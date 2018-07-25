@@ -1,7 +1,7 @@
 <template>
     <section>
       
-        book appp
+        <div class="background-img-container"><div class="bg"></div></div>
 
         <book-list :books="books"></book-list>
     </section>
@@ -36,4 +36,20 @@ export default {
 </script>
 
 <style>
+.background-img-container{
+  height: 400px;
+}
+.bg { 
+    /* The image used */
+    background-image: url('../../public/img/background.jpg');
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 </style>
