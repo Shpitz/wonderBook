@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/book/:bookId">Book Details</router-link> |
+      <!-- <router-link to="/book/:bookId">Book Details</router-link> | -->
       <nav-bar></nav-bar>
 
     </div>
@@ -26,12 +26,12 @@ export default {
   color: #2c3e50;
 }
 #nav {
-  padding: 30px;
+  // padding: 30px;
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: white;
     &.router-link-exact-active {
-      color: #42b983;
+      color: black;
     }
   }
 }
