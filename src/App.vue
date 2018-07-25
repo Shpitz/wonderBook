@@ -31,7 +31,7 @@ export default {
     font-weight: bold;
     color: white;
     &.router-link-exact-active {
-      color: black;
+      color:#011f76;
     }
   }
 }

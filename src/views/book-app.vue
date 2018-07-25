@@ -38,6 +38,7 @@ export default {
 <style>
 .background-img-container{
   height: 400px;
+  margin: 0 0 40px 0;
 }
 .bg { 
     /* The image used */

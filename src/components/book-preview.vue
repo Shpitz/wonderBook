@@ -1,27 +1,24 @@
 <template>
-         <section class="cards">
-        <article class="card card--1">
-            <div class="card__info-hover">
-                <div class="card__clock-info">
-                    <span class="card__time">15 min</span>
-                </div>
-            </div>
-            <div class="card__img"></div>
-            <a href="#" class="card_link">
-                <div class="card__img--hover"></div>
-            </a>
-            <div class="card__info">
-                <span class="card__category"> {{book.title}}</span>
-                <h3 class="card__title">Crisp Spanish tortilla Matzo brei</h3>
-                <span class="card__by">by
-                    <a href="#" class="card__author" title="author">{{book.author}}</a>
-                </span>
-                 <slot></slot>
-            </div>
-        </article>
-
-
-    </section>
+<div class="blog-card spring-fever">
+  <div class="title-content">
+    <h3>{{book.title}}</h3>
+    <hr />
+    <div class="intro">By {{book.author}}</div>
+  </div><!-- /.title-content -->
+  <div class="card-info">
+      {{book.description}}
+  </div><!-- /.card-info -->
+  <div class="utility-info">
+    <ul class="utility-list">
+      <li class="comments">12</li>
+      <li class="date">{{datePublish | date-format}}</li>
+      <li><slot></slot></li>
+    </ul>
+  </div><!-- /.utility-info -->
+  <!-- overlays -->
+  <div class="gradient-overlay"></div>
+  <div class="color-overlay"></div>
+</div><!-- /.blog-card -->
 </template>
 
 <script>
@@ -29,11 +26,162 @@ export default {
   name: "bookPreview",
   props: {
     book: Object
+  },
+  computed:{
+      datePublish(){
+          return Math.round( this.book.createdAt)
+      }
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+$card-width:  300px;
+$card-height: 400px;
+$h-color:     #021d73;
+$yellow:      #D0BB57;
+$txt-color:   #DCE3E7;
+
+.blog-card{
+    cursor: pointer;
+  width: $card-width;
+  height: $card-height;
+  position: relative;
+  margin: 0 20px 20px 0;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);
+  text-align: center;
+  
+  &.spring-fever{
+    background: url('../../public/img/books/page9.jpg') no-repeat;
+    background-size: cover;
+    background-position: bottom;
+  }
+  
+  .color-overlay{
+    /* Rectangle 11: */
+    background: rgba(84,104,110,0.4);
+    width: $card-width;
+    height: $card-height;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    transition: background .3s cubic-bezier(.33,.66,.66,1);
+  }
+  .gradient-overlay{
+    /* bg-gradient: */
+    background-image: -webkit-linear-gradient(rgba(0,0,0,0.00) 0%, rgba(0,0,0,.6) 21%);
+    background-image: -moz-linear-gradient(rgba(0,0,0,0.00) 0%, rgba(0,0,0,.6) 21%);
+    background-image: -o-linear-gradient(rgba(0,0,0,0.00) 0%, rgba(0,0,0,.6) 21%);
+    background-image: linear-gradient(rgba(0,0,0,0.00) 0%, rgba(0,0,0,.6) 21%);
+    width: $card-width;
+    height: $card-height;
+    position: absolute;
+    top: 350px;
+    left: 0;
+    z-index: 15;
+  }
+  
+  &:hover{
+    
+    .card-info{
+      opacity: 1;
+      bottom: 70px;
+    }
+    .color-overlay{
+      background: rgba(84,104,110,0.8);
+    }
+  }
+}
+
+.title-content{
+  text-align: center;
+  margin: 70px 0 0 0;
+  position: absolute;
+  z-index: 20;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+h3{
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: $h-color;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 0;
+}
+hr{
+  width: 50px;
+  height: 3px;
+  margin: 20px auto;
+  border: 0;
+  background: $yellow;
+}
+.intro{
+  width: 170px;
+  margin: 0 auto;
+  color: $txt-color;
+  font-family: 'Droid Serif', serif;
+  font-size: 13px;
+  font-style: italic;
+  line-height: 18px;
+}
+.card-info{
+  width: 100%;
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  margin: 0 auto;
+  padding: 0 50px;
+  color: $txt-color;
+  font-family: 'Droid Serif', serif;
+  font-style: 16px;
+  line-height: 24px;
+  z-index: 20;
+  opacity: 0;
+  transition: bottom .3s, opacity .3s cubic-bezier(.33,.66,.66,1);
+}
+
+.utility-info{
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  z-index: 20;
+}
+.utility-list{
+  list-style-type: none;
+  margin: 0 0 30px 20px;
+  padding: 0;
+  width: 100%;
+  
+  li{
+    margin: 0 15px 0 0;
+    padding: 0 0 0 22px;
+    display: inline-block;
+    color: $txt-color;
+    font-family: 'Roboto', sans-serif;
+    
+    &.comments{
+      background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1765/icon-chat.svg) no-repeat 0 .1em;
+    }
+    &.date{
+      background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1765/icon-calendar.svg) no-repeat 0 .1em;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
 .cards {
     width: 100%;
     display: flex;
@@ -44,7 +192,6 @@ export default {
 
 .card--1 .card__img, .card--1 .card__img--hover {
     background-image: url('../../public/img/books/page9.jpg')
-    /* background-image: url('https://images.pexels.com/photos/45202/brownie-dessert-cake-sweet-45202.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'); */
 }
 
 
@@ -81,7 +228,7 @@ border-top-right-radius: 12px;
 }
 
 .card__info-hover {
-    position: absolute;
+    // position: absolute;
     padding: 16px;
   width: 100%;
   opacity: 0;
@@ -95,7 +242,7 @@ border-top-right-radius: 12px;
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-  position: absolute;
+//   position: absolute;
     height: 235px;
   border-top-left-radius: 12px;
 border-top-right-radius: 12px;
@@ -106,7 +253,6 @@ top: 0;
     margin: 0 25px 25px 0;
   transition: all .4s cubic-bezier(0.175, 0.885, 0, 1);
   background-color: #fff;
-    /* width: 33.3%; */
   position: relative;
   border-radius: 12px;
   overflow: hidden;
@@ -114,7 +260,6 @@ top: 0;
 }
 .card:hover {
   box-shadow: 0px 30px 18px -8px rgba(0, 0, 0,0.1);
-    /* transform: scale(1.01, 1.01); */
 }
 
 .card__info {
