@@ -5,7 +5,6 @@
                 <div class="card__clock-info">
                     <span class="card__time">15 min</span>
                 </div>
-
             </div>
             <div class="card__img"></div>
             <a href="#" class="card_link">
@@ -17,8 +16,10 @@
                 <span class="card__by">by
                     <a href="#" class="card__author" title="author">{{book.author}}</a>
                 </span>
+                 <slot></slot>
             </div>
         </article>
+
 
     </section>
 </template>
@@ -36,15 +37,14 @@ export default {
 .cards {
     width: 100%;
     display: flex;
-    display: -webkit-flex;
     justify-content: center;
-    -webkit-justify-content: center;
     max-width: 820px;
-    min-width: 300px;
+    min-width: 250px;
 }
 
 .card--1 .card__img, .card--1 .card__img--hover {
-    background-image: url('https://images.pexels.com/photos/45202/brownie-dessert-cake-sweet-45202.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');
+    background-image: url('../../public/img/books/page9.jpg')
+    /* background-image: url('https://images.pexels.com/photos/45202/brownie-dessert-cake-sweet-45202.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'); */
 }
 
 
@@ -103,7 +103,7 @@ top: 0;
   
 }
 .card {
-  margin-right: 25px;
+    margin: 0 25px 25px 0;
   transition: all .4s cubic-bezier(0.175, 0.885, 0, 1);
   background-color: #fff;
     /* width: 33.3%; */
@@ -114,7 +114,7 @@ top: 0;
 }
 .card:hover {
   box-shadow: 0px 30px 18px -8px rgba(0, 0, 0,0.1);
-    transform: scale(1.10, 1.10);
+    /* transform: scale(1.01, 1.01); */
 }
 
 .card__info {
