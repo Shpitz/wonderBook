@@ -21,11 +21,6 @@ export default {
 
 <style scopped>
 
-    @font-face {
-    font-family: "Gaegu";
-    src: url("../assets/fonts/Gaegu/Gaegu-Regular.ttf");
-    }
-
 .nav-bar, .routes-container {
   display: flex;
   justify-content: space-between;

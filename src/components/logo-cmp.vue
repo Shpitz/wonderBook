@@ -10,10 +10,7 @@ export default {};
 </script>
 
 <style scopped>
-    @font-face {
-    font-family: "Poor_Story";
-    src: url("../assets/fonts/Poor_Story/PoorStory-Regular.ttf");
-    }
+   
 
     .logo {
     font-family: Poor_Story;
