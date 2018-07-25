@@ -1,5 +1,6 @@
 <template>
     <section>
+      
         book appp
         <pre>{{books}}</pre>
     </section>
@@ -7,6 +8,7 @@
 
 <script>
 import { LOAD_BOOKS, BOOKS_FOR_DISPLAY } from "../store/book-module.js";
+
 export default {
   data() {
     return {
@@ -28,7 +30,8 @@ export default {
           console.log('error in book app loadBooks component',err)
         });
     }
-  }
+  },
+
 };
 </script>
 
