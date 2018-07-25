@@ -4,6 +4,7 @@ import router from './router';
 import store from './store/store';
 import './registerServiceWorker';
 import './filters.js'
+import './assets/scss/style.scss';
 
 Vue.config.productionTip = false;
 

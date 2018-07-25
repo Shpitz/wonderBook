@@ -1,18 +1,17 @@
 <template>
     <section>
+      
         book appp
-        <pre>{{books}}</pre>
+
+        <book-list :books="books"></book-list>
     </section>
 </template>
 
 <script>
 import { LOAD_BOOKS, BOOKS_FOR_DISPLAY } from "../store/book-module.js";
+import bookList from '../components/book-list.vue'
+
 export default {
-  data() {
-    return {
-      // books: []
-    };
-  },
   created() {
     this.loadBooks();
   },
@@ -28,7 +27,11 @@ export default {
           console.log('error in book app loadBooks component',err)
         });
     }
+  },
+  components:{
+      bookList
   }
+
 };
 </script>
 

@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Home from './views/book-app.vue';
 import About from './views/About.vue';
 import bookDetails from './views/book-details.vue';
+import Contact from './views/Contact.vue';
+import Login from './views/Login.vue';
 
 Vue.use(Router);
 
@@ -22,6 +24,16 @@ export default new Router({
       path: '/book/:bookId',
       name: 'bookDetails',
       component: bookDetails,
-    }
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: Contact,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+    },
   ],
 });

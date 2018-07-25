@@ -24,6 +24,10 @@
 .flex {
   display: flex;
 }
+.flex-warp {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .align-center {
   align-items: center;
