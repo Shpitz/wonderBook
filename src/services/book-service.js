@@ -14,6 +14,31 @@ function query() {
         })
 }
 
+function remove(bookId) {
+    return axios.delete(`${BASE_URL}/${bookId}`)
+}
+
+function getById(bookId) {
+    return axios.get(`${BASE_URL}/${bookId}`)
+        .then(res => res.data)
+        .catch(err => console.log('Problem talking to server', err))
+}
+
+function saveToy(book) {
+    if (book._id) {
+        // update
+        return axios.put(`${BASE_URL}/${book._id}`, book)
+            .then(res => res.data)
+            .catch(err => console.log('Problem talking to server', err))
+    } else {
+        //add new
+        return axios.post(BASE_URL, book)
+            .then(res => res.data)
+            .catch(err => console.log('Problem talking to server', err))
+    }
+}
+
+
 export default {
     query,
     // getToyById,
