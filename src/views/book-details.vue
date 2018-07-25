@@ -1,11 +1,15 @@
 <template>
-    <section>
-        <p>{{book.title}}</p>
+    <section class="flex">
+        <!-- <div class="img-container"></div> -->
+        <img :src="book.coverImg" alt="">
+        <div class="details-container">
+        <h1>{{book.title}}</h1>
         <p>{{book.author}}</p>
         <p>{{book.createdAt | date-format}}</p>
         <p>{{book.description}}</p>
         <p>{{book.length}}</p>
         <p>{{book.numOfPages}}</p>
+        </div>
     </section>
 
 </template>
@@ -34,7 +38,7 @@ export default {
                 audio: '',
                 numOfPages: 0,
                 length: 240,
-                coverImg: ''
+                coverImg: './img/books/page9.jpg'
                 }
         }
     }
@@ -48,6 +52,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+/* .img-container {
+    background-image: url('../../public/img/books/page9.jpg')
+} */
 
 </style>
