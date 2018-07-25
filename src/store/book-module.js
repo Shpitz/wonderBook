@@ -10,7 +10,6 @@ export const SET_BOOKS = 'book/mutations/setBooks'
 // getters
 export const BOOKS_FOR_DISPLAY = 'book/getters/Books'
 export const FILTRT_BY = 'book/getters/filterBy'
-export const BOOKS_FOR_DISPLAY = 'book/getters/books'
 
 
 
