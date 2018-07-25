@@ -10,7 +10,7 @@ import { LOAD_BOOKS, BOOKS_FOR_DISPLAY } from "../store/book-module.js";
 export default {
   data() {
     return {
-      books: []
+      // books: []
     };
   },
   created() {
@@ -23,7 +23,10 @@ export default {
   },
   methods: {
     loadBooks() {
-      this.$store.dispatch({ type: LOAD_BOOKS });
+      this.$store.dispatch({ type: LOAD_BOOKS })
+        .catch((err)=> {
+          console.log('error in book app loadBooks component',err)
+        });
     }
   }
 };

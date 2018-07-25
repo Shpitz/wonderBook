@@ -9,10 +9,9 @@ function query() {
             console.log(res.data)
             return res.data
         })
-    // .catch((err) => {
-    //     console.warn(err)
-    //     return Promise.reject(err)
-    // })
+        .catch((err) => {
+            return Promise.reject(err)
+        })
 }
 
 export default {
