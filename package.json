@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "sass":"node-sass -o css scss"
+    "sass": "node-sass -o css scss"
   },
   "dependencies": {
     "axios": "^0.18.0",

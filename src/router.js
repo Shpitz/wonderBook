@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/book-app.vue';
 import About from './views/About.vue';
+import Contact from './views/Contact.vue';
+import Login from './views/Login.vue';
 
 Vue.use(Router);
 
@@ -16,6 +18,16 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: About,
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: Contact,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
     },
   ],
 });
