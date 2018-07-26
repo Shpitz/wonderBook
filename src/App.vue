@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-    <div>
-      <router-link to="/bookReading/5b59a54e38e91934842357b1">Book reading</router-link> 
+    <div id="nav">
+      <!-- <router-link to="/bookReading/5b59a54e38e91934842357b1">Book reading</router-link>  -->
       <nav-bar></nav-bar>
-
     </div>
     <router-view/>
   </div>

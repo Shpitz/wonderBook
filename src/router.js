@@ -5,7 +5,7 @@ import About from './views/About.vue';
 import bookDetails from './views/book-details.vue';
 import Contact from './views/Contact.vue';
 import Login from './views/Login.vue';
-import  BookDisplay from './views/book-display.vue'
+// import BookDisplay from './views/book-display.vue'
 
 Vue.use(Router);
 
@@ -36,11 +36,11 @@ export default new Router({
       name: 'login',
       component: Login,
     },
-    {
-      path: '/bookReading/:bookId',
-      name: 'bookReading',
-      component: BookDisplay,
-    },
+    // {
+    //   path: '/bookReading/:bookId',
+    //   name: 'bookReading',
+    //   component: BookDisplay,
+    // },
     
   ],
 });
