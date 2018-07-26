@@ -1,5 +1,10 @@
 <template>
     <section>
+<!--       
+      <audio ontimeupdate='updateTrackTime(this)'>
+    <source src="http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3" type="audio/ogg">
+  </audio> -->
+
 <button @click="play('http://soundbible.com/mp3/Elevator Ding-SoundBible.com-685385892.mp3')">play</button>
 book read
 <div v-if="book" >
