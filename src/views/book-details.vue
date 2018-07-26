@@ -1,5 +1,5 @@
 <template>
-    <section  class="flex space-between">
+    <section  v-if="book" class="flex space-between">
         <div class="details-img-wrap flex justify-center">
             <!-- <div class="img-details"></div> -->
             <img src="https://images2.storyjumper.com/transcoder.png?trim&id=78-oqy1h9n0d9-56y1kdrcl&maxw=512&maxh=512" alt="">
@@ -38,11 +38,9 @@
             <p>{{book.description}}</p>
             </div>
             <div class="btn-wrap flex column">
-                <button class="play-book">Play Book</button>
+                <button class="play-book" @click="playBook()">Play Book</button>
                 <button class="back">Back</button>
             </div>
-
-
         </div>
     </section>
 
@@ -55,68 +53,19 @@ export default {
     name: 'bookDetails',
     data() {
         return {
-            // book: null,
-            book: {
-                title : 'Monster Kingdom',
-                author : 'Gal Sinai',
-                illustrator: 'Itzik Turjeman',
-                categories: ['Beginner English', 'Behaviour', 'Creative Commons', 'Family'],
-                description : 'The tiny, multi-colored bean-shaped bears of Beandom are under attack by a monster. Even the Kings wisest advisors seem unable find a solution. Who will save Beandom? Can an ordinary tiny bear step forward with a plan that works? The message of the story is: Follow your convictions even when others think differently.',
-                rating : 4.62,
-                views : 3463,
-                numOfPages : 0,
-                audio : '',
-                pages : [
-                    {
-                        txt : 'Monster Kingdom',
-                        time : 0,
-                        img : './kingdom/cover.jpg'
-                    },
-                    {
-                        txt : 'There was a monster in the kingdom that was so big that it made the earth tremble whenever it walked.',
-                        time : 1,
-                        img : './kingdom/page1.jpg'
-                    },
-                    {
-                        txt : 'The monster quickly ate the food, but it would be back the next day. The kingdom needed a better plan.',
-                        time : 2,
-                        img : './kingdom/page2.jpg'
-                    },
-                    {
-                        txt : 'Fortunately, Sandy went to the king and presented a clever plan for handling the monster.',
-                        time : 3,
-                        img : './kingdom/page3.jpg'
-                    },
-                    {
-                        txt : 'There was a monster in the kingdom that was so big that it made the earth tremble whenever it walked.',
-                        time : 4,
-                        img : './kingdom/page4.jpg'
-                    },
-                    {
-                        txt : 'The monster quickly ate the food, but it would be back the next day. The kingdom needed a better plan.',
-                        time : 5,
-                        img : './kingdom/page5.jpg'
-                    },
-                    {
-                        txt : 'Fortunately, Sandy went to the king and presented a clever plan for handling the monster.',
-                        time : 6,
-                        img : './kingdom/page6.jpg'
-                    },
-
-                        ],
-                reviews : [],
-                status: 'done',
-                createdAt: 1532597037875,
-            }
+            book: null,
         }
+    },
+    methods: {
+        playBook() {
+            this.$router.push(`/bookReading/${this.book._id}`)
+        }
+    },
+    created() {
+        let bookId = this.$route.params.bookId;
+        this.$store.dispatch({type: LOAD_BOOK, bookId})
+            .then(book => this.book = book)
     }
-    // created() {
-    //     let bookId = this.$route.params.bookId;
-    //     this.$store.dispatch({type: LOAD_BOOK, bookId})
-    //         .then(book => this.book = book)
-    // }
-
-
 }
 </script>
 
