@@ -7,10 +7,10 @@ import './filters.js'
 import './assets/scss/style.scss';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit} from '@fortawesome/free-solid-svg-icons'
+import { faEdit,faCalendarAlt,faEye} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faEdit)
+library.add(faEdit,faCalendarAlt,faEye)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

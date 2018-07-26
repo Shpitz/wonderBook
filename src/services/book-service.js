@@ -43,6 +43,7 @@ function saveToy(book) {
 
 export default {
     query,
+    getById
     // getToyById,
     // remove,
     // add,
