@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <!-- <router-link to="/book/:bookId">Book Details</router-link> | -->
       <nav-bar></nav-bar>
-
     </div>
     <router-view/>
   </div>

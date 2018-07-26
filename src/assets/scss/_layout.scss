@@ -49,6 +49,14 @@
   height: 100%;
 }
 
+.column {
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
+}
+
 
 /* Breakpoint mixins */
 

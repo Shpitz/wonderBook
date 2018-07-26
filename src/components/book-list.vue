@@ -22,7 +22,6 @@ export default {
   },
   methods:{
       watchBook(bookId){
-          debugger
           var url = `/book/${bookId}`
           this.$router.push(url)
       },
