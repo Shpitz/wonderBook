@@ -81,6 +81,7 @@ export default {
         var book = JSON.parse(JSON.stringify(book));
         console.log('book in dispaly',book)
         // book.pages.forEach(page => {
+
         //   page.imgUrl = "./img/books/page9.jpg";
         // });
         this.book = book;
