@@ -21,7 +21,8 @@ export default {
   },
     computed: {
         pageImg(){
-            return this.pageData.imgUrl
+            //TODO: make it wor;
+            return this.pageData.img;
         }
     }
 };
