@@ -21,7 +21,7 @@ export default {
   },
     computed: {
         pageImg(){
-            return this.pageData.imgUrl
+            return `./img/books/${this.pageData.img}`
         }
     }
 };
