@@ -21,8 +21,17 @@ export default {
 };
 </script>
 
-<style scopped>
+<style scopped lang="scss">
+.nav-bar {
 
+  a {
+    font-weight: bold;
+    color: white;
+    &.router-link-exact-active {
+      color:#011f76;
+    }
+  }
+}
 .nav-bar {
     /* position: fixed;
     top: 10px;
