@@ -6,11 +6,11 @@
     <div class="intro">By {{book.author}}</div>
   </div><!-- /.title-content -->
   <div class="card-info">
-      {{book.description}}
+      {{pageDesc}}
   </div><!-- /.card-info -->
   <div class="utility-info">
     <ul class="utility-list">
-      <li class="comments">12</li>
+      <li> <font-awesome-icon class="icon" icon="eye" /> 500</li>
       <li class="date">{{datePublish | date-format}}</li>
       <li><slot></slot></li>
     </ul>
@@ -30,6 +30,10 @@ export default {
   computed:{
       datePublish(){
           return Math.round( this.book.createdAt)
+      },
+      pageDesc(){
+        var pageDesc = this.book.description
+        return pageDesc
       }
   }
 };
@@ -41,6 +45,9 @@ $card-height: 400px;
 $h-color:     #021d73;
 $yellow:      #D0BB57;
 $txt-color:   #DCE3E7;
+.icon {
+  color:$yellow;
+}
 
 .blog-card{
     cursor: pointer;

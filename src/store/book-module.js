@@ -2,6 +2,9 @@
 import bookSerivce from '../services/book-service.js'
 //actions
 export const LOAD_BOOKS = 'book/actions/loadBooks'
+export const LOAD_BOOK = 'book/actions/loadBook'
+
+
 
 
 // mutations
@@ -16,7 +19,7 @@ export const FILTRT_BY = 'book/getters/filterBy'
 export default {
     state: {
         books: [],
-        filterBy: {}
+        filterBy: {},
     },
     mutations: {
         [SET_BOOKS](state, { books }) {
@@ -36,6 +39,10 @@ export default {
                     context.commit({ type: SET_BOOKS, books })
                     console.log(books, 'from action')
                 })
-        }
+        },
+        [LOAD_BOOK](context, { bookId }) {
+            return bookSerivce.getById(bookId)
+                .then(book => book)
+        },
     }
 }
