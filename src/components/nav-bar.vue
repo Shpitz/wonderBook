@@ -24,10 +24,10 @@ export default {
 <style scopped>
 
 .nav-bar {
-    position: fixed;
+    /* position: fixed;
     top: 10px;
     z-index: 1;
-    width: 95%;
+    width: 95%; */
 }
 
 .nav-bar-container{
