@@ -21,13 +21,22 @@ export default {
 };
 </script>
 
-<style scopped>
-
+<style scopped lang="scss">
 .nav-bar {
-  position: fixed;
-  top: 0;
-  z-index: 1;
-  width: 90%;
+
+  a {
+    font-weight: bold;
+    color: white;
+    &.router-link-exact-active {
+      color:#011f76;
+    }
+  }
+}
+.nav-bar {
+    /* position: fixed;
+    top: 10px;
+    z-index: 1;
+    width: 95%; */
 }
 
 .nav-bar-container{
@@ -54,6 +63,7 @@ export default {
 .nav-route:hover{
     background-color: #041f7391;
 }
+
 
 .clean-link{
     text-decoration: none;

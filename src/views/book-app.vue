@@ -2,7 +2,7 @@
     <section>
       
         <div class="background-img-container"><div class="bg"></div></div>
-
+        <book-filter></book-filter>
         <book-list :books="books"></book-list>
     </section>
 </template>
@@ -10,6 +10,7 @@
 <script>
 import { LOAD_BOOKS, BOOKS_FOR_DISPLAY } from "../store/book-module.js";
 import bookList from '../components/book-list.vue'
+import bookFilter from '../components/book-filter.vue'
 
 export default {
   created() {
@@ -29,7 +30,8 @@ export default {
     }
   },
   components:{
-      bookList
+      bookList,
+      bookFilter
   }
 
 };
@@ -38,6 +40,7 @@ export default {
 <style>
 .background-img-container{
   height: 400px;
+  margin: 0 0 40px 0;
 }
 .bg { 
     /* The image used */

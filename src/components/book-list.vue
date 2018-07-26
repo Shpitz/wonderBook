@@ -35,14 +35,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.btn-icon {
-    border: none;
-    background: transparent;
-    padding: 10px;
-    outline: none;
-}
-.btn-icon:hover {
-   color: cornflowerblue;
-}
+<style scoped lang="scss">
+
 </style>

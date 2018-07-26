@@ -3,8 +3,10 @@ const BASE_URL = (process.env.NODE_ENV !== 'development') ? '' : 'http://localho
 
 // const BOOK_URL = 'http://localhost:3000/book'
 
-function query() {
-    return axios.get(BASE_URL)
+function query(booksFilter = {}) {
+    var queryParams  = new URLSearchParams()
+    if (booksFilter.byTxt) queryParams.set('q', booksFilter.byTxt)
+    return axios.get(`${BASE_URL}?${queryParams}`)
         .then(res => {
             console.log(res.data)
             return res.data
@@ -41,6 +43,7 @@ function saveToy(book) {
 
 export default {
     query,
+    getById
     // getToyById,
     // remove,
     // add,

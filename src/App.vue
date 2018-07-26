@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
+      <!-- <router-link to="/bookReading/5b59a54e38e91934842357b1">Book reading</router-link>  -->
       <nav-bar></nav-bar>
     </div>
     <router-view/>
@@ -23,14 +24,5 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-#nav {
-  // padding: 30px;
-  a {
-    font-weight: bold;
-    color: white;
-    &.router-link-exact-active {
-      color: black;
-    }
-  }
-}
+
 </style>
