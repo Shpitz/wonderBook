@@ -21,12 +21,8 @@ export default {
   },
     computed: {
         pageImg(){
-<<<<<<< HEAD
-            return `./img/books/${this.pageData.img}`
-=======
             //TODO: make it wor;
             return this.pageData.img;
->>>>>>> 7bb3a5da1a3abbb1e214cc49a28bf40d9f514fb2
         }
     }
 };
