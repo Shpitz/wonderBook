@@ -73,6 +73,7 @@ export default {
       } else {
         if (currIdx > 0) {
           this.currPageIdx += opartor;
+          // debugger;
           this.currPage = this.book.pages[this.currPageIdx];
         }
       }
@@ -99,6 +100,7 @@ export default {
         var currIdx = this.book.pages.findIndex(page => {
           return page.time >= this.currentTime;
         });
+        debugger;
         this.currPageIdx = currIdx - 1;
         this.currPage = this.book.pages[this.currPageIdx];
      
