@@ -1,18 +1,20 @@
 <template>
-        <section v-if="book" class="flex space-between page-container">
+        <section v-if="book" class="flex space-between page-container" >
         <div class="details-img-wrap flex justify-center">
             <!-- <div class="img-details"></div> -->
             <img :src="book.coverImg" alt="">
         </div>
-        <div class="details-container">
-            <button class="play-book button4" @click="playBook()">Play Book</button>
+        <div class="details-container" >
             <div class="details-title">
                 <h1>{{book.title}}</h1>
             </div>
             <div class="flex space-around">
                 <h6 class="italic no-margin">Wrriten by {{book.author}}</h6>
                 <h6 class="italic no-margin">Illustrated by {{book.illustrator}}</h6>
+
             </div>
+                <button class="play-book button4" @click="playBook()">Play Book</button>
+
             <ul class="details flex justify-center space-between align-center no-padding clean-list">
                 <!-- <li>
                     <fieldset class="rating">
@@ -44,22 +46,22 @@
                     <font-awesome-icon class="icon" icon="eye" /> {{book.views}}</li>
                 <li>
                     <font-awesome-icon class="clock" icon="clock" /> {{book.duration}}</li>
-                <li> {{book.createdAt | date-format}}</li>
+                <li> <font-awesome-icon class="clock" icon="calendar-alt" /> {{book.createdAt | date-format}}</li>
             </ul>
 
-
+       <div class="details-description">
+                <p>" {{book.description}} "</p>
+            </div>
             <div class="flex categories space-around">
-                <ul v-for="(category, idx) in book.categories" :key="idx" class="clean-list tag">
-                    <li>
+                <ul>
+                    <li v-for="(category, idx) in book.categories" :key="idx" class="clean-list tag flex align-center">
                         <span>{{category}}</span>
                     </li>
                 </ul>
             </div>
 
 
-            <div class="details-description">
-                <p>{{book.description}}</p>
-            </div>
+     
 
             <div class="">
                 <div class="social">
@@ -79,26 +81,30 @@
 </template>
 
 <script>
-import {LOAD_BOOK} from "../store/book-module.js";
+import { LOAD_BOOK } from "../store/book-module.js";
 
 export default {
-    name: 'bookDetails',
-    data() {
-        return {
-            book: null,
-        }
+  name: "bookDetails",
+  data() {
+    return {
+      book: null
+    };
+  },
+
+  created() {
+    let bookId = this.$route.params.bookId;
+    this.$store
+      .dispatch({ type: LOAD_BOOK, bookId })
+      .then(book => (this.book = book));
+  },
+ 
+  methods: {
+    playBook() {
+      this.$router.push(`/bookReading/${this.book._id}`);
     },
-    methods: {
-        playBook() {
-            this.$router.push(`/bookReading/${this.book._id}`)
-        }
-    },
-    created() {
-        let bookId = this.$route.params.bookId;
-        this.$store.dispatch({type: LOAD_BOOK, bookId})
-            .then(book => this.book = book)
-    }   
-}
+    
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -107,102 +113,101 @@ export default {
 // }
 
 .page-container {
-    box-shadow: 0 3px 7px 3px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    padding: 15px;
+  box-shadow: 0 3px 7px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 15px;
 }
 .details-img-wrap {
-    align-items: center;
-    width: 50%;
-    border-right: solid 1.2px rgba(128, 128, 128, 0.568); 
-    /* margin: 5px; */
+  align-items: center;
+  width: 50%;
+  border-right: solid 1.2px rgba(128, 128, 128, 0.568);
+  /* margin: 5px; */
 }
 
 .details-img-wrap img {
-width: 80%;
-height: 80%;
-
+  width: 80%;
+  height: 80%;
 }
 
-.details-container{
-    width: 50%;
-    margin: 5px;
-    padding: 50px;
+.details-container {
+  width: 50%;
+  margin: 5px;
+  padding: 20px;
+}
+.details-container div{
+    margin: 0 0 10px;
 }
 
 .details-title {
-    font-size: 2.3em;
-    font-family: Gaegu;
+  font-size: 2.3em;
+  font-family: Gaegu;
 }
 
 .img-details {
-    width: 80%;
-    height: 100%;
-    background-image: url('https://images2.storyjumper.com/transcoder.png?trim&id=78-oqy1h9n0d9-56y1kdrcl&maxw=512&maxh=512');
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0 auto;
+  width: 80%;
+  height: 100%;
+  background-image: url("https://images2.storyjumper.com/transcoder.png?trim&id=78-oqy1h9n0d9-56y1kdrcl&maxw=512&maxh=512");
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0 auto;
 }
 
 .fa-btn {
-    border: none;
-    background: transparent;
-    padding: 10px;
-    outline: none;
+  border: none;
+  background: transparent;
+  padding: 10px;
+  outline: none;
 }
 
-.fa-btn:hover{
-    color: rgb(51, 126, 201)
+.fa-btn:hover {
+  color: rgb(51, 126, 201);
 }
 
 .tag {
-  
-    display:inline-block;
-    padding:0.4em 1.2em;
-    margin:0 0.1em 0.1em 0;
-    border:0.16em solid rgba(255, 255, 255, 0.863);
-    border-radius:2em;
-    box-sizing: border-box;
-    text-decoration:none;
-    font-family:'Roboto',sans-serif;
-    font-weight:300;
-    color:#FFFFFF;
-    text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
-    text-align:center;
-    transition: all 0.2s;
-    background: rgba(153, 226, 151, 0.966);
+  display: inline-block;
+  padding: 0.4em 1.2em;
+  margin: 0 0.1em 0.1em 0;
+  border: 0.16em solid rgba(255, 255, 255, 0.863);
+  border-radius: 2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: #ffffff;
+  text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+  text-align: center;
+  transition: all 0.2s;
+  background: rgba(153, 226, 151, 0.966);
 }
-
 
 .tag:hover {
-    border-color: rgb(7, 73, 12);
+  border-color: rgb(7, 73, 12);
 }
-  
 
 .italic {
-    font-style: italic;
+  font-style: italic;
 }
 
-.button4{
-    display:inline-block;
-    padding:0.4em 1.2em;
-    margin:0 0.1em 0.1em 0;
-    border:0.16em solid rgba(255,255,255,0);
-    border-radius:2em;
-    box-sizing: border-box;
-    text-decoration:none;
-    font-family:'Roboto',sans-serif;
-    font-weight:500;
-    font-size: 1.5em;
-    color:#FFFFFF;
-    text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
-    text-align:center;
-    transition: all 0.2s;
-    background: rgba(153, 226, 151, 0.966);
+.button4 {
+  display: inline-block;
+  padding: 0.4em 1.2em;
+  margin: 0 0.1em .5em 0;
+  border: 0.16em solid rgba(255, 255, 255, 0);
+  border-radius: 2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 1.5em;
+  color: #ffffff;
+  text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+  text-align: center;
+  transition: all 0.2s;
+  background: rgba(153, 226, 151, 0.966);
 }
-.button4:hover{
-    border-color: rgb(7, 73, 12);
+.button4:hover {
+  border-color: rgb(7, 73, 12);
 }
 // @media all and (max-width:30em){
 //  a.button4{
@@ -215,19 +220,30 @@ height: 80%;
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
-fieldset, label { margin: 0; padding: 0; }
-body{ margin: 20px; }
-h1 { font-size: 1.5em; margin: 10px; }
+fieldset,
+label {
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 20px;
+}
+h1 {
+  font-size: 1.5em;
+  margin: 10px;
+}
 
 /****** Style Star Rating Widget *****/
 
-.rating { 
+.rating {
   border: none;
   float: left;
 }
 
-.rating > input { display: none; } 
-.rating > label:before { 
+.rating > input {
+  display: none;
+}
+.rating > label:before {
   margin: 5px;
   font-size: 1.25em;
   font-family: FontAwesome;
@@ -235,46 +251,48 @@ h1 { font-size: 1.5em; margin: 10px; }
   content: "\f005";
 }
 
-.rating > .half:before { 
+.rating > .half:before {
   content: "\f089";
   position: absolute;
 }
 
-.rating > label { 
-  color: #ddd; 
- float: right; 
+.rating > label {
+  color: #ddd;
+  float: right;
 }
 
 /***** CSS Magic to Highlight Stars on Hover *****/
 
 .rating > input:checked ~ label, /* show gold star when clicked */
 .rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+.rating:not(:checked) > label:hover ~ label {
+  color: #ffd700;
+} /* hover previous stars in list */
 
 .rating > input:checked + label:hover, /* hover current star when changing rating */
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
-
+.rating > input:checked ~ label:hover ~ label {
+  color: #ffed85;
+}
 
 /* ***** SOCIAL****** */
-@mixin iconTransition{
-
-        transition: all 100ms cubic-bezier(0.420, 0.000, 0.580, 1.000); /* ease-in-out */
+@mixin iconTransition {
+  transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1); /* ease-in-out */
 }
 
-@mixin wiggler{
-   animation-name: wiggle;
-   animation-duration: .4s;
-   animation-iteration-count: infinite;
-   animation-timing-function: ease;
+@mixin wiggler {
+  animation-name: wiggle;
+  animation-duration: 0.4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
 }
 
-
-
-*, *::before, *::after{
-  box-sizing: border-box; 
-} 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 .wrap {
   width: 35%;
@@ -282,51 +300,49 @@ h1 { font-size: 1.5em; margin: 10px; }
   text-align: center;
 }
 
-.social{
+.social {
   font-size: 2.5em;
   height: 50px;
-  overflow:hidden;
+  overflow: hidden;
   border-bottom: 1px solid #abc;
 }
 
-i{
+i {
   position: relative;
   top: 30px;
   margin: 0 10px;
   @include iconTransition;
 
-  &:hover{
-     top: 5px;
-    
-    }
+  &:hover {
+    top: 5px;
+  }
 }
 
-.fb{
-  color: #3B5998;
+.fb {
+  color: #3b5998;
 }
 
-.tw{
- color: #09AEEC;
+.tw {
+  color: #09aeec;
 }
 
-.yt{
-  color: #AA2A25;
+.yt {
+  color: #aa2a25;
 }
 
-.dr{
+.dr {
   color: #ea4c89;
 }
 
-.sk{
-  color: #00A5E6;
+.sk {
+  color: #00a5e6;
 }
 
-.db{
+.db {
   color: #000;
 }
 
-.apple{
+.apple {
   color: #ccc;
 }
-
 </style>
