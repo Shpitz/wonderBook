@@ -15,7 +15,7 @@
         <p>
       <audio
         ref="audio"
-        src="./audio/book2.mp3"
+        :src="book.audio"
         @timeupdate="onTimeUpdate"
         @seeking="onSeeking"
         controls
@@ -38,12 +38,13 @@ export default {
       book: null,
       currPage: null,
       currPageIdx: 0,
-      currentTime: 0
+      currentTime: 0,
     };
   },
   created() {
     var bookId = this.$route.params.bookId;
     this.getBook(bookId);
+    
   },
   mounted() {},
   computed: {
@@ -81,11 +82,13 @@ export default {
         var book = JSON.parse(JSON.stringify(book));
         console.log("book in dispaly", book);
         this.book = book;
-        this.currPage = book.pages[0];
+        this.currPage = book.pages[0];        
       });
     },
     onTimeUpdate(ev, value = null) {
       this.currentTime = this.$refs.audio.currentTime;
+      console.log(this.currentTime);
+      
       if (this.currPageIdx + 1 === this.book.pages.length) return;
       if (this.currentTime >= this.book.pages[this.currPageIdx + 1].time) {
         this.movePage(+1);

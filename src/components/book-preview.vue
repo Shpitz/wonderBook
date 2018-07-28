@@ -1,5 +1,7 @@
 <template>
-<div class="blog-card spring-fever">
+<div class="blog-card spring-fever" :style="{backgroundImage:'url(' +backgroundImg+')'}">
+        <slot class="btn-edit-slot"></slot>
+
   <div class="title-content">
     <h3>{{book.title}}</h3>
     <hr />
@@ -10,9 +12,8 @@
   </div><!-- /.card-info -->
   <div class="utility-info">
     <ul class="utility-list">
-      <li> <font-awesome-icon class="icon" icon="eye" /> 500</li>
+      <li> <font-awesome-icon class="icon" icon="eye" /> {{book.views}}</li>
       <li class="date">{{datePublish | date-format}}</li>
-      <li><slot></slot></li>
     </ul>
   </div><!-- /.utility-info -->
   <!-- overlays -->
@@ -32,8 +33,12 @@ export default {
           return Math.round( this.book.createdAt)
       },
       pageDesc(){
-        var pageDesc = this.book.description
-        return pageDesc
+        var bookDesc = this.book.description
+        var shortDesc = bookDesc.slice(0,bookDesc.length/2)
+        return shortDesc +'...'
+      },
+      backgroundImg(){
+        return this.book.coverImg
       }
   }
 };
@@ -42,11 +47,14 @@ export default {
 <style scoped lang="scss">
 $card-width:  300px;
 $card-height: 400px;
-$h-color:     #021d73;
+$h-color:     #081641;
 $yellow:      #D0BB57;
 $txt-color:   #DCE3E7;
 .icon {
   color:$yellow;
+}
+.btn-edit-slot {
+  float: right;
 }
 
 .blog-card{
@@ -61,7 +69,7 @@ $txt-color:   #DCE3E7;
   text-align: center;
   
   &.spring-fever{
-    background: url('../../public/img/books/page9.jpg') no-repeat;
+    // background: url('../../public/img/books/page9.jpg') no-repeat;
     background-size: cover;
     background-position: bottom;
   }
@@ -105,7 +113,7 @@ $txt-color:   #DCE3E7;
 
 .title-content{
   text-align: center;
-  margin: 70px 0 0 0;
+  margin: 50px 0 0 0;
   position: absolute;
   z-index: 20;
   width: 100%;
@@ -117,7 +125,8 @@ h3{
   font-weight: 500;
   letter-spacing: 2px;
   color: $h-color;
-  font-family: 'Roboto', sans-serif;
+  background-color: #f5deb370;
+  font-family: 'Merriweather', sans-serif;
   margin-bottom: 0;
 }
 hr{
@@ -154,13 +163,15 @@ hr{
 
 .utility-info{
   position: absolute;
+  width: 100%;
   bottom: 0px;
   left: 0;
   z-index: 20;
 }
 .utility-list{
   list-style-type: none;
-  margin: 0 0 30px 20px;
+  margin: 0 0 30px;
+  background-color: #f5deb370;
   padding: 0;
   width: 100%;
   
@@ -168,12 +179,9 @@ hr{
     margin: 0 15px 0 0;
     padding: 0 0 0 22px;
     display: inline-block;
-    color: $txt-color;
-    font-family: 'Roboto', sans-serif;
+    color: $h-color;
+    font-family: 'Merriweather', sans-serif;
     
-    &.comments{
-      background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1765/icon-chat.svg) no-repeat 0 .1em;
-    }
     &.date{
       background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1765/icon-calendar.svg) no-repeat 0 .1em;
     }
