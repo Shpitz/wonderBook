@@ -8,7 +8,7 @@ import './assets/scss/style.scss';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt,faEye, faMapMarkerAlt, faClock, faStar} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
 library.add(faEdit, faEnvelope, faBell, faBook, faCalendarAlt,faEye,faMapMarkerAlt, faClock, faStar)
 
