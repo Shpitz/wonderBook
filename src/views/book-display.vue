@@ -105,14 +105,7 @@ export default {
         "paragraphs[this.currParIdx]",
         currPage.paragraphs[this.currParIdx].txt
       );
-      // if (
-      //   this.currentTime >= currPage.paragraphs[this.currParIdx].parStartTime
-      // ) {
-      //   if (currPage.paragraphs.length !== this.currParIdx + 1) {
-      //     this.movePar();
-      //   }
-      // }
-
+   
       if (this.currParIdx + 1 === currPage.paragraphs.length) {}
       else if(this.currentTime >= currPage.paragraphs[this.currParIdx + 1].parStartTime) {
         this.movePar();

@@ -55,7 +55,7 @@ export default {
 </script>
 
 
-<style scopped>
+<style scoped>
 .contact{
 
 }
@@ -183,9 +183,9 @@ export default {
     color: #219d84;
 }
 
-path {
+/* path {
     color: white;
-}
+} */
 
 .contact-us-container {
     width: 230px;

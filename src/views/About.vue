@@ -50,7 +50,7 @@ export default {
 
 
 
-<style scopped>
+<style scoped>
 .about {
     /* background-color: #2eb398; */
     color: #3a5195;
