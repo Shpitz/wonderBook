@@ -107,7 +107,7 @@ height: 80%;
 }
 
 .fa-btn:hover{
-    color: rgb(51, 126, 201)
+    color: rgb(51, 126, 201);
 }
 
 </style>

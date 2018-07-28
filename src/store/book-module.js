@@ -28,8 +28,9 @@ export default {
         [SET_BOOKS](state, { books }) {
             state.books = books
         },
-        [UPDATE_SEARCH_FILTER](state, {searchStr}){
-            state.booksFilter.byTxt = searchStr;
+        [UPDATE_SEARCH_FILTER](state, { filterBy }){
+            debugger
+            state.booksFilter = filterBy;
         }
     },
     getters: {
@@ -42,11 +43,9 @@ export default {
     },
     actions: {
         [LOAD_BOOKS](store) {
-            // console.log('context.state.filterBy',store.state.booksFilter) 
             return bookSerivce.query(store.state.booksFilter)
                 .then(books => {
                     store.commit({ type: SET_BOOKS, books })
-                    // console.log(books, 'from action')
                 })
         },
         [LOAD_BOOK](context, { bookId }) {
