@@ -2,7 +2,6 @@
     <section>
 <div v-if="book" >
        <div>
-             <!-- <button @click="movePage(-1)" class="btn-page-control" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" > -->
              <button @click="manualMovePage(-1)" class="btn-page-control" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" >
                prev page
            </button>
@@ -39,12 +38,13 @@ export default {
       currPage: null,
       currPageIdx: 0,
       currentTime: 0,
+      currPar: null,
+      currParIdx: 0
     };
   },
   created() {
     var bookId = this.$route.params.bookId;
     this.getBook(bookId);
-    
   },
   mounted() {},
   computed: {
@@ -69,41 +69,74 @@ export default {
           this.currPageIdx += opartor;
           this.currPage = this.book.pages[this.currPageIdx];
           // this.onTimeUpdate(this.currPage.time)
+          this.currParIdx = 0;
+          this.currPar = this.currPage.paragraphs[this.currParIdx];
         }
       } else {
         if (currIdx > 0) {
           this.currPageIdx += opartor;
           // debugger;
           this.currPage = this.book.pages[this.currPageIdx];
+          this.currParIdx = 0;
+          this.currPar = this.currPage.paragraphs[this.currParIdx];
         }
       }
+    },
+    movePar() {
+      this.currParIdx += 1;
+      this.currPar = this.currPage.paragraphs[this.currParIdx];
     },
     getBook(bookId) {
       this.$store.dispatch({ type: LOAD_BOOK, bookId: bookId }).then(book => {
         var book = JSON.parse(JSON.stringify(book));
         console.log("book in dispaly", book);
         this.book = book;
-        this.currPage = book.pages[0];        
+        this.currPage = book.pages[0];
+        this.currPar = book.pages[0].paragraphs[0];
       });
     },
     onTimeUpdate(ev, value = null) {
       this.currentTime = this.$refs.audio.currentTime;
-      console.log(this.currentTime);
-      
-      if (this.currPageIdx + 1 === this.book.pages.length) return;
-      if (this.currentTime >= this.book.pages[this.currPageIdx + 1].time) {
+      var currBookPages = this.book.pages;
+      var currPage = currBookPages[this.currPageIdx];
+
+      console.log("this.currParIdx", this.currParIdx);
+      console.log(
+        "paragraphs[this.currParIdx]",
+        currPage.paragraphs[this.currParIdx]
+      );
+      if (
+        this.currentTime >= currPage.paragraphs[this.currParIdx].parStartTime
+      ) {
+        if (currPage.paragraphs.length !== this.currParIdx + 1) {
+          this.movePar();
+        }
+      }
+
+      if (this.currPageIdx + 1 === currBookPages.length) return;
+      if (this.currentTime >= currBookPages[this.currPageIdx + 1].time) {
         this.movePage(+1);
       }
     },
     onSeeking() {
-    // TODO:ERROR ON SKEEPING WHEN POUSED
+      if (this.currentTime < this.book.pages[1].time) {
+        this.currPageIdx = 0;
+        this.currPage = this.book.pages[this.currPageIdx];
+      } else if (
+        this.currentTime > this.book.pages[this.book.pages.length - 1].time
+      ) {
+        this.currPageIdx = this.book.pages.length - 1;
+        this.currPage = this.book.pages[this.currPageIdx];
+      } else {
         var currIdx = this.book.pages.findIndex(page => {
           return page.time >= this.currentTime;
         });
         debugger;
         this.currPageIdx = currIdx - 1;
         this.currPage = this.book.pages[this.currPageIdx];
-     
+      }
+      this.currParIdx = 0;
+      this.currPar = this.currPage.paragraphs[this.currParIdx];
     },
     manualMovePage(op) {
       this.movePage(op);
