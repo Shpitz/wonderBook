@@ -4,7 +4,7 @@
             <!-- <p>
                 {{pageData.txt}}
             </p> -->
-                <p v-for="(p,idx) in pageData.paragraphs" :key="idx">
+                <p v-for="(p,idx) in pageData.paragraphs" :key="idx" :class="[idx === parIdx ? 'red' : '']">
                          {{p.txt}}
                 </p>
              </div>
@@ -14,7 +14,8 @@
 <script>
 export default {
   props: {
-      pageData:Object
+      pageData:Object,
+      parIdx:Number
   },
   created(){
       console.log('pageData in book page',this.pageData)
@@ -35,5 +36,9 @@ export default {
     p {
         word-wrap: break-word;
     }
+}
+
+.red{
+    color: red;
 }
 </style>

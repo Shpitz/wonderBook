@@ -20,7 +20,7 @@
         controls
         autoplay/>
     </p>
-   <book-page  :pageData= "getPage">
+   <book-page  :pageData= "getPage" :parIdx= "getParIdx">
    </book-page>
 </div>
     </section>
@@ -48,8 +48,8 @@ export default {
   },
   mounted() {},
   computed: {
-    pageImg() {
-      return this.book.pages[0].imgUrl;
+    getParIdx() {
+      return this.currParIdx;
     },
     getPage() {
       return this.currPage;
@@ -89,7 +89,7 @@ export default {
     getBook(bookId) {
       this.$store.dispatch({ type: LOAD_BOOK, bookId: bookId }).then(book => {
         var book = JSON.parse(JSON.stringify(book));
-        console.log("book in dispaly", book);
+        // console.log("book in dispaly", book);
         this.book = book;
         this.currPage = book.pages[0];
         this.currPar = book.pages[0].paragraphs[0];
@@ -100,19 +100,23 @@ export default {
       var currBookPages = this.book.pages;
       var currPage = currBookPages[this.currPageIdx];
 
-      console.log("this.currParIdx", this.currParIdx);
+      // console.log("this.currParIdx", this.currParIdx);
       console.log(
         "paragraphs[this.currParIdx]",
-        currPage.paragraphs[this.currParIdx]
+        currPage.paragraphs[this.currParIdx].txt
       );
-      if (
-        this.currentTime >= currPage.paragraphs[this.currParIdx].parStartTime
-      ) {
-        if (currPage.paragraphs.length !== this.currParIdx + 1) {
-          this.movePar();
-        }
-      }
+      // if (
+      //   this.currentTime >= currPage.paragraphs[this.currParIdx].parStartTime
+      // ) {
+      //   if (currPage.paragraphs.length !== this.currParIdx + 1) {
+      //     this.movePar();
+      //   }
+      // }
 
+      if (this.currParIdx + 1 === currPage.paragraphs.length) {}
+      else if(this.currentTime >= currPage.paragraphs[this.currParIdx + 1].parStartTime) {
+        this.movePar();
+      }
       if (this.currPageIdx + 1 === currBookPages.length) return;
       if (this.currentTime >= currBookPages[this.currPageIdx + 1].time) {
         this.movePage(+1);
@@ -131,7 +135,6 @@ export default {
         var currIdx = this.book.pages.findIndex(page => {
           return page.time >= this.currentTime;
         });
-        debugger;
         this.currPageIdx = currIdx - 1;
         this.currPage = this.book.pages[this.currPageIdx];
       }
