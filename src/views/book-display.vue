@@ -1,16 +1,7 @@
 <template>
     <section>
 <div v-if="book" >
-       <div>
-             <button @click="manualMovePage(-1)" class="btn-page-control" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" >
-               prev page
-           </button>
-           <button class="btn-page-control" :class="[disabledNextBtn ? 'btnDisabled' : '']" 
-           @click="manualMovePage(+1)">
-               next page
-           </button>
-
-       </div>
+   
         <p>
       <audio
         ref="audio"
@@ -21,6 +12,16 @@
         autoplay/>
     </p>
    <book-page  :pageData= "getPage" :parIdx= "getParIdx">
+         <div>
+             <button @click="manualMovePage(-1)" class="btn-page-control clean-btn" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" >
+                              <font-awesome-icon class="icon" icon="backward" /> 
+           </button>
+           <button class="btn-page-control clean-btn" :class="[disabledNextBtn ? 'btnDisabled' : '']" 
+           @click="manualMovePage(+1)">
+               <font-awesome-icon class="icon" icon="forward" /> 
+           </button>
+
+       </div>
    </book-page>
 </div>
     </section>
