@@ -1,12 +1,12 @@
 <template>
    <section >
         <div class="page-container flex" :style="{ backgroundImage: 'url(' + pageImg + ')' }">
-            <p>
+            <!-- <p>
                 {{pageData.txt}}
-            </p>
-                <!-- <p v-for="(p,idx) in pageData.paragraph" :key="idx">
-                         {{p.text}}
-                </p> -->
+            </p> -->
+                <p v-for="(p,idx) in pageData.paragraphs" :key="idx">
+                         {{p.txt}}
+                </p>
              </div>
      </section>
 </template>
