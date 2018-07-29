@@ -24,7 +24,6 @@
                 </div>
                 <button @click="saveDetails">save</button>
             </form>
-            <pre>{{book}}</pre>
         </div>
         <div>
             <h1>{{book.title}}</h1>
@@ -67,12 +66,15 @@
         <button @click="addPage">Add page</button>
         </div>
         
-        <button @click="saveBook">Save</button>
+        <!-- <button @click="saveBook">Save</button> -->
 
     </section>
 </template>
 
 <script>
+// import {
+//   SAVE_BOOK,
+// } from "../store/book-module.js";
 
 export default {
   name: "bookEditor",
@@ -80,7 +82,7 @@ export default {
     return {
         audioPath :'',
         imgPath :'',
-        isFirstDetails: true,
+        isFirstDetails: false,
         book: null,
         pageNum: 0,
         parNum: 1,
@@ -120,7 +122,6 @@ export default {
   computed: {},
   methods: {
     addPage() {
-      console.log("addpage: ", this.pageNum);
       this.pageNum += 1;
       var newPage = {
             time: 0,
@@ -134,6 +135,8 @@ export default {
             ]
       }
       this.book.pages.push(newPage)
+      console.log(this.book.pages);
+      
     },
     addPar() {
     var newPar = {...this.paragraph}
@@ -150,7 +153,9 @@ export default {
     },
     saveDetails() {
         this.isFirstDetails = true
+        this.saveBook()
         console.log(this.book);
+
         
     },
     setAudioFile() {
@@ -173,13 +178,15 @@ export default {
         this.book.pages[this.pageNum-1].paragraphs[idx].parStartTime = this.$refs.audio.currentTime
         this.$refs.audio.pause()
     },
-    saveBook() {
-
-    }
-  },
-  components: {
-  }
-};
+//     saveBook() {
+//       this.$store.dispatch({ type: SAVE_BOOK }).catch(err => {
+//         console.log("error in saveing book", err);
+//       });
+//   },
+//   components: {
+//   }
+}
+}
 </script>
 
 <style scoped>
