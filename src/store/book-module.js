@@ -1,4 +1,4 @@
-
+import axios from 'axios'
 import bookSerivce from '../services/book-service.js'
 //actions
 export const LOAD_BOOKS = 'book/actions/loadBooks'
@@ -21,32 +21,36 @@ export default {
     state: {
         books: [],
         booksFilter: {
-            byTxt:''
+            byTxt: '',
+            byCategorie: ''
         }
     },
     mutations: {
         [SET_BOOKS](state, { books }) {
             state.books = books
         },
-        [UPDATE_SEARCH_FILTER](state, {searchStr}){
-            state.booksFilter.byTxt = searchStr;
+        [UPDATE_SEARCH_FILTER](state, { filterBy }) {
+            state.booksFilter.byCategorie = filterBy.byCategorie
+            state.booksFilter.byTxt = filterBy.byTxt ? filterBy.byTxt : '';
         }
     },
     getters: {
-        [BOOKS_FOR_DISPLAY](state){
+        [BOOKS_FOR_DISPLAY](state) {
             return state.books
         },
-        [BOOKS_FILTER](state){
+        [BOOKS_FILTER](state) {
             return state.booksFilter
         }
     },
     actions: {
         [LOAD_BOOKS](store) {
-            // console.log('context.state.filterBy',store.state.booksFilter) 
             return bookSerivce.query(store.state.booksFilter)
                 .then(books => {
                     store.commit({ type: SET_BOOKS, books })
-                    // console.log(books, 'from action')
+<<<<<<< HEAD
+                    // console.log(books, 'from action')                    
+=======
+>>>>>>> c9783aa525fd1f265b58804a0e5afd1f52f92322
                 })
         },
         [LOAD_BOOK](context, { bookId }) {
