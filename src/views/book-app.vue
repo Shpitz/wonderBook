@@ -8,7 +8,6 @@
                   </div>
                 </div>
             </div>
-            <v-btn color="info">Info</v-btn>
              <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter"></book-filter-categories>
             <book-list :books="books"></book-list>
         </section>
