@@ -6,6 +6,7 @@ import bookDetails from './views/book-details.vue';
 import Contact from './views/Contact.vue';
 import Login from './views/Login.vue';
 import BookDisplay from './views/book-display.vue'
+import BookEditor from './views/book-editor.vue'
 
 Vue.use(Router);
 
@@ -41,6 +42,11 @@ export default new Router({
       name: 'bookReading',
       component: BookDisplay,
     },
+    {
+      path: '/bookEditor/:bookId?',
+      name: 'bookEditor',
+      component: BookEditor,
+    }
     
   ],
 });
