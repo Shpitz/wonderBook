@@ -47,10 +47,6 @@ export default {
             return bookSerivce.query(store.state.booksFilter)
                 .then(books => {
                     store.commit({ type: SET_BOOKS, books })
-<<<<<<< HEAD
-                    // console.log(books, 'from action')                    
-=======
->>>>>>> c9783aa525fd1f265b58804a0e5afd1f52f92322
                 })
         },
         [LOAD_BOOK](context, { bookId }) {

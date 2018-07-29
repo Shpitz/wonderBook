@@ -1,5 +1,6 @@
   <template>
         <section>
+          <router-link to="/bookEditor">Add Book</router-link>
             <div class="background-img-container">
                 <div class="bg flex align-center justify-center">
                   <div>
