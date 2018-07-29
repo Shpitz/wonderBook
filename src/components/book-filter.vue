@@ -25,7 +25,6 @@ export default {
     filter() {
           var filter =  this.$store.getters[BOOKS_FILTER]
            this.filterBy.byTxt = filter.byTxt;
-           debugger
            return filter
       },
   }

@@ -57,6 +57,8 @@
                         <textarea rows='3' cols='50' class="form-control" v-model="par.txt" placeHolder="Your paragraph here"/>
                         <button>Set</button>
                         <button @click="deletePar(idx)">Delete</button>
+                        <button @click="setTimingPar(idx)">Start Timing</button>
+                        <div class="display-timing">{{book.pages[pageNum-1].paragraphs[idx].parStartTime}}</div>
                     </li>
                 </ul>
             </div>
@@ -164,6 +166,11 @@ export default {
     setTimingPage(){
         console.log('start timing',this.$refs.audio.currentTime)
         this.book.pages[this.pageNum-1].time = this.$refs.audio.currentTime
+        this.$refs.audio.pause()
+    },
+    setTimingPar(idx){
+        console.log('start timing',this.$refs.audio.currentTime)
+        this.book.pages[this.pageNum-1].paragraphs[idx].parStartTime = this.$refs.audio.currentTime
         this.$refs.audio.pause()
     },
     saveBook() {
