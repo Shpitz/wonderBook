@@ -78,7 +78,7 @@ export default {
     return {
         audioPath :'',
         imgPath :'',
-        isFirstDetails: true,
+        isFirstDetails: false,
         book: null,
         pageNum: 0,
         parNum: 1,

@@ -40,7 +40,6 @@ export default {
   methods: {
     setCategorie(categorie) {
       categorie = categorie === "All" ? "" : categorie;
-      debugger
       this.filterBy.byCategorie = categorie;
       this.$emit("searchCategorie", this.filterBy);
     }
