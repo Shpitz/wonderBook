@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store/store';
+import './plugins/vuetify.js'
 import './registerServiceWorker';
 import './filters.js'
 import './assets/scss/style.scss';
