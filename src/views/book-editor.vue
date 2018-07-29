@@ -24,7 +24,6 @@
                 </div>
                 <button @click="saveDetails">save</button>
             </form>
-            <pre>{{book}}</pre>
         </div>
         <div>
             <h1>{{book.title}}</h1>
@@ -57,6 +56,8 @@
                         <textarea rows='3' cols='50' class="form-control" v-model="par.txt" placeHolder="Your paragraph here"/>
                         <button>Set</button>
                         <button @click="deletePar(idx)">Delete</button>
+                        <button @click="setTimingPar(idx)">Start Timing</button>
+                        <div class="display-timing">{{book.pages[pageNum-1].paragraphs[idx].parStartTime}}</div>
                     </li>
                 </ul>
             </div>
@@ -65,12 +66,15 @@
         <button @click="addPage">Add page</button>
         </div>
         
-        <button @click="saveBook">Save</button>
+        <!-- <button @click="saveBook">Save</button> -->
 
     </section>
 </template>
 
 <script>
+// import {
+//   SAVE_BOOK,
+// } from "../store/book-module.js";
 
 export default {
   name: "bookEditor",
@@ -118,7 +122,6 @@ export default {
   computed: {},
   methods: {
     addPage() {
-      console.log("addpage: ", this.pageNum);
       this.pageNum += 1;
       var newPage = {
             time: 0,
@@ -132,6 +135,8 @@ export default {
             ]
       }
       this.book.pages.push(newPage)
+      console.log(this.book.pages);
+      
     },
     addPar() {
     var newPar = {...this.paragraph}
@@ -148,7 +153,9 @@ export default {
     },
     saveDetails() {
         this.isFirstDetails = true
+        this.saveBook()
         console.log(this.book);
+
         
     },
     setAudioFile() {
@@ -166,13 +173,20 @@ export default {
         this.book.pages[this.pageNum-1].time = this.$refs.audio.currentTime
         this.$refs.audio.pause()
     },
-    saveBook() {
-
-    }
-  },
-  components: {
-  }
-};
+    setTimingPar(idx){
+        console.log('start timing',this.$refs.audio.currentTime)
+        this.book.pages[this.pageNum-1].paragraphs[idx].parStartTime = this.$refs.audio.currentTime
+        this.$refs.audio.pause()
+    },
+//     saveBook() {
+//       this.$store.dispatch({ type: SAVE_BOOK }).catch(err => {
+//         console.log("error in saveing book", err);
+//       });
+//   },
+//   components: {
+//   }
+}
+}
 </script>
 
 <style scoped>

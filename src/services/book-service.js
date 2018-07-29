@@ -56,7 +56,9 @@ function getCategories(){
 export default {
     query,
     getById,
-    getCategories
+    getCategories,
+    saveBook,
+    remove
     // getToyById,
     // remove,
     // add,

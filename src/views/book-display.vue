@@ -76,7 +76,6 @@ export default {
       } else {
         if (currIdx > 0) {
           this.currPageIdx += opartor;
-          // debugger;
           this.currPage = this.book.pages[this.currPageIdx];
           this.currParIdx = 0;
           this.currPar = this.currPage.paragraphs[this.currParIdx];
