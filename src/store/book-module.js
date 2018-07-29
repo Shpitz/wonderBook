@@ -1,4 +1,4 @@
-
+import axios from 'axios'
 import bookSerivce from '../services/book-service.js'
 //actions
 export const LOAD_BOOKS = 'book/actions/loadBooks'
@@ -46,7 +46,7 @@ export default {
             return bookSerivce.query(store.state.booksFilter)
                 .then(books => {
                     store.commit({ type: SET_BOOKS, books })
-                    // console.log(books, 'from action')
+                    // console.log(books, 'from action')                    
                 })
         },
         [LOAD_BOOK](context, { bookId }) {
