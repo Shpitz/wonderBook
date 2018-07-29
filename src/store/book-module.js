@@ -75,7 +75,14 @@ export default {
             if (isEdit) return bookSerivce.saveBook(book)
                 .then(_ => context.commit({ type: UPDATE_BOOK, book }))
             else return bookSerivce.saveBook(book)
-                .then(_ => context.commit({ type: ADD_BOOK, book }))
+                .then(newBook => 
+                    {
+                    console.log('new book inside store pf frontend',newBook)
+                    context.commit({ type: ADD_BOOK, book })
+                    return newBook
+                
+                })
+        
         },
     }
 }

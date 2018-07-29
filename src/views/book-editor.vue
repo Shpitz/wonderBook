@@ -22,7 +22,7 @@
                     <span>description:</span>
                     <textarea rows='4' cols='50' class="form-control" v-model="book.description" placeHolder="Your book description here" />
                 </div>
-                <button @click="saveDetails">save</button>
+                <button @click.prevent="saveDetails">save</button>
             </form>
         </div>
         <div>
@@ -34,30 +34,30 @@
             </form>
             <audio ref="audio" :src="audioPath" controls />
         </div>
-        <h1>page # {{pageNum}}</h1>
+        <h1>page # {{currPageIdx}}</h1>
         <div class="page-timing-container flex">
             <button @click="setTimingPage">Start Timing</button>
-            <div class="display-timing">{{book.pages[pageNum-1].time}}</div>
+            <div class="display-timing">{{book.pages[currPageIdx].time}}</div>
         </div>
         <div class="page-container flex">
             <div class="page-area">
-                <form action="/action_page.php">
+                <form>
                     <input @change="setImgFile" type="file" accept="image/*" ref="imgInput">
                 </form>
-                <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[pageNum-1].img + ')' }">
-                    <p v-for="(p,idx) in book.pages[pageNum-1].paragraphs" :key="idx" >
+                <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')' }">
+                    <p v-for="(p,idx) in book.pages[currPageIdx].paragraphs" :key="idx" >
                         {{p.txt}}
                     </p>
                 </div>
             </div>
             <div class="par-area">
                 <ul class="pagePar clean-list">
-                    <li v-for="(par,idx) in book.pages[pageNum-1].paragraphs" :key="idx">
+                    <li v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
                         <textarea rows='3' cols='50' class="form-control" v-model="par.txt" placeHolder="Your paragraph here"/>
                         <button>Set</button>
                         <button @click="deletePar(idx)">Delete</button>
                         <button @click="setTimingPar(idx)">Start Timing</button>
-                        <div class="display-timing">{{book.pages[pageNum-1].paragraphs[idx].parStartTime}}</div>
+                        <div class="display-timing">{{book.pages[currPageIdx].paragraphs[idx].parStartTime}}</div>
                     </li>
                 </ul>
             </div>
@@ -66,16 +66,18 @@
         <button @click="addPage">Add page</button>
         </div>
         
-        <!-- <button @click="saveBook">Save</button> -->
-
+        <button @click="saveBook">Save</button>
+        <ul class="editor-previews clean-list flex">
+            <li @click="selectPage(pageIdx)" v-for="(page,pageIdx) in book.pages" :key="pageIdx"><bookPage :pageData="page"></bookPage></li>
+        </ul>
     </section>
 </template>
 
 <script>
-// import {
-//   SAVE_BOOK,
-// } from "../store/book-module.js";
-
+import {
+  SAVE_BOOK,
+} from "../store/book-module.js";
+import bookPage from "../components/book-page.vue";
 export default {
   name: "bookEditor",
   data() {
@@ -85,6 +87,7 @@ export default {
         isFirstDetails: false,
         book: null,
         pageNum: 0,
+        currPageIdx: 0,
         parNum: 1,
         paragraph: {
             txt: '',
@@ -113,7 +116,7 @@ export default {
       }
       this.addPage();
       console.log(this.book);
-      console.log(this.pageNum);
+      console.log(this.currPageIdx,'currPageIdx');
       
       console.log(this.book.pages[this.pageNum-1]);
 
@@ -122,6 +125,7 @@ export default {
   computed: {},
   methods: {
     addPage() {
+     
       this.pageNum += 1;
       var newPage = {
             time: 0,
@@ -134,22 +138,22 @@ export default {
                 }
             ]
       }
-      this.book.pages.push(newPage)
+      this.currPageIdx = this.pageNum-1;
+      this.book.pages.push(newPage);
       console.log(this.book.pages);
       
     },
+    selectPage(idx){
+        debugger;
+        this.currPageIdx = idx
+    },
     addPar() {
     var newPar = {...this.paragraph}
-      this.book.pages[this.pageNum-1].paragraphs.push(newPar);
-      console.log('book paragraphs: ', this.book.pages[this.pageNum-1].paragraphs);
-       
+      this.book.pages[this.currPageIdx].paragraphs.push(newPar);
     },
     deletePar(idx) {
-         this.book.pages[this.pageNum-1].paragraphs.splice(idx, 1);
-         console.log(this.book.pages[this.pageNum-1].paragraphs);
-         
-
-
+         this.book.pages[this.currPageIdx].paragraphs.splice(idx, 1);
+        
     },
     saveDetails() {
         this.isFirstDetails = true
@@ -164,28 +168,34 @@ export default {
     },
     setImgFile() {
         this.imgPath ="./img/books/walkingTogether/cover.jpg";
-        this.book.pages[this.pageNum-1].img = this.imgPath;
+        this.book.pages[this.currPageIdx].img = this.imgPath;
         this.imgPath = '';
         
     },
     setTimingPage(){
         console.log('start timing',this.$refs.audio.currentTime)
-        this.book.pages[this.pageNum-1].time = this.$refs.audio.currentTime
+        this.book.pages[this.currPageIdx].time = this.$refs.audio.currentTime
         this.$refs.audio.pause()
     },
     setTimingPar(idx){
         console.log('start timing',this.$refs.audio.currentTime)
-        this.book.pages[this.pageNum-1].paragraphs[idx].parStartTime = this.$refs.audio.currentTime
+        this.book.pages[this.currPageIdx].paragraphs[idx].parStartTime = this.$refs.audio.currentTime
         this.$refs.audio.pause()
     },
-//     saveBook() {
-//       this.$store.dispatch({ type: SAVE_BOOK }).catch(err => {
-//         console.log("error in saveing book", err);
-//       });
-//   },
-//   components: {
-//   }
-}
+    saveBook() {
+      this.$store.dispatch({ type: SAVE_BOOK, book: this.book})
+      .then((book)=>{
+          console.log('book',book);
+          this.book = JSON.parse(JSON.stringify(book))
+      })
+      .catch(err => {
+        
+      });
+    },
+},
+components: {
+          bookPage
+      }
 }
 </script>
 
@@ -209,5 +219,10 @@ export default {
     height: 300px;
 
 
+}
+
+.editor-previews li{
+    max-width: 80px;
+    max-height: 80px;
 }
 </style>
