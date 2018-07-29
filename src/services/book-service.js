@@ -5,7 +5,8 @@ const BASE_URL = (process.env.NODE_ENV !== 'development') ? '' : 'http://localho
 
 function query(booksFilter = {}) {
     var queryParams  = new URLSearchParams()
-    if (booksFilter.byTxt) queryParams.set('q', booksFilter.byTxt)
+    if (booksFilter.byTxt) queryParams.append('txt', booksFilter.byTxt)
+    if (booksFilter.byCategorie ) queryParams.set('categorie', booksFilter.byCategorie)
     return axios.get(`${BASE_URL}?${queryParams}`)
         .then(res => {
             console.log(res.data)
@@ -40,10 +41,21 @@ function saveToy(book) {
     }
 }
 
+function getCategories(){
+    var categories = [
+        {catTxt:'All',img:'./img/categories/All.jpeg'},
+    {catTxt:'Animals',img:'./img/categories/Animals.jpeg'},
+    {catTxt:'Family',img:'./img/categories/Family.jpeg'},
+    {catTxt:'Friends',img:'./img/categories/Friends.jpeg'}
+    
+]
+    return categories
+}
 
 export default {
     query,
-    getById
+    getById,
+    getCategories
     // getToyById,
     // remove,
     // add,

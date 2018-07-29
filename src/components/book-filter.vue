@@ -1,33 +1,37 @@
 <template>
     <section class="book-filter">
-        <input type="text" v-model="searchStr" class="filter-input" @input="loadBooks">
+        <input placeholder="Serach a book or author" type="search"
+         v-model="filterBy.byTxt" class="filter-input"
+         @input="$emit('searchStr',filterBy)">
+         <p v-show="false"> {{filter}}</p>
     </section>
 </template>
 
 <script>
-import {BOOKS_FILTER, UPDATE_SEARCH_FILTER, LOAD_BOOKS} from "../store/book-module.js";
+import {
+  BOOKS_FILTER,
+  UPDATE_SEARCH_FILTER,
+} from "../store/book-module.js";
 export default {
-    computed:{
-        filter() {
-            return this.$store.getters[BOOKS_FILTER]
-        },
-        searchStr: {
-            get: function () {
-                return this.filter.byTxt
-            },
-            set: function (searchStr) {
-                this.$store.commit({ type: UPDATE_SEARCH_FILTER, searchStr })
-            }
-        }
-    },
-    methods: {
-        loadBooks(){
-            this.$store.dispatch(LOAD_BOOKS)
-        }
-    }
-}
+ 
+  data() {
+    return {
+      filterBy: {
+        byTxt: ""
+      }
+    };
+  },
+  computed:{
+    filter() {
+          var filter =  this.$store.getters[BOOKS_FILTER]
+           this.filterBy.byTxt = filter.byTxt;
+           debugger
+           return filter
+      },
+  }
+
+};
 </script>
 
 <style>
-
 </style>
