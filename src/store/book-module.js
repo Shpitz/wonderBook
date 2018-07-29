@@ -21,23 +21,24 @@ export default {
     state: {
         books: [],
         booksFilter: {
-            byTxt:''
+            byTxt: '',
+            byCategorie: ''
         }
     },
     mutations: {
         [SET_BOOKS](state, { books }) {
             state.books = books
         },
-        [UPDATE_SEARCH_FILTER](state, { filterBy }){
-            debugger
-            state.booksFilter = filterBy;
+        [UPDATE_SEARCH_FILTER](state, { filterBy }) {
+            state.booksFilter.byCategorie = filterBy.byCategorie
+            state.booksFilter.byTxt = filterBy.byTxt ? filterBy.byTxt : '';
         }
     },
     getters: {
-        [BOOKS_FOR_DISPLAY](state){
+        [BOOKS_FOR_DISPLAY](state) {
             return state.books
         },
-        [BOOKS_FILTER](state){
+        [BOOKS_FILTER](state) {
             return state.booksFilter
         }
     },
