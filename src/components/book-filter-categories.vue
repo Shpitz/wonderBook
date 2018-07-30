@@ -5,7 +5,8 @@
                  :key="idx" @click="setCategorie(cat.catTxt)">
                     <div class="categorie-sub-container flex align-center">
                         <!-- <img :src="cat.img"/> -->
-                    <div class="cat-img" :style="{ backgroundImage: 'url(' + cat.img + ')' }"/>
+                    <div class="cat-img" :class="[cat.img === '' ? 'hidden' : '']"
+                    :style="{ backgroundImage: 'url(' + cat.img + ')' }"/>
                     <div>
                      <p>
                      {{cat.catTxt}}
@@ -33,6 +34,7 @@ export default {
     };
   },
   mounted() {
+    
     var filter = this.$store.getters[BOOKS_FILTER];
     this.filterBy.byCategorie = filter.byCategorie;
     console.log("this.filterBy", this.filterBy);

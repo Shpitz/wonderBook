@@ -18,5 +18,15 @@
 }
 
 .hidden {
+  display:none;
+}
+
+.collapsed {
   opacity: 0;
+}
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
 }

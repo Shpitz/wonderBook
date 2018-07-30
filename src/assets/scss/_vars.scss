@@ -1,8 +1,8 @@
 $container-width: 1063px;
 $mobile-breakpoint: 642px;
 $container-bg:#ececec;
-$main-color:#2c3e50;;
-
+$main-color:#2c3e50;
+$dark-main-color: darken($main-color,15%);
 
 :root {
   /* Layout */

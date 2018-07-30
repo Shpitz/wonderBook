@@ -1,6 +1,6 @@
 <template>
    <section >
-        <div :class="{hidden:!pageData}" class="page-container flex space-between" ref="page-container" :style="{ backgroundImage: 'url(' + pageImg + ')' }">
+        <div :class="{collapsed:!pageData}" class="page-container flex space-between" ref="page-container" :style="{ backgroundImage: 'url(' + pageImg + ')' }">
            <div class="p-container" ref="p-container">
        <p v-for="(p,idx) in pageData.paragraphs" :key="idx" 
 
