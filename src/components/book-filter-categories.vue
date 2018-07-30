@@ -1,11 +1,13 @@
     <template>
         <section class="book-filter-categories">
-            <ul class="clean-list flex justify-center">
-                <li class="categorie-container" v-for="(cat,idx) in categories"
-                 :key="idx" @click="setCategorie(cat.catTxt)">
+            <ul class="clean-list flex-warp justify-center" >
+                <li  class="categorie-container" v-for="(cat,idx) in categories"
+                :class="[cat.img === '' ? 'no-img' : '']"
+                 :key="idx" @click="setCategorie(cat.catTxt)" title='Search by categorie'   >
                     <div class="categorie-sub-container flex align-center">
                         <!-- <img :src="cat.img"/> -->
-                    <div class="cat-img" :style="{ backgroundImage: 'url(' + cat.img + ')' }"/>
+                    <div class="cat-img" :class="[cat.img === '' ? 'hidden' : '']"
+                    :style="{ backgroundImage: 'url(' + cat.img + ')' }"/>
                     <div>
                      <p>
                      {{cat.catTxt}}
@@ -33,10 +35,12 @@ export default {
     };
   },
   mounted() {
+    
     var filter = this.$store.getters[BOOKS_FILTER];
     this.filterBy.byCategorie = filter.byCategorie;
     console.log("this.filterBy", this.filterBy);
   },
+
   methods: {
     setCategorie(categorie) {
       categorie = categorie === "All" ? "" : categorie;
@@ -48,12 +52,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$container-bg:#ecececb3;
+@import "./src/assets/scss/_vars.scss";
+
+$container-bg:white;
   ul {
         background-color: $container-bg;
         padding: 1rem 1rem 0;
         margin: 0;
     }
+
+
 .categorie-container{
     cursor: pointer;
     transition: all 0.3s;
@@ -81,4 +89,14 @@ $container-bg:#ecececb3;
         opacity: 0.8;
       }
 }
+
+.no-img {
+       width: auto;
+       padding: .3rem;
+}
+.no-img:hover {
+    color:$dark-main-color;
+    font-weight: bold;
+}
+
 </style>

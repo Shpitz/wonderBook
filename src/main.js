@@ -14,7 +14,7 @@ Vue.component('v-select', vSelect)
 
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt, faClock, faStar, faForward, faBackward, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt, faClock, faStar, faForward, faBackward, faSearch, faPlaneDeparture, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt,
