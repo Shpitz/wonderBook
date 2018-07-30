@@ -1,8 +1,6 @@
 <template>
-    <section>
-<div v-if="book" >
-   
-        <p>
+    <section class="section-container">
+      <div v-if="book" >
       <audio
         ref="audio"
         :src="book.audio"
@@ -10,8 +8,7 @@
         @seeking="onSeeking"
         controls
         autoplay/>
-    </p>
-   <book-page  :pageData= "getPage" :parIdx= "getParIdx">
+       <book-page  :pageData= "getPage" :parIdx= "getParIdx">
          <div>
              <button @click="manualMovePage(-1)" class="btn-page-control clean-btn" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" >
                               <font-awesome-icon class="icon" icon="backward" /> 
@@ -151,5 +148,8 @@ export default {
 .btn-page-control.btnDisabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+audio {
+  margin: 0 0 1rem;
 }
 </style>

@@ -15,5 +15,15 @@
   box-sizing:border-box;
 }
 
+html,body {
+  margin:0;
+}
 
+.collapsed {
+  opacity: 0;
+}
 
+// section
+.section-container {
+  padding: 1rem 3rem ;
+}

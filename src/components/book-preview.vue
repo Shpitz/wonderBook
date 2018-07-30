@@ -1,5 +1,5 @@
 <template>
-<div class="blog-card spring-fever" :style="{backgroundImage:'url(' +backgroundImg+')'}">
+<div class="blog-card spring-fever " :style="{backgroundImage:'url(' +backgroundImg+')'}">
         <slot class="btn-edit-slot"></slot>
 
   <div class="title-content">

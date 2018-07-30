@@ -9,7 +9,7 @@
 export default {};
 </script>
 
-<style scopped>
+<style scoped>
    
 
     .logo {
