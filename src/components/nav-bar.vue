@@ -1,7 +1,7 @@
 <template>
     <section class="nav-bar">
         <div class="nav-bar-container">
-            <logo-cmp></logo-cmp>
+            <logo-cmp  class="animated tada"></logo-cmp>
             <div class="routes-container"> 
                 <router-link to="/" class="clean-link nav-route">Home</router-link> 
                 <router-link to="/about" class="clean-link nav-route">About</router-link>
@@ -21,9 +21,10 @@ export default {
 };
 </script>
 
-<style scopped lang="scss">
+<style scoped lang="scss">
+$container-bg:#ececec4a;
 .nav-bar {
-
+background-color: $container-bg;
   a {
     font-weight: bold;
     color: white;
@@ -32,12 +33,7 @@ export default {
     }
   }
 }
-.nav-bar {
-    /* position: fixed;
-    top: 10px;
-    z-index: 1;
-    width: 95%; */
-}
+
 
 .nav-bar-container{
     display: flex;

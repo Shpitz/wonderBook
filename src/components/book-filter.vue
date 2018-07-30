@@ -1,8 +1,11 @@
 <template>
     <section class="book-filter">
-        <input placeholder="Serach a book or author" type="search"
+      <div class="search-bar">
+       <input placeholder="Serach a book or author" type="search"
          v-model="filterBy.byTxt" class="filter-input"
          @input="$emit('searchStr',filterBy)">
+         <font-awesome-icon :class="{collapsed : !IsInputEmpty }" class="icon" icon="search" /> 
+      </div>
          <p v-show="false"> {{filter}}</p>
     </section>
 </template>
@@ -27,10 +30,78 @@ export default {
            this.filterBy.byTxt = filter.byTxt;
            return filter
       },
+      IsInputEmpty(){
+          return this.filterBy.byTxt === '';
+      }
   }
 
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+$size: 20px;
+.icon {
+      margin: 0 0 0 -2rem;
+}
+.search-bar {
+  height: auto;
+  width: auto;
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  
+  input {
+    height: 44px;
+    width: 44px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    border: $size/10 solid transparent;
+    border-radius: 44px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.5s ease-out;
+    
+    color: transparent;
+    &::placeholder {
+      color: transparent;
+    }
+    
+    &:invalid {
+      box-shadow: none;
+    }
+    
+    &:hover {
+      border: $size/10 solid #FFF;
+      box-shadow: 0 0 $size/10 $size/10 #EEE;
+    }
+    
+    &:focus, &:valid {
+      width: 300px;
+      border: $size/10 solid #CCC;
+      outline: none;
+      cursor: auto;
+      background-color: #FFF;
+      color: #000;
+      
+      &::placeholder {
+        color: #999;
+      }
+      
+      + .search-icon {
+        z-index: 0;
+        border-color: #CCC;
+        right: 20px;
+        
+        &:after {
+          background-color: #CCC;
+        }
+      }
+    }
+  }
+}
+
 </style>
