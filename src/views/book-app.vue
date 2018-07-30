@@ -1,16 +1,18 @@
   <template>
         <section>
-          <router-link to="/bookEditor">Add Book</router-link>
+          <!-- <router-link to="/bookEditor">Add Book</router-link> -->
             <div class="background-img-container">
                 <div class="bg flex align-center justify-center">
                   <div>
-                    <h1>Online book</h1>
+                    <h1><span class="black">Online</span>  <span class="white"> book</span></h1>
                    <book-filter @searchStr="updateFilter"></book-filter>
                   </div>
                 </div>
             </div>
+            
              <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter"></book-filter-categories>
             <book-list :books="books"></book-list>
+            <app-footer></app-footer>
         </section>
     </template>
 
@@ -26,6 +28,7 @@ import bookSerivce from '../services/book-service.js'
 import bookList from "../components/book-list.vue";
 import bookFilter from "../components/book-filter.vue";
 import bookFilterCategories from "../components/book-filter-categories.vue"
+import appFooter from "../components/footer-cmp.vue"
 
 
 
@@ -59,7 +62,8 @@ export default {
   components: {
     bookList,
     bookFilter,
-    bookFilterCategories
+    bookFilterCategories,
+    appFooter
   }
 };
 </script>
@@ -67,7 +71,7 @@ export default {
 <style lang="scss">
 .background-img-container {
   height: 400px;
-  margin: 0 0 40px 0;
+  margin: 0;
 }
 .bg {
   /* The image used */
@@ -81,7 +85,15 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   h1 {
+  
       text-transform: capitalize;
+    .black {
+      margin: 0 .5rem;
+      color:black;
+    }
+    .white {
+      color:white;
+    }
   }
 }
 </style>

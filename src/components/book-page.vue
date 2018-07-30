@@ -1,9 +1,11 @@
 <template>
    <section >
-        <div class="page-container flex space-between" :style="{ backgroundImage: 'url(' + pageImg + ')' }">
+        <div :class="{hidden:!pageData}" class="page-container flex space-between" ref="page-container" :style="{ backgroundImage: 'url(' + pageImg + ')' }">
            <div class="p-container" ref="p-container">
-       <p v-for="(p,idx) in pageData.paragraphs" :key="idx" :class="[idx === parIdx ? 'red' : '']">
-                         {{p.txt}}
+       <p v-for="(p,idx) in pageData.paragraphs" :key="idx" 
+
+       :class="[idx === parIdx ? 'active-p animated fadeIn' : '']" >
+                 {{p.txt}}
                 </p>
            </div>
               <slot></slot>
@@ -21,7 +23,7 @@ export default {
     console.log("pageData in book page", this.pageData);
   },
   mounted() {
-    this.goto("p-container");
+    this.goto('page-container');
   },
   computed: {
     pageImg() {
@@ -47,12 +49,9 @@ export default {
   border-radius: 10px;
   box-shadow: 0 0 11px black;
   background-position: center;
+  transition: all  1.5s;
 }
 
-.red {
-  color: red;
-  font-weight: bold;
-}
 .p-container {
   border-radius: 10px;
   background-color: #f0f8ff57;
@@ -62,7 +61,11 @@ export default {
     text-align: left;
     font-family: "Merriweather", sans-serif;
     color: #2c3e50;
-    transition: all 0.3s;
+    transition: all 0.5s;
   }
+  .active-p{
+  font-weight: bold;
+  font-size: 1.3rem;
+}
 }
 </style>

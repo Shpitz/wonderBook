@@ -15,8 +15,8 @@
                     <input class="form-control" type=text v-model="book.illustrator" placeHolder="Enter illustrator name here">
                 </div>
                 <div class="">
-                    <span>catefories:</span>
-                    <input class="form-control" type=text v-model="book.categories" placeHolder="Enter categories here">
+                    <span>categories:</span>
+                    <v-select class="book-categories" multiple v-model="book.categories" :options="options"></v-select>
                 </div>
                 <div class="">
                     <span>description:</span>
@@ -30,17 +30,19 @@
         <div class="audio-area">
             <!-- <button @click="uploadAudio">Upload audio file</button> -->
             <form action="" @submit.prevent="setAudioFile" ref="audioInput">
-                <input @change.prevent="setAudioFile" type="file" accept="audio/*">
+                <input type="file" accept="audio/*">
                 <div>
                     <button type="submit" class="btn">Submit</button>
                 </div>
             </form>
             <audio ref="audio" :src="book.audio" controls />
         </div>
-        <h1>page # {{currPageIdx}}</h1>
+        <button @click="editBookDetails">Update Book Details</button>
+        <h1>page # {{currPageIdx+1}}</h1>
         <div class="page-timing-container flex">
             <button @click="setTimingPage">Start Timing</button>
             <div class="display-timing">{{book.pages[currPageIdx].time}}</div>
+            <input class="display-timing" v-model="book.pages[currPageIdx].time" placeholder="page start time">
         </div>
         <div class="page-container flex">
             <div class="page-area">
@@ -70,6 +72,7 @@
             <button @click="addPar">Add Par</button>
         </div>
         <button @click="addPage">Add page</button>
+        <button @click="deletePage(currPageIdx)">Delete page</button>
         </div>
         
         <button @click="saveBook">Save</button>
@@ -92,15 +95,11 @@ export default {
         audioPath :'',
         imgPath :'',
         isFirstDetails: false,
+        options: ['Toddlers','Early Reader','Beginner English', 'Animals', 'Dogs', 'Family'],
         book: null,
         pageNum: 0,
         currPageIdx: 0,
-        parNum: 1,
-        paragraph: {
-            txt: '',
-            parStartTime: 0,
-            parEndTime: 0
-        }
+        parNum: 1
     };
   },
   created() {
@@ -148,6 +147,7 @@ export default {
       this.currPageIdx = this.pageNum-1;
       this.book.pages.push(newPage);
       console.log(this.book.pages);
+      console.log(this.pageNum);
       
     },
     selectPage(idx){
@@ -155,19 +155,31 @@ export default {
         this.currPageIdx = idx
     },
     addPar() {
-    var newPar = {...this.paragraph}
+    var newPar = {
+            txt: '',
+            parStartTime: 0,
+            parEndTime: 0
+        }
       this.book.pages[this.currPageIdx].paragraphs.push(newPar);
     },
     deletePar(idx) {
          this.book.pages[this.currPageIdx].paragraphs.splice(idx, 1);
-        
+    },
+    deletePage(idx) {
+        console.log('before delete', this.book.pages);
+        console.log('before delete', this.pageNum);
+        this.book.pages.splice(idx, 1);
+        this.pageNum -= 1;
+        console.log('after delete', this.book.pages);
+        console.log('after delete', this.pageNum);
     },
     saveDetails() {
         this.isFirstDetails = true
         this.saveBook()
-        console.log(this.book);
-
-        
+        console.log(this.book); 
+    },
+    editBookDetails() {
+        this.isFirstDetails = false
     },
     setAudioFile() {
         // console.log(this.$refs.audioInput)
@@ -193,6 +205,19 @@ export default {
         console.log('start timing',this.$refs.audio.currentTime)
         this.book.pages[this.currPageIdx].time = this.$refs.audio.currentTime
         this.$refs.audio.pause()
+
+        //VALIDATIONS
+        // var currTime = this.$refs.audio.currentTime;
+        // var currPage = this.book.pages[this.currPageIdx]
+        // var prevPage = this.book.pages[this.currPageIdx-1]
+        // if (this.currPageIdx === 0) {
+        //     prevPage.time = currPage.time
+        // } else {
+        //     prevPage.time = this.book.pages[this.currPageIdx-1].time
+        // }
+        // if (currPage.time <= prevPage.time) {
+        //     console.log('prev page time: ', prevPage.time, 'curr page start time: ', currPage.time);
+        // }
     },
     setTimingPar(idx){
         console.log('start timing',this.$refs.audio.currentTime)
@@ -208,10 +233,12 @@ export default {
       .catch(err => {
         
       });
+      console.log('book:', this.book);
+      
     },
 },
 components: {
-          bookPage
+          bookPage,
       }
 }
 </script>
@@ -242,4 +269,11 @@ components: {
     max-width: 80px;
     max-height: 80px;
 }
+
+.book-categories {
+    max-width: 30em;
+    margin: 1em auto;
+    background: white;
+}
+
 </style>
