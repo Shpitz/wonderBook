@@ -48,8 +48,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$container-bg:#ecececb3;
   ul {
-        padding: 0;
+        background-color: $container-bg;
+        padding: 1rem 1rem 0;
         margin: 0;
     }
 .categorie-container{
