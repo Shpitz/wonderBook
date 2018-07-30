@@ -29,10 +29,13 @@
             <h1>{{book.title}}</h1>
         <div class="audio-area">
             <!-- <button @click="uploadAudio">Upload audio file</button> -->
-            <form action="/action_page.php">
-                <input @change="setAudioFile" type="file" accept="audio/*" ref="audioInput">
+            <form action="" @submit.prevent="setAudioFile" ref="audioInput">
+                <input @change.prevent="setAudioFile" type="file" accept="audio/*">
+                <div>
+                    <button type="submit" class="btn">Submit</button>
+                </div>
             </form>
-            <audio ref="audio" :src="audioPath" controls />
+            <audio ref="audio" :src="book.audio" controls />
         </div>
         <h1>page # {{currPageIdx}}</h1>
         <div class="page-timing-container flex">
@@ -41,8 +44,11 @@
         </div>
         <div class="page-container flex">
             <div class="page-area">
-                <form>
-                    <input @change="setImgFile" type="file" accept="image/*" ref="imgInput">
+                <form method="POST" @submit.prevent="setImgFile" ref="imgInput">
+                    <input type="file" accept="image/*" >
+                    <div>
+                        <button type="submit" class="btn">Submit</button>
+                    </div>
                 </form>
                 <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')' }">
                     <p v-for="(p,idx) in book.pages[currPageIdx].paragraphs" :key="idx" >
@@ -78,6 +84,7 @@ import {
   SAVE_BOOK,
 } from "../store/book-module.js";
 import bookPage from "../components/book-page.vue";
+import cloudinaryService from "../services/cloudinary-service.js"
 export default {
   name: "bookEditor",
   data() {
@@ -163,14 +170,24 @@ export default {
         
     },
     setAudioFile() {
-        this.audioPath ="./audio/walkingTogether.mp3"
-        
+        // console.log(this.$refs.audioInput)
+        // this.audioPath ="./audio/walkingTogether.mp3"
+        // this.book.audio = this.audioPath;
+
+        // var something = cloudinaryService.uploadImg(this.$refs.audioInput);
+        cloudinaryService.doUploadAudio(this.$refs.audioInput)
+        .then((url)=>{
+            console.log('url!audiio!!!',url.secure_url)
+            this.book.audio = url.secure_url;
+            })
     },
+
     setImgFile() {
-        this.imgPath ="./img/books/walkingTogether/cover.jpg";
-        this.book.pages[this.currPageIdx].img = this.imgPath;
-        this.imgPath = '';
-        
+        cloudinaryService.doUploadImg(this.$refs.imgInput)
+        .then((url)=>{
+            console.log('url!!!!!!!!!!',url.secure_url)
+            this.book.pages[this.currPageIdx].img = url.secure_url;
+            })
     },
     setTimingPage(){
         console.log('start timing',this.$refs.audio.currentTime)
