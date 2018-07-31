@@ -47,11 +47,7 @@ $size: 20px;
 .search-bar {
   height: auto;
   width: auto;
-  position: absolute;
   display: inline-block;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   box-sizing: border-box;
   
   input {
