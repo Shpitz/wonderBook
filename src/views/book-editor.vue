@@ -172,7 +172,6 @@ export default {
       console.log(this.pageNum);
     },
     selectPage(idx) {
-      debugger;
       this.currPageIdx = idx;
     },
     addPar() {
