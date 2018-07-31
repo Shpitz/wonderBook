@@ -18,6 +18,11 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/about/contact',
+      name: 'contact',
+      component: About,
+    },
+    {
       path: '/about',
       name: 'about',
       component: About,
@@ -26,11 +31,6 @@ export default new Router({
       path: '/book/:bookId',
       name: 'bookDetails',
       component: bookDetails,
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: Contact,
     },
     {
       path: '/login',

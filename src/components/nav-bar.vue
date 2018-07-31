@@ -2,12 +2,19 @@
     <section class="nav-bar">
         <div class="nav-bar-container">
             <logo-cmp  class="animated tada"></logo-cmp>
-            <div class="routes-container"> 
+             <div class="routes-container"> 
+                <router-link to="/" class="clean-link nav-route">Home</router-link> 
+                <router-link to="/about" class="clean-link nav-route">About</router-link>
+                <router-link to="/about/contact" class="clean-link nav-route">Contact</router-link>
+                <router-link to="/login" class="clean-link nav-route">Login</router-link>
+            </div>
+
+            <!-- <div class="routes-container"> 
                 <router-link to="/" class="clean-link nav-route">Home</router-link> 
                 <router-link to="/about" class="clean-link nav-route">About</router-link>
                 <router-link to="/contact" class="clean-link nav-route">Contact</router-link>
                 <router-link to="/login" class="clean-link nav-route">Login</router-link>
-            </div>
+            </div> -->
         </div>
     </section>
 </template>
@@ -22,14 +29,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "./src/assets/scss/_vars.scss";
+
 $container-bg:#ececec4a;
 .nav-bar {
-background-color: $container-bg;
+margin:$margin-bM;
   a {
     font-weight: bold;
-    color: white;
+    color:$main-color;
     &.router-link-exact-active {
-      color:#011f76;
+      color:$main-color-hover;
     }
   }
 }
@@ -37,14 +46,18 @@ background-color: $container-bg;
 
 .nav-bar-container{
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 
 }
 
 .routes-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+
+    border-bottom: 1px solid #2828287d;
+    border-top: 1px solid #2828287d;
 }
 
 .nav-route{
@@ -52,12 +65,12 @@ background-color: $container-bg;
     font-family: Gaegu;
     padding: 5px;
     margin: 3px;
-    background-color: #041f7361;
     transition: all 0.2s
 }
 
 .nav-route:hover{
-    background-color: #041f7391;
+color:$main-color-hover;
+
 }
 
 

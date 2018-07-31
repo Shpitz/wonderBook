@@ -27,8 +27,16 @@
   src: url('../fonts/Merriweather_Sans/MerriweatherSans-Regular.ttf');
 }
 
+@font-face {
+  font-family: 'Crayon';
+  src: url('../fonts/crayon_crumble/DK Crayon Crumble.ttf');
+}
 
-
+// logo 
+@font-face {
+  font-family: 'ComeOverTonite';
+  src: url('../fonts/des_comeovertonite/ComeOverTonite.ttf');
+}
 .italic {
   font-style: italic;
 }

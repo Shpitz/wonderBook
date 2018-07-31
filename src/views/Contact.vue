@@ -14,22 +14,6 @@
                             <button class="send-btn" @click="OnMessageSubmitted()">SEND</button>
                         </div>
                     </div>
-
-                    <div class="get-in-touch-detail flex flex-dir-col">
-                        <div class="get-in-touch-detail-p">
-                            <span>Lorem ipsum:</span> dolor sit amet consectetur adipisicing elit. Ex culpa ipsa laboriosam, a
-                            id eum soluta, dolores voluptatem est placeat quisquam, cum nemo iste aut ut reiciendis eligendi.
-                            Non, aut.
-                        </div>
-                        <div class="get-in-touch-detail-logos">
-                            <div>
-                                <i class="fa fa-map-marker"> </i> Elm St. 14/05 Lost City</div>
-                            <div>
-                                <i class="fa fa-phone"> </i> + 3582 331 86 35</div>
-                            <div>
-                                <i class="fa fa-envelope"> </i> hexalcrop@gmail.com</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -56,24 +40,20 @@ export default {
 
 
 <style scoped>
-.contact{
-
-}
-
-  
+ 
 .get-in-touch{
     display: flex;
     justify-content: center;
     padding: 10px 0;
-    color: #bebebe;
-    background-color: #3a5195;
+    color: white;
+    /* background-color: #887de6; */
     font-family: Maven Pro, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .get-in-touch h1 {
     margin:0;
     font-size: 30px;
     font-weight: 400;
-    color: #e0e0e0;
+    color: white;
 }
 
 .get-in-touch h4 {
@@ -86,12 +66,13 @@ export default {
     display: flex;
     justify-content: center;
     padding: 0 20px;
+    width: 100%
 }
 
 .get-in-touch-form {
   display: flex;
   flex-direction: column;
-    width: 80%;
+    width: 100%;
 }
 
 .form{
@@ -113,7 +94,7 @@ export default {
         grid-template-rows: repeat(12,1fr);
     }
     .sub-contact .form {
-        grid-column: 9 span;
+        grid-column: 12 span;
         grid-row: 12 span;
     }
     .sub-contact .get-in-touch-detail {
@@ -124,7 +105,7 @@ export default {
 
 
 .get-in-touch-form input{
-    background-color: rgb(211, 211, 211);
+    background-color: white;
     border: none;
     margin: 0.5rem 0.5rem 0.5rem 0;
 }
@@ -139,12 +120,12 @@ export default {
 }
 
 .get-in-touch-form input::-webkit-input-placeholder {
-    color: #919191;
+    color: rgba(71, 69, 69, 0.87);
     padding: 1rem;
 }
 
 .send-btn {
-    background-color: #2eb398;
+    background-color: #1d2b46;
     color: #d7fcf5;
     border: none;
     width: 70px;
