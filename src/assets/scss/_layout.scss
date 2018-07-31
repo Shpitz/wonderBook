@@ -61,7 +61,13 @@
   flex-direction: row;
 }
 
+.self-end {
+  align-self: flex-end;
+}
 
+.self-center {
+  align-self: center;
+}
 /* Breakpoint mixins */
 
 // @mixin for-mobile-only {

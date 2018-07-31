@@ -18,51 +18,65 @@
         </form>
     </div>
     <button v-if="!isFirstDetails" @click="editBookDetails">Update Book Details</button>
-    <h1>{{book.title}}</h1>
 
-    <h1>Page {{currPageIdx+1}}</h1>
-
-
-    <div class="page-container flex">
-        <div class="page-area">
-            <div class="page-btns-container">
-                <div class="page-timing-container">
+ <div class="audio-area flex">
+      <h1>{{book.title}}</h1>
+        <form action="" ref="audioInput">
+            <input type="file" accept="audio/*" @change.prevent="setAudioFile">
+        </form>
+        <div class="flex align-center">
+        <audio ref="audio" :src="book.audio" controls />
                     <button @click="setTimingPage">Page Timing</button>
-                    <div class="display-timing">{{book.pages[currPageIdx].time}}</div>
-                </div>
-                <form method="POST" ref="imgInput" class="page-img-upload-form">
+                    <input type="text" class="input-samll" v-model="book.pages[currPageIdx].time" >
+        </div>
+    </div>
+
+    <div class="page-container flex column">
+        <div class="flex page-ctr">
+               <form method="POST" ref="imgInput" class="page-img-upload-form">
                     <input type="file" accept="image/*" @change.prevent="setImgFile">
                 </form>
+                <div>
+                <h1>Page {{currPageIdx+1}}</h1>
+                <button class="round-btn" title="Add page" @click="addPage">
+                   <font-awesome-icon class="icon" icon="file-upload" /> 
+                </button>
+                <button class="round-btn" title="Delete page" @click="deletePage(currPageIdx)">
+                      <font-awesome-icon class="icon" icon="trash-alt" /> 
+                </button>
+                </div>
+                
             </div>
+  
+        <div class="page-area">
             <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')' }">
-                <div class="par-area">
-                    <ul class="pagePar clean-list">
-                        <li class="paragraphs-item" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
-                            <textarea rows='3' cols='50' v-model="par.txt" placeHolder="Your paragraph here" />
-                            <div class="par-btns-container">
-                                <button @click="deletePar(idx)">Delete</button>
+                <div class="par-area flex column">
+                    <button title="Add paragraf" class="self-end round-btn" @click="addPar">
+                      <font-awesome-icon class="icon" icon="plus-circle" /> 
+                      </button>
+                    <ul class="par-list clean-list">
+                        <li class="paragraphs-item relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
+                            <textarea autofocus class="editor-text-area" rows='3' cols='50' v-model="par.txt" 
+                            placeHolder="Your paragraph here" />
+                            <div class="par-btns-container absolute">
+                                <button class="round-btn" title="Delete paragraf" @click="deletePar(idx)">
+                                    <font-awesome-icon class="icon" icon="trash-alt" /> 
+                                </button>
                                 <div class="par-timing-container">
-                                    <button @click="setTimingPar(idx)">Start Timing</button>
-                                    <div class="display-timing">{{book.pages[currPageIdx].paragraphs[idx].parStartTime}}</div>
+                                    <button title="Set paragraf time" class="round-btn" @click="setTimingPar(idx)">
+                                      <font-awesome-icon class="icon" icon="clock" /> 
+                                    </button>
+                                    <input class="input-samll self-center" type="text" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime">
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-                <button @click="addPar">Add Par</button>
             </div>
-            <div class="page-btns-container">
-                <button @click="addPage">Add page</button>
-                <button @click="deletePage(currPageIdx)">Delete page</button>
-            </div>
+          
         </div>
     </div>
-    <div class="audio-area">
-        <form action="" ref="audioInput">
-            <input type="file" accept="audio/*" @change.prevent="setAudioFile">
-        </form>
-        <audio ref="audio" :src="book.audio" controls />
-    </div>
+   
     <button @click="saveBook">Save</button>
     <ul class="editor-previews clean-list flex">
         <li @click="selectPage(pageIdx)" v-for="(page,pageIdx) in book.pages" :key="pageIdx">
@@ -265,17 +279,17 @@ export default {
     width: 50%;
 }
 
-/* .first-details-container, .first-title-container{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-} */
+
 
 .page-container{
     width: 90%;
+    min-height: 500px;
     margin: 1rem;
 }
-
+.page-area {
+      min-height: inherit;
+      box-shadow: 0 0 11px black;
+}
 .page-btns-container{
     width: 100%;
     display: flex;
@@ -287,14 +301,8 @@ export default {
     align-items: center;
 }
 
-.page-area{
-  border: 1px black solid;
-    width: 100%;
-}
 
-.img-container {
-  width: 100%;
-}
+
 
 .page-img-upload-form{
     display: flex;
@@ -309,21 +317,22 @@ export default {
 .par-btns-container{
     display: flex;
     justify-content: space-around;
+    right: 0;
+    padding: .3rem;
+
 }
 
 .par-timing-container{
     display: flex;
 }
 
-.pagePar{
-    padding: 1rem;
+.par-list{
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 0 0 1rem;
+    }
 }
-
-.page-btns-container{
-    display: flex;
-
-}
-
 
 
 .book-categories {
@@ -332,10 +341,6 @@ export default {
   width: 50%;
 }
 
-.audio-area{
-    width: 50%;
-    border: solid 1px black;
-}
 
 .editor-previews {
   li {
