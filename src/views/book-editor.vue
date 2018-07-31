@@ -1,26 +1,37 @@
 <template>
     
-<section class="book-editor">
+<section class="book-editor" >
+    <div v-if="book">
+    <transition name="fade">
     <div v-if="isFirstDetails" class="firstDetails form-style-3">
         <form id="form" class="topBefore">
                 <input class="form-control" type=text v-model="book.title" placeHolder="Book title">
                 <input class="form-control" type=text v-model="book.author" placeHolder="Author name">
                 <input class="form-control" type=text v-model="book.illustrator" placeHolder="Illustrator name">
-                <textarea rows="5" cols="100" class="form-control" v-model="book.description" placeHolder="Book description" />
+                <textarea rows="5" cols="500" class="form-control" v-model="book.description" placeHolder="Book description" />
                 <v-select class="book-categories form-control" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
                 <form method="POST" ref="coverImgInput" class="page-img-upload-form">
-                    <input type="file" accept="image/*" @change.prevent="setCoverImgFile">
+                    <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="input-file">
+                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
                 </form>
+
+
+                    <!-- <div class="input-file-container">
+                        <input class="input-file" type="file" name="image" onchange="onFileInputChange(event)" />
+                        <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
+                    </div> -->
+
                 <div class="first-details-btn-container">
                     <input type="submit" @click.prevent="saveDetails" value="Save">
                     <input type="button" @click.prevent="cancelFirstDetails" value="Cancel">
                 </div>
         </form>
     </div>
+    </transition>
     <button v-if="!isFirstDetails" @click="editBookDetails">Update Book Details</button>
     <h1>{{book.title}}</h1>
 
-    <h1>Page {{currPageIdx+1}}</h1>
+    <!-- <h1>Page {{currPageIdx+1}}</h1> -->
 
 
     <div class="page-container flex">
@@ -69,12 +80,12 @@
             <bookPage :pageData="page" :previewInEdit="true" ></bookPage>
         </li>
     </ul>
-
+</div>
 </section>
 </template>
 
 <script>
-import { SAVE_BOOK } from "../store/book-module.js";
+import { SAVE_BOOK,LOAD_BOOK } from "../store/book-module.js";
 import bookPage from "../components/book-page.vue";
 import cloudinaryService from "../services/cloudinary-service.js";
 export default {
@@ -99,28 +110,33 @@ export default {
     };
   },
   created() {
-    this.book = {
-      title: "",
-      author: "",
-      illustrator: "",
-      categories: [],
-      description: "",
-      rating: 0,
-      views: 0,
-      numOfPages: 0,
-      duration: 0,
-      audio: "",
-      coverImg: "",
-      pages: [],
-      reviews: [],
-      status: "inProgress",
-      createdAt: Date.now()
-    };
-    this.addPage();
-    console.log(this.book);
-    console.log(this.currPageIdx, "currPageIdx");
-
-    console.log(this.book.pages[this.pageNum - 1]);
+    if (this.$route.params.bookId){
+        this.$store.dispatch({ type: LOAD_BOOK, bookId: this.$route.params.bookId })
+        .then((book) => {
+            console.log('book after dispach!!!!',book)
+            return this.book = book});
+    }
+    else {
+        this.book = {
+            title: "",
+            author: "",
+            illustrator: "",
+            categories: [],
+            description: "",
+            rating: 0,
+            views: 0,
+            numOfPages: 0,
+            duration: 0,
+            audio: "",
+            coverImg: "",
+            pages: [],
+            reviews: [],
+            status: "inProgress",
+            createdAt: Date.now()
+        };
+        this.addPage();
+    }
+    
   },
   computed: {},
   methods: {
@@ -235,6 +251,9 @@ export default {
 
 <style scoped lang="scss">
 
+$editorInputColor : #f5c2bd;
+$editorButtonColor : #d49c97;
+
 .book-editor{
     display: flex;
     flex-direction: column;
@@ -242,9 +261,15 @@ export default {
     align-items: center;
 }
 
+.upload-btn{
+    width: 100px;
+    height: 100px;
+}
+
 .firstDetails {
-  margin: 1rem;
-  border: solid 1.5px gray;
+    margin: 1rem;
+    border: solid 1px lightgray;
+    box-shadow: 0px 0px 11px black;
 }
 
 .topBefore {
@@ -255,7 +280,7 @@ export default {
 }
 
 .form-control{
-    width: 15%;
+    width: 50%;
 }
 
 .first-details-btn-container{
@@ -345,103 +370,11 @@ export default {
 
 
 
-/*******************************************************************************************/
-
-.form-style-3{
-    max-width: 450px;
-    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
 }
-.form-style-3 label{
-    display:block;
-    margin-bottom: 10px;
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
-.form-style-3 label > span{
-    float: left;
-    width: 100px;
-    color: #F072A9;
-    font-weight: bold;
-    font-size: 13px;
-    text-shadow: 1px 1px 1px #fff;
-}
-.form-style-3 fieldset{
-    border-radius: 10px;
-    margin: 0px 0px 10px 0px;
-    border: 1px solid #FFD2D2;
-    padding: 20px;
-    background: #FFF4F4;
-    box-shadow: inset 0px 0px 15px #FFE5E5;
-}
-.form-style-3 fieldset legend{
-    color: #FFA0C9;
-    border-top: 1px solid #FFD2D2;
-    border-left: 1px solid #FFD2D2;
-    border-right: 1px solid #FFD2D2;
-    border-radius: 5px 5px 0px 0px;
-    background: #FFF4F4;
-    padding: 0px 8px 3px 8px;
-    box-shadow: -0px -1px 2px #F1F1F1;
-    font-weight: normal;
-    font-size: 12px;
-}
-.form-style-3 textarea{
-    width:250px;
-    height:100px;
-}
-.form-style-3 input[type=text],
-.form-style-3 input[type=date],
-.form-style-3 input[type=datetime],
-.form-style-3 input[type=number],
-.form-style-3 input[type=search],
-.form-style-3 input[type=time],
-.form-style-3 input[type=url],
-.form-style-3 input[type=email],
-.form-style-3 select, 
-.form-style-3 textarea{
-    border-radius: 3px;
-    border: 1px solid #FFC2DC;
-    outline: none;
-    color: #F072A9;
-    padding: 5px 8px 5px 8px;
-    box-shadow: inset 1px 1px 4px #FFD5E7;
-    background: #FFEFF6;
-    width:50%;
-    margin: 1rem;
-}
-.form-style-3  input[type=submit],
-.form-style-3  input[type=button]{
-    background: #EB3B88;
-    border: 1px solid #C94A81;
-    padding: 5px 15px 5px 15px;
-    color: #FFCBE2;
-    box-shadow: inset -1px -1px 3px #FF62A7;
-    border-radius: 3px;
-    border-radius: 3px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.required{
-    color:red;
-    font-weight:normal;
-}
-
-/********************************************************************************************************/
-
-.round-button {
-    display:block;
-    width:50px;
-    height:50px;
-    line-height:50px;
-    border: 2px solid #f5f5f5;
-    border-radius: 50%;
-    color:#f5f5f5;
-    text-align:center;
-    text-decoration:none;
-    background: #464646;
-    box-shadow: 0 0 3px gray;
-    font-size:20px;
-    font-weight:bold;
-}
-.round-button:hover {
-    background: #262626;
-}
+  
 </style>
