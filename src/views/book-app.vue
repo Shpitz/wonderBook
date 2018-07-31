@@ -32,6 +32,7 @@ import appFooter from "../components/footer-cmp.vue"
 
 
 
+
 export default {
   data(){
    return{
@@ -54,16 +55,18 @@ export default {
       });
     },
     updateFilter(filterBy) {
-
       this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy});
       this.loadBooks()
+    },
+    addNewBook(){
+
     }
   },
   components: {
     bookList,
     bookFilter,
     bookFilterCategories,
-    appFooter
+    appFooter,
   }
 };
 </script>
