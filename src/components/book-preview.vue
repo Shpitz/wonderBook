@@ -6,6 +6,13 @@
     <hr />
     <div class="intro">By {{book.author}}</div>
   </div><!-- /.title-content -->
+                  <div class="play-mask absolute flex">
+                  <div class="play-ctr flex">
+                    <div class="flex align-center justify-center">
+                      <font-awesome-icon class="icon" icon="play" /> 
+                    </div>
+                  </div>
+              </div>
   <div class="card-info">
       {{pageDesc}}
   </div><!-- /.card-info -->
@@ -44,6 +51,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "./src/assets/scss/_vars.scss";
 $card-width:  300px;
 $card-height: 400px;
 $h-color:     #081641;
@@ -185,5 +193,29 @@ hr{
     }
   }
 }
+
+  .play-mask {
+    height: 100%;
+    width: 100%;
+    background-color: #00000040;
+    align-items: center;
+    justify-content: center;
+  }
+  .play-ctr {
+    // background-color: $container-bg;
+    background-color: $container-bg;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    div {
+      width: 80%;
+      height: 80%;
+      border-radius: inherit;
+      border: 1px solid;
+    }
+  }
 
 </style>
