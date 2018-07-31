@@ -1,8 +1,12 @@
 <template>
-<section class="about flex justify-content-center">
-        <div class="about-container flex flex-dir-col space-between">
-            <logo-cmp class="about-logo"></logo-cmp>
+<section class="about flex justify-content-center column">
+            <div class="background-img-container">
+            <div class="about-cover"></div>
+            </div>
+            <div class="about-container flex space-between">
             <div class="about-text-container">
+            <logo-cmp class="about-logo"></logo-cmp>
+
                 <h1>Omer Sela & Gal Sinai & Itzik Turjeman</h1>
                 <h3>Full-stack programers</h3>
                 <div>Children's Wonder-Book copyright ©2018 Omer sela, Gal Sinai, Itzik Turjeman.</div>
@@ -51,6 +55,27 @@ export default {
 
 
 <style scoped>
+
+.background-img-container {
+    
+  height: 400px;
+  margin: 0;
+}
+
+.about-cover {
+    width: 100%;
+    /* The image used */
+    background-image: url(../../public/img/about-img.jpg);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .about {
     /* background-color: #2eb398; */
     color: #3a5195;
@@ -89,6 +114,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     font-size: 1.5rem;
+
 }
 
 .about-logo {
