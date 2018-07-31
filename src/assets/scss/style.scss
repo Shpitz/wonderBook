@@ -40,13 +40,19 @@ html,body {
 
 .page-edit-preview {
   min-height: 30vh;
-  width: 30vw;
+  min-width: 80px;
+  width: 100%;
 }
 
 .p-container-prev {
+  border-radius: 10px;
+  background-color: #f0f8ff57;
+  padding: 1rem;
   p {
+    font-size: bold;
     overflow-wrap: break-word;
     max-width: 250px;
+    margin: 0 .5rem 0 0;
   }
 }
 
