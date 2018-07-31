@@ -9,6 +9,7 @@
 @import 'layout';
 @import 'base';
 @import 'forms';
+@import 'social';
 
 /* Components */
 * {
@@ -28,4 +29,23 @@ html,body {
 // section
 .section-container {
   padding: 1rem 3rem ;
+}
+
+.active {
+  color:$main-color-hover;
+}
+
+
+//book page in editor
+
+.page-edit-preview {
+  min-height: 30vh;
+  width: 30vw;
+}
+
+.p-container-prev {
+  p {
+    overflow-wrap: break-word;
+    max-width: 250px;
+  }
 }

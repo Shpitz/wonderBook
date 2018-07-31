@@ -33,7 +33,6 @@ export default {
 
 $container-bg:#ececec4a;
 .nav-bar {
-margin:$margin-bM;
   a {
     font-weight: bold;
     color:$main-color;
