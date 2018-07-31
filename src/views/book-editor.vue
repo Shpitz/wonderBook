@@ -1,16 +1,17 @@
 <template>
     
-<section class="book-editor" >
+<section class="book-editor flex justify-center column align-center" >
     <div v-if="book">
     <transition name="fade">
-    <div v-if="isFirstDetails" class="firstDetails form-style-3">
-        <form id="form" class="topBefore">
+    <div v-if="isFirstDetails" class="firstDetailsContainer">
+    <div class="firstDetails form-style-3">
+        <form id="form" class="topBefore flex justify-center column align-center">
                 <input class="form-control" type=text v-model="book.title" placeHolder="Book title">
                 <input class="form-control" type=text v-model="book.author" placeHolder="Author name">
                 <input class="form-control" type=text v-model="book.illustrator" placeHolder="Illustrator name">
                 <textarea rows="5" cols="500" class="form-control" v-model="book.description" placeHolder="Book description" />
                 <v-select class="book-categories form-control" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
-                <form method="POST" ref="coverImgInput" class="page-img-upload-form">
+                <form method="POST" ref="coverImgInput" class="page-img-upload-form flex column">
                     <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="input-file">
                     <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
                 </form>
@@ -21,11 +22,12 @@
                         <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
                     </div> -->
 
-                <div class="first-details-btn-container">
+                <div class="first-details-btn-container flex space-around">
                     <input type="submit" @click.prevent="saveDetails" value="Save">
                     <input type="button" @click.prevent="cancelFirstDetails" value="Cancel">
                 </div>
         </form>
+    </div>
     </div>
     </transition>
     <button v-if="!isFirstDetails" @click="editBookDetails">Update Book Details</button>
@@ -44,7 +46,7 @@
 
     <div class="page-container flex column">
         <div class="flex page-ctr">
-               <form method="POST" ref="imgInput" class="page-img-upload-form">
+               <form method="POST" ref="imgInput" class="page-img-upload-form  flex column">
                     <input type="file" accept="image/*" @change.prevent="setImgFile">
                 </form>
                 <div>
@@ -173,7 +175,6 @@ export default {
       console.log(this.pageNum);
     },
     selectPage(idx) {
-      debugger;
       this.currPageIdx = idx;
     },
     addPar() {
@@ -269,10 +270,6 @@ $editorInputColor : #f5c2bd;
 $editorButtonColor : #d49c97;
 
 .book-editor{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .upload-btn{
@@ -280,17 +277,28 @@ $editorButtonColor : #d49c97;
     height: 100px;
 }
 
+.firstDetailsContainer{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.726);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
 .firstDetails {
     margin: 1rem;
     border: solid 1px lightgray;
     box-shadow: 0px 0px 11px black;
+    background-color: rgb(146, 133, 133);
 }
 
 .topBefore {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
 }
 
 .form-control{
@@ -299,8 +307,6 @@ $editorButtonColor : #d49c97;
 
 .first-details-btn-container{
     margin: 1rem;
-    display: flex;
-    justify-content: space-around;
     width: 50%;
 }
 
@@ -315,23 +321,12 @@ $editorButtonColor : #d49c97;
       min-height: inherit;
       box-shadow: 0 0 11px black;
 }
-.page-btns-container{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.page-timing-container{
-    display: flex;
-    align-items: center;
-}
 
 
 
 
 .page-img-upload-form{
-    display: flex;
-    flex-direction: column;
+
 }
 
 .paragraphs-item{
