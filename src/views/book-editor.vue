@@ -35,9 +35,6 @@
                 </form>
             </div>
             <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')' }">
-                <!-- <p v-for="(p,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
-                    {{p.txt}}
-                </p> -->
                 <div class="par-area">
                     <ul class="pagePar clean-list">
                         <li class="paragraphs-item" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
@@ -69,9 +66,10 @@
     <button @click="saveBook">Save</button>
     <ul class="editor-previews clean-list flex">
         <li @click="selectPage(pageIdx)" v-for="(page,pageIdx) in book.pages" :key="pageIdx">
-            <bookPage :pageData="page" class="book-page"></bookPage>
+            <bookPage :pageData="page" :previewInEdit="true" ></bookPage>
         </li>
     </ul>
+
 </section>
 </template>
 
@@ -178,11 +176,6 @@ export default {
       this.isFirstDetails = true;
     },
     setAudioFile() {
-      // console.log(this.$refs.audioInput)
-      // this.audioPath ="./audio/walkingTogether.mp3"
-      // this.book.audio = this.audioPath;
-
-      // var something = cloudinaryService.uploadImg(this.$refs.audioInput);
       cloudinaryService.doUploadAudio(this.$refs.audioInput).then(url => {
         this.book.audio = url.secure_url;
       });
@@ -240,7 +233,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 .book-editor{
     display: flex;
@@ -331,10 +324,7 @@ export default {
 
 }
 
-.editor-previews li {
-  max-width: 80px;
-  max-height: 80px;
-}
+
 
 .book-categories {
   background: white;
@@ -347,9 +337,10 @@ export default {
     border: solid 1px black;
 }
 
-.book-page{
-    width: 50px;
-    height: 50px;
+.editor-previews {
+  li {
+    margin:0 1rem 0 0;
+  }
 }
 
 
