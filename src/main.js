@@ -11,6 +11,9 @@ import './filters.js'
 import './assets/scss/style.scss';
 import vSelect from 'vue-select'
 Vue.component('v-select', vSelect)
+  
+import VueCarousel from 'vue-carousel';
+Vue.use(VueCarousel);
 
 
 import { library } from '@fortawesome/fontawesome-svg-core'

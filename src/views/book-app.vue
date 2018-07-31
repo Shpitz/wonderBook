@@ -1,14 +1,20 @@
   <template>
         <section class="book-app">
             <div class="background-img-container">
+<<<<<<< HEAD
                 <div class="bg flex column align-center justify-center">
                     <h1>Look. Listen. Join the wonder.</h1>
+=======
+                <div class="bg flex align-center justify-center">
+                  <div class="flex column space-around filter-container">
+                    <div><h1><span class="black">Online</span>  <span class="white"> book</span></h1></div>
+>>>>>>> master
                    <book-filter @searchStr="updateFilter"></book-filter>
                 </div>
             </div>
-            <div class="flex space-between">
+            <button class="create-button" @click="createBook">Cretae your book</button>
+            <div class="flex justify-center">
              <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter"/>
-               <button class="create-btn" @click="createBook">Cretae your book</button>
             </div>
             <loader v-if="!books"></loader>
             <book-list :user="user" :books="booksToShow"></book-list>
@@ -80,6 +86,7 @@ export default {
 .background-img-container {
   height: 400px;
   margin: 0;
+  
 }
 .bg {
   /* The image used */
