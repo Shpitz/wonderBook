@@ -34,3 +34,18 @@ html,body {
 .active {
   color:$main-color-hover;
 }
+
+
+//book page in editor
+
+.page-edit-preview {
+  min-height: 30vh;
+  width: 30vw;
+}
+
+.p-container-prev {
+  p {
+    overflow-wrap: break-word;
+    max-width: 250px;
+  }
+}

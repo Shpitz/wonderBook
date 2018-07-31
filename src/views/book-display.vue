@@ -8,7 +8,7 @@
         @seeking="onSeeking"
         controls
         autoplay/>
-       <book-page :pageData= "getPage" :parIdx= "getParIdx" >
+       <book-page :pageData= "getPage"  :parIdx= "getParIdx" >
          <div>
          
              <button @click="manualMovePage(-1)" class="btn-page-control clean-btn" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" >
