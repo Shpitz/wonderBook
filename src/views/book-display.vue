@@ -8,8 +8,9 @@
         @seeking="onSeeking"
         controls
         autoplay/>
-       <book-page  :pageData= "getPage" :parIdx= "getParIdx">
+       <book-page :pageData= "getPage" :parIdx= "getParIdx" >
          <div>
+         
              <button @click="manualMovePage(-1)" class="btn-page-control clean-btn" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" >
                               <font-awesome-icon class="icon" icon="backward" /> 
            </button>
@@ -86,7 +87,6 @@ export default {
     getBook(bookId) {
       this.$store.dispatch({ type: LOAD_BOOK, bookId: bookId }).then(book => {
         var book = JSON.parse(JSON.stringify(book));
-        // console.log("book in dispaly", book);
         this.book = book;
         this.currPage = book.pages[0];
         this.currPar = book.pages[0].paragraphs[0];
@@ -97,14 +97,11 @@ export default {
       var currBookPages = this.book.pages;
       var currPage = currBookPages[this.currPageIdx];
 
-      // console.log("this.currParIdx", this.currParIdx);
-      console.log(
-        "paragraphs[this.currParIdx]",
-        currPage.paragraphs[this.currParIdx].txt
-      );
-   
-      if (this.currParIdx + 1 === currPage.paragraphs.length) {}
-      else if(this.currentTime >= currPage.paragraphs[this.currParIdx + 1].parStartTime) {
+      if (this.currParIdx + 1 === currPage.paragraphs.length) {
+      } else if (
+        this.currentTime >=
+        currPage.paragraphs[this.currParIdx + 1].parStartTime
+      ) {
         this.movePar();
       }
       if (this.currPageIdx + 1 === currBookPages.length) return;
@@ -136,7 +133,9 @@ export default {
       var currPageTime = this.currPage.time;
       this.currentTime = currPageTime;
       this.$refs.audio.currentTime = currPageTime;
-    }
+    },
+    
+  
   },
   components: {
     bookPage
