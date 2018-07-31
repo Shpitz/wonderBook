@@ -63,9 +63,7 @@ $text-bg: rgba(255, 255, 255, 0.55);
 .icon {
   color:$yellow;
 }
-.btn-edit-slot {
-  float: right;
-}
+
 
 .blog-card{
     cursor: pointer;
