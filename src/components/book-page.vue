@@ -16,7 +16,7 @@
             <!-- priview in editor -->
               <div v-if="previewInEdit"  class="page-container relative page-edit-preview" 
                :style="{ backgroundImage: 'url(' + pageImg + ')'}">
-                <div class="p-container-prev" >
+                <div class="p-container-prev " >
                     <p v-for="(p,idx) in pageData.paragraphs" :key="idx">
                         {{p.txt}}
                     </p>
@@ -89,14 +89,8 @@ export default {
   background-position: center;
   display: flex;
   justify-content: space-between;
-  // transition:opacity 1s ease-in-out;
-  // img {
-  //    object-fit: cover;
-  //   width: 100%;
-  //   height: 100%;
-  //   border-radius: inherit;
-  //   z-index: -1;
-  // }
+  font-family: $story-font;
+
 }
 
 
@@ -104,14 +98,11 @@ export default {
   border-radius: 10px;
   background-color: #f0f8ff57;
   padding: 1rem;
-  // margin: 0.5rem;
   max-width: 80%;
   p {
     word-wrap: break-word;
     text-align: left;
     font-size: 1.3rem;
-    font-family: $story-font;
-    // transition: all 0.3s;
   }
 
   .active-p {
