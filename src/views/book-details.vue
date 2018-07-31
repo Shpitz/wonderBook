@@ -33,7 +33,7 @@
                     <font-awesome-icon class="clock" icon="clock" /> {{book.duration}}</li>
                 <li> <font-awesome-icon class="clock" icon="calendar-alt" /> {{book.createdAt | date-format}}</li>
             </ul>
-             <book-filter-categories @searchCategorie="updateFilter" :categories="bookCategories" ></book-filter-categories>
+             <book-filter-categories @@searchCategorie="updateFilter" :categories="bookCategories" ></book-filter-categories>
             </div>
           </div>
     </section>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { LOAD_BOOK, UPDATE_SEARCH_FILTER } from "../store/book-module.js";
+import { LOAD_BOOK,UPDATE_SEARCH_FILTER } from "../store/book-module.js";
 import bookFilterCategories from "../components/book-filter-categories.vue";
 
 export default {
@@ -71,9 +71,10 @@ export default {
     playBook() {
       this.$router.push(`/bookReading/${this.book._id}`);
     },
-    updateFilter(filterBy) {
-      this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy });
-      this.$router.push(`/`);
+     updateFilter(filterBy) {
+
+      this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy});
+      // this.$router.push(`/contact`);
     }
   },
   components: {
@@ -89,18 +90,15 @@ export default {
   font-family: "Merriweather", sans-serif;
 }
 .hr {
-  height: 2px;
-  background-color: $main-color-hover;
+  height: 1px;
+  background-color: pink;
   margin: 0 0 1rem;
 }
 
 .img-details {
   cursor: pointer;
-  width: 50%;
+  width: 60%;
   margin: 0 1rem 0 0;
-  h1{
-    color: $main-color-hover;
-  }
 
   img {
     box-shadow: 0 3px 7px 3px rgba(0, 0, 0, 0.1);
@@ -110,7 +108,7 @@ export default {
   .play-mask {
     height: 100%;
     width: 100%;
-    background-color: #00000040;
+    background-color: #0000006e;
     align-items: center;
     justify-content: center;
   }
@@ -133,7 +131,7 @@ export default {
 
 .img-details:hover {
   .play-mask {
-    color: $main-color-hover;
+    color: $dark-main-color;
   }
   .play-ctr {
     transform: scale(1.2);
@@ -141,7 +139,7 @@ export default {
 }
 
 .txt-details {
-  width: 50%;
+  width: 40%;
   h4 {
     margin: 0;
   }
@@ -150,6 +148,67 @@ export default {
   }
 }
 
+// .page-container {
+//   box-shadow: 0 3px 7px 3px rgba(0, 0, 0, 0.1);
+//   border-radius: 5px;
+//   padding: 15px;
+//   color: $main-color;
 
+// }
+// .details-img-wrap {
+//   align-items: center;
+//   width: 50%;
+//   border-right: solid 1.2px rgba(128, 128, 128, 0.568);
+// }
 
+// .details-img-wrap img {
+//   width: 80%;
+//   height: 80%;
+// }
+// .details-container {
+//   width: 50%;
+//   margin: 5px;
+//   padding: 20px;
+// }
+// .details-container div{
+//     margin: 0 0 10px;
+// }
+// .details-title {
+//   font-size: 2.3em;
+//   font-family: Gaegu;
+// }
+
+// .tag {
+//   display: inline-block;
+//   padding: 0.4em 1.2em;
+//   margin: 0 0.1em 0.1em 0;
+//   border: 0.16em solid rgba(255, 255, 255, 0.863);
+//   border-radius: 2em;
+//   font-weight: 300;
+//   text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+//   text-align: center;
+//   transition: all 0.2s;
+//   background: rgba(153, 226, 151, 0.966);
+// }
+
+// .tag:hover {
+//   border-color: rgb(7, 73, 12);
+// }
+
+// .play-book {
+//   display: inline-block;
+//   padding: 0.4em 1.2em;
+//   margin: 0 0.1em .5em 0;
+//   border: 0.16em solid rgba(255, 255, 255, 0);
+//   border-radius: 2em;
+//   font-weight: 500;
+//   font-size: 1.5em;
+//   text-shadow: 0 0.04em 0.04em rgba(0, 0, 0, 0.35);
+//   transition: all 0.2s;
+//   background: rgba(153, 226, 151, 0.966);
+//   color:inherit;
+// }
+// .play-book:hover {
+//   border-color: rgb(7, 73, 12);
+// }
 </style>
