@@ -54,9 +54,6 @@ $container-bg:#ececec4a;
     display: flex;
     justify-content: space-around;
     align-items: center;
-
-    border-bottom: 1px solid #2828287d;
-    border-top: 1px solid #2828287d;
 }
 
 .nav-route{
