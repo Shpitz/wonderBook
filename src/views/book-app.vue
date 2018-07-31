@@ -2,15 +2,15 @@
         <section class="book-app">
             <div class="background-img-container">
                 <div class="bg flex align-center justify-center">
-                  <div>
-                    <h1><span class="black">Online</span>  <span class="white"> book</span></h1>
+                  <div class="flex column space-around filter-container">
+                    <div><h1><span class="black">Online</span>  <span class="white"> book</span></h1></div>
                    <book-filter @searchStr="updateFilter"></book-filter>
                   </div>
                 </div>
             </div>
-            <div class="flex space-between">
+            <button class="create-button" @click="createBook">Cretae your book</button>
+            <div class="flex justify-center">
              <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter"/>
-               <button class="create-btn" @click="createBook">Cretae your book</button>
             </div>
             <book-list :user="user" :books="books"></book-list>
             <app-footer></app-footer>
@@ -74,9 +74,18 @@ export default {
 </script>
 
 <style lang="scss">
+.book-app{
+  // background-image: url("../../public/img/background/wonderbookback.jpg");
+}
+
+.filter-container{
+  height: 80%;
+}
+
 .background-img-container {
   height: 400px;
   margin: 0;
+  
 }
 .bg {
   /* The image used */

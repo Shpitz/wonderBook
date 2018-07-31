@@ -1,102 +1,101 @@
   <template>
 
-        <section class="flex column">
-            <div v-if="book" class="editor-container flex column">
-                <transition name="fade">
-                    <div v-if="isFirstDetails" class="firstDetails form-style-3">
-                        <form id="form" class="topBefore">
-                            <input class="form-control" type=text v-model="book.title" placeHolder="Book title">
-                            <input class="form-control" type=text v-model="book.author" placeHolder="Author name">
-                            <input class="form-control" type=text v-model="book.illustrator" placeHolder="Illustrator name">
-                            <textarea rows="5" cols="500" class="form-control" v-model="book.description" placeHolder="Book description" />
-                            <v-select class="book-categories form-control" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
-                            <form method="POST" ref="coverImgInput" class="page-img-upload-form">
-                                <div class="input-file-container">
-                                    <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="input-file">
-                                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
-                                </div>
-                                <!-- <p class="file-return"></p> -->
-                            </form>
-
-                            <div class="first-details-btn-container">
-                                <input type="submit" @click.prevent="saveDetails" value="Save">
-                                <input type="button" @click.prevent="cancelFirstDetails" value="Cancel">
-                            </div>
-                        </form>
-                    </div>
-                </transition>
-                <button v-if="!isFirstDetails" @click="editBookDetails" class="editor-btn editor-regular-btn details-btn self-start"> Book Details</button>
-
-                <div class="audio-area flex column align-center">
-                    <form action="" ref="audioInput" class="page-form">
-                        <div class="input-file-container">
-                            <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="input-file">
+<section class="flex column">
+    <div v-if="book">
+        <transition name="fade">
+            <div v-if="isFirstDetails" class="firstDetailsContainer">
+                <div class="firstDetails form-style-3">
+                    <form id="form" class="topBefore flex justify-center column align-center">
+                        <input class="form-control" type=text v-model="book.title" placeHolder="Book title">
+                        <input class="form-control" type=text v-model="book.author" placeHolder="Author name">
+                        <input class="form-control" type=text v-model="book.illustrator" placeHolder="Illustrator name">
+                        <textarea rows="5" cols="500" class="form-control" v-model="book.description" placeHolder="Book description" />
+                        <v-select class="book-categories form-control" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
+                        <form method="POST" ref="coverImgInput" class="page-img-upload-form flex column">
+                            <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="input-file">
                             <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
+                        </form>
+                        <div class="first-details-btn-container flex space-around">
+                            <input type="submit" @click.prevent="saveDetails" value="Save">
+                            <input type="button" @click.prevent="cancelFirstDetails" value="Cancel">
                         </div>
                     </form>
-                    <div class="flex align-center">
-                        <audio ref="audio" :src="book.audio" controls />
-                        <button @click="setTimingPage" class="set-btn editor-btn editor-regular-btn ">Set page Timing</button>
-                        <input type="text" class="input-samll" v-model="book.pages[currPageIdx].time">
+                </div>
+            </div>
+        </transition>
+        <button v-if="!isFirstDetails" @click="editBookDetails" class="editor-btn editor-regular-btn details-btn self-start"> Book Details</button>
+
+        <div class="audio-area flex column align-center">
+            <form action="" ref="audioInput" class="page-form">
+                <div class="input-file-container">
+                    <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="input-file">
+                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
+                </div>
+            </form>
+            <div class="flex align-center">
+                <audio ref="audio" :src="book.audio" controls />
+                <button @click="setTimingPage" class="set-btn editor-btn editor-regular-btn ">Set page Timing</button>
+                <input type="number" class="input-samll" v-model="book.pages[currPageIdx].time" step="0.01">
+            </div>
+            <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1>
+        </div>
+
+        <div class="page-container flex column">
+            <div class="flex page-ctr">
+                <form method="POST" class="img-form page-form " ref="imgInput">
+                    <div class="input-file-container ">
+                        <input type="file" accept="image/*" @change.prevent="setImgFile" class="input-file">
+                        <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
                     </div>
-                    <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1>
+                </form>
+                <div class="page-ctr-btn flex align-center">
+                    <h1>Page {{currPageIdx+1}}</h1>
+                    <button class="editor-btn round-btn set-btn" title="Add page" @click="addPage">
+                        <font-awesome-icon class="icon" icon="file-upload" />
+                    </button>
+                    <button class="editor-btn round-btn" title="Delete page" @click="deletePage(currPageIdx)">
+                        <font-awesome-icon class="icon" icon="trash-alt" />
+                    </button>
+                </div>
+            </div>
+
+            <div class="page-area">
+                <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')' }">
+                    <div class="par-area flex column">
+                        <button title="Add paragraf" class="editor-btn self-end round-btn" @click="addPar">
+                            <font-awesome-icon class="icon" icon="plus-circle" />
+                        </button>
+                        <ul class="par-list clean-list">
+                            <li class="paragraphs-item flex column relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
+                                <textarea autofocus class="editor-text-area" rows='3' cols='50' v-model="par.txt" placeHolder="Your paragraph here" />
+                                <div class="par-btns-container absolute">
+                                    <button class="editor-btn round-btn set-btn" title="Delete paragraf" @click="deletePar(idx)">
+                                        <font-awesome-icon class="icon" icon="trash-alt" />
+                                    </button>
+                                    <button title="Set time set-btn" class="set-btn editor-btn round-btn" @click="setTimingPar(idx)">
+                                        <font-awesome-icon class="icon" icon="clock" />
+                                    </button>
+                                    <input class="input-samll self-center" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime" step="0.01">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="page-container flex column">
-                    <div class="flex page-ctr">
-                        <form method="POST" class="img-form page-form " ref="imgInput">
-                            <div class="input-file-container ">
-                                <input type="file" accept="image/*" @change.prevent="setImgFile" class="input-file">
-                                <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
-                            </div>
-                        </form>
-                        <div class="page-ctr-btn flex align-center">
-                            <h1>Page {{currPageIdx+1}}</h1>
-                            <button class="editor-btn round-btn set-btn" title="Add page" @click="addPage">
-                                <font-awesome-icon class="icon" icon="file-upload" />
-                            </button>
-                            <button class="editor-btn round-btn" title="Delete page" @click="deletePage(currPageIdx)">
-                                <font-awesome-icon class="icon" icon="trash-alt" />
-                            </button>
-                        </div>
-                    </div>
+            </div>
+        </div>
 
-                    <div class="page-area">
-                        <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')' }">
-                            <div class="par-area flex column">
-                                <button title="Add paragraf" class="editor-btn self-end round-btn" @click="addPar">
-                                    <font-awesome-icon class="icon" icon="plus-circle" />
-                                </button>
-                                <ul class="par-list clean-list">
-                                    <li class="paragraphs-item flex column relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
-                                        <textarea autofocus class="editor-text-area" rows='3' cols='50' v-model="par.txt" placeHolder="Your paragraph here" />
-                                        <div class="par-btns-container absolute">
-                                            <button class="editor-btn round-btn set-btn" title="Delete paragraf" @click="deletePar(idx)">
-                                                <font-awesome-icon class="icon" icon="trash-alt" />
-                                            </button>
-                                            <button title="Set time set-btn" class="set-btn editor-btn round-btn" @click="setTimingPar(idx)">
-                                                <font-awesome-icon class="icon" icon="clock" />
-                                            </button>
-                                            <input class="input-samll self-center" type="text" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime">
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-          
-                    </div>
-                </div>
-   
-    <button @click="saveBook">Save</button>
+                <button @click="saveBook">Save</button>
     <!-- <ul class="editor-previews clean-list flex">
         <li @click="selectPage(pageIdx)" v-for="(page,pageIdx) in book.pages" :key="pageIdx">
             <bookPage :pageData="page" :previewInEdit="true" ></bookPage>
         </li>
     </ul> -->
-    <imgCarusale :pages="book.pages"></imgCarusale>
-</div>
+    <imgCarusale :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
+    </div>
 </section>
-</template>
+
+    </template>
 
 <script>
 import { SAVE_BOOK, LOAD_BOOK } from "../store/book-module.js";
@@ -153,7 +152,8 @@ export default {
       this.addPage();
     }
   },
-  computed: {},
+  computed: {
+  },
   methods: {
     addPage() {
       this.pageNum += 1;
@@ -174,6 +174,7 @@ export default {
       console.log(this.pageNum);
     },
     selectPage(idx) {
+        console.log('page idx from carusale: ', idx);
       this.currPageIdx = idx;
     },
     addPar() {
@@ -269,23 +270,38 @@ audio {
   margin: 0 0.5rem 0 0;
 }
 
+.firstDetailsContainer{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.726);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
 .firstDetails {
-  margin: 1rem;
-  border: solid 1px lightgray;
-  box-shadow: 0px 0px 11px black;
+    margin: 1rem;
+    border: solid 1px lightgray;
+    box-shadow: 0px 0px 11px black;
+    background-color: rgb(146, 133, 133);
 }
 
 .topBefore {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
 }
 
 .form-control {
   width: 50%;
 }
 
+.first-details-btn-container{
+    margin: 1rem;
+    width: 50%;
+}
 .page-form {
   margin: 0 0 1rem;
 }
@@ -304,6 +320,15 @@ audio {
   min-height: 500px;
 }
 .page-area {
+      min-height: inherit;
+      box-shadow: 0 0 11px black;
+}
+
+
+
+
+.page-img-upload-form{
+
   min-height: inherit;
   box-shadow: 0 0 11px black;
 }

@@ -3,7 +3,7 @@
         <div>
             <!-- <carousel :navigationEnabled="true">' + buildSlideMarkup(10) + '</carousel> -->
               <carousel :per-page="3" :mouse-drag="true">
-                <slide class="slide-page-container"  v-for="(page,pageIdx) in pages" data-index="pageIdx" :key="pageIdx" data-name="MySlideName" @slideClick="handleSlideClick">
+                <slide class="slide-page-container"  v-for="(page,pageIdx) in pages" data-index="pageIdx" :key="pageIdx" data-name="MySlideName" @slideClick="handleSlideClick(pageIdx)">
                         <bookPage :pageData="page" :previewInEdit="true" ></bookPage>
                 </slide>
                 <!-- <slide data-index="1" data-name="MySlideName" @slideClick="handleSlideClick">
@@ -33,8 +33,9 @@
             }
         },
         methods: {
-            handleSlideClick (dataset) {
-                console.log(dataset.index, dataset.name)
+            handleSlideClick (pageIdx) {
+                console.log(pageIdx)
+                this.$emit('onPreviewClicked', pageIdx)
             },
             // buildSlideMarkup(count) {
             //     let slideMarkup = '';
