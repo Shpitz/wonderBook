@@ -82,7 +82,7 @@ $container-bg:white;
     }
 }
  .categorie-container:last-child {
-     margin: 0 0 1rem 0;
+     margin: $margin-bM;
  }
 .categorie-container:hover {
       .cat-img {
@@ -95,7 +95,7 @@ $container-bg:white;
        padding: .3rem;
 }
 .no-img:hover {
-    color:$dark-main-color;
+    color:$main-color-hover;
     font-weight: bold;
 }
 
