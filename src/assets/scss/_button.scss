@@ -36,3 +36,18 @@ button {
     align-self: baseline;
     border: none;
 }
+
+
+// editor 
+.round-btn {
+    border: none;
+    background-color: lightgreen;
+    border-radius: 50%;
+    min-width: 40px;
+    height: 40px;
+    padding: .5rem;
+    color:$color-btn;
+}
+.add-par-btn {
+    align-self: flex-end;
+}

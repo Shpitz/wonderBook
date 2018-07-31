@@ -4,6 +4,21 @@
 //   font-family: var(--primary-font);
 // }
 
+
+
+.input-samll {
+    width: 50px;
+}
+
+.editor-text-area {
+    padding: 0.3rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border:none; 
+}
+.editor-text-area:focus {
+    background-color: #d3cdcd;
+    
+}
 /*******************************************************************************************/
 
 .form-style-3{

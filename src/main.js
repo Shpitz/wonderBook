@@ -14,11 +14,11 @@ Vue.component('v-select', vSelect)
 
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt, faClock, faStar, faForward, faBackward, faSearch, faPlaneDeparture, faPlay, faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt, faClock, faStar, faForward, faBackward, faSearch, faPlaneDeparture, faPlay, faArrowsAlt, faPlusCircle, faTrash, faTrashAlt, faFileUpload, faParagraph } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt,
-  faClock, faStar, faForward, faBackward,faSearch,faPlay,faArrowsAlt)
+  faClock, faStar, faForward, faBackward,faSearch,faPlay,faArrowsAlt,faPlusCircle,faTrashAlt,faFileUpload,faParagraph)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false;

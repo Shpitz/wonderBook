@@ -14,7 +14,7 @@
                 </button>
             </div>
             <!-- priview in editor -->
-              <div else  class="page-container relative page-edit-preview" 
+              <div v-if="previewInEdit"  class="page-container relative page-edit-preview" 
                :style="{ backgroundImage: 'url(' + pageImg + ')'}">
                 <div class="p-container-prev" >
                     <p v-for="(p,idx) in pageData.paragraphs" :key="idx">
