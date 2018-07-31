@@ -89,11 +89,12 @@
     </div>
    
     <button @click="saveBook">Save</button>
-    <ul class="editor-previews clean-list flex">
+    <!-- <ul class="editor-previews clean-list flex">
         <li @click="selectPage(pageIdx)" v-for="(page,pageIdx) in book.pages" :key="pageIdx">
             <bookPage :pageData="page" :previewInEdit="true" ></bookPage>
         </li>
-    </ul>
+    </ul> -->
+    <imgCarusale :pages="book.pages"></imgCarusale>
 </div>
 </section>
 </template>
@@ -102,6 +103,7 @@
 import { SAVE_BOOK,LOAD_BOOK } from "../store/book-module.js";
 import bookPage from "../components/book-page.vue";
 import cloudinaryService from "../services/cloudinary-service.js";
+import imgCarusale from "../components/img-carusale.vue";
 export default {
   name: "bookEditor",
   data() {
@@ -173,7 +175,6 @@ export default {
       console.log(this.pageNum);
     },
     selectPage(idx) {
-      debugger;
       this.currPageIdx = idx;
     },
     addPar() {
@@ -258,7 +259,8 @@ export default {
     }
   },
   components: {
-    bookPage
+    bookPage,
+    imgCarusale
   }
 };
 </script>
