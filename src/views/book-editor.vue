@@ -12,8 +12,10 @@
                         <textarea rows="5" cols="500" class="form-control" v-model="book.description" placeHolder="Book description" />
                         <v-select class="book-categories form-control" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
                         <form method="POST" ref="coverImgInput" class="page-img-upload-form flex column">
-                            <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="input-file">
-                            <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
+                            <div class="file-upload">
+                                <label for="upload" class="file-upload__label">Select a file...</label>
+                                <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input">
+                            </div>
                         </form>
                         <div class="first-details-btn-container flex space-around">
                             <input type="submit" @click.prevent="saveDetails" value="Save">
@@ -27,9 +29,9 @@
 
         <div class="audio-area flex column align-center">
             <form action="" ref="audioInput" class="page-form">
-                <div class="input-file-container">
-                    <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="input-file">
-                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
+                <div class="file-upload">
+                    <label for="upload" class="file-upload__label">Select a file...</label>
+                    <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input">
                 </div>
             </form>
             <div class="flex align-center">
@@ -43,9 +45,9 @@
         <div class="page-container flex column">
             <div class="flex page-ctr">
                 <form method="POST" class="img-form page-form " ref="imgInput">
-                    <div class="input-file-container ">
-                        <input type="file" accept="image/*" @change.prevent="setImgFile" class="input-file">
-                        <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
+                    <div class="file-upload">
+                        <label for="upload" class="file-upload__label">Select a file...</label>
+                        <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input">
                     </div>
                 </form>
                 <div class="page-ctr-btn flex align-center">
@@ -325,8 +327,8 @@ audio {
 
 .page-img-upload-form{
 
-  min-height: inherit;
-  box-shadow: 0 0 11px black;
+//   min-height: inherit;
+//   box-shadow: 0 0 11px black;
 }
 .page-btns-container {
   width: 100%;
