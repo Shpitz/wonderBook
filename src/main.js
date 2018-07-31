@@ -18,7 +18,7 @@ import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAl
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt,
-  faClock, faStar, faForward, faBackward,faSearch)
+  faClock, faStar, faForward, faBackward,faSearch,faPlay)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false;

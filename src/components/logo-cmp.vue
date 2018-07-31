@@ -9,11 +9,13 @@
 export default {};
 </script>
 
-<style scoped>
-   
+<style scoped lang="scss">
+@import "./src/assets/scss/_vars.scss";
 
     .logo {
-    font-family: Poor_Story;
-    font-size: 3rem;
+    font-family: $logo-font;
+    font-size: 3.5rem;
+    color:$main-color-hover;
+    margin:$margin-bM;
     }
 </style>
