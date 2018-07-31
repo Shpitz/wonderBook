@@ -1,17 +1,23 @@
 <template>
     
 <section class="book-editor">
-    <div class="firstDetails">
+    <div v-if="isFirstDetails" class="firstDetails form-style-3">
         <form id="form" class="topBefore">
-            <input class="form-control" type=text v-model="book.title" placeHolder="Book title">
-            <input class="form-control" type=text v-model="book.author" placeHolder="Author name">
-            <input class="form-control" type=text v-model="book.illustrator" placeHolder="Illustrator name">
-            <textarea rows="10" class="form-control" v-model="book.description" placeHolder="Book description" />
-            <v-select class="book-categories form-control" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
-            <input type="submit" @click.prevent="saveDetails" value="save">
+                <input class="form-control" type=text v-model="book.title" placeHolder="Book title">
+                <input class="form-control" type=text v-model="book.author" placeHolder="Author name">
+                <input class="form-control" type=text v-model="book.illustrator" placeHolder="Illustrator name">
+                <textarea rows="5" cols="100" class="form-control" v-model="book.description" placeHolder="Book description" />
+                <v-select class="book-categories form-control" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
+                <form method="POST" ref="coverImgInput" class="page-img-upload-form">
+                    <input type="file" accept="image/*" @change.prevent="setCoverImgFile">
+                </form>
+                <div class="first-details-btn-container">
+                    <input type="submit" @click.prevent="saveDetails" value="Save">
+                    <input type="button" @click.prevent="cancelFirstDetails" value="Cancel">
+                </div>
         </form>
     </div>
-    <button @click="editBookDetails">Update Book Details</button>
+    <button v-if="!isFirstDetails" @click="editBookDetails">Update Book Details</button>
     <h1>{{book.title}}</h1>
 
     <h1>Page {{currPageIdx+1}}</h1>
@@ -24,9 +30,8 @@
                     <button @click="setTimingPage">Page Timing</button>
                     <div class="display-timing">{{book.pages[currPageIdx].time}}</div>
                 </div>
-                <form method="POST" @submit.prevent="setImgFile" ref="imgInput" class="page-img-upload-form">
-                    <input type="file" accept="image/*">
-                    <button type="submit" class="btn">Submit</button>
+                <form method="POST" ref="imgInput" class="page-img-upload-form">
+                    <input type="file" accept="image/*" @change.prevent="setImgFile">
                 </form>
             </div>
             <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')' }">
@@ -36,7 +41,7 @@
                 <div class="par-area">
                     <ul class="pagePar clean-list">
                         <li class="paragraphs-item" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
-                            <textarea rows='3' cols='50' class="form-control" v-model="par.txt" placeHolder="Your paragraph here" />
+                            <textarea rows='3' cols='50' v-model="par.txt" placeHolder="Your paragraph here" />
                             <div class="par-btns-container">
                                 <button @click="deletePar(idx)">Delete</button>
                                 <div class="par-timing-container">
@@ -56,9 +61,8 @@
         </div>
     </div>
     <div class="audio-area">
-        <form action="" @submit.prevent="setAudioFile" ref="audioInput">
-            <input type="file" accept="audio/*">
-            <button type="submit" class="btn">Submit</button>
+        <form action="" ref="audioInput">
+            <input type="file" accept="audio/*" @change.prevent="setAudioFile">
         </form>
         <audio ref="audio" :src="book.audio" controls />
     </div>
@@ -81,7 +85,7 @@ export default {
     return {
       audioPath: "",
       imgPath: "",
-      isFirstDetails: false,
+      isFirstDetails: true,
       options: [
         "Toddlers",
         "Early Reader",
@@ -164,12 +168,14 @@ export default {
       console.log("after delete", this.pageNum);
     },
     saveDetails() {
-      this.isFirstDetails = true;
+      this.isFirstDetails = false;
       this.saveBook();
-      console.log(this.book);
+    },
+    cancelFirstDetails(){
+        this.isFirstDetails = false;
     },
     editBookDetails() {
-      this.isFirstDetails = false;
+      this.isFirstDetails = true;
     },
     setAudioFile() {
       // console.log(this.$refs.audioInput)
@@ -178,15 +184,18 @@ export default {
 
       // var something = cloudinaryService.uploadImg(this.$refs.audioInput);
       cloudinaryService.doUploadAudio(this.$refs.audioInput).then(url => {
-        console.log("url!audiio!!!", url.secure_url);
         this.book.audio = url.secure_url;
       });
     },
 
     setImgFile() {
       cloudinaryService.doUploadImg(this.$refs.imgInput).then(url => {
-        console.log("url!!!!!!!!!!", url.secure_url);
         this.book.pages[this.currPageIdx].img = url.secure_url;
+      });
+    },
+    setCoverImgFile() {
+      cloudinaryService.doUploadImg(this.$refs.coverImgInput).then(url => {
+        this.book.coverImg = url.secure_url;
       });
     },
     setTimingPage() {
@@ -241,14 +250,33 @@ export default {
 }
 
 .firstDetails {
-  width: 40%;
+  margin: 1rem;
   border: solid 1.5px gray;
 }
 
 .topBefore {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+.form-control{
+    width: 15%;
+}
+
+.first-details-btn-container{
+    margin: 1rem;
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+}
+
+/* .first-details-container, .first-title-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+} */
 
 .page-container{
     width: 90%;
@@ -309,9 +337,9 @@ export default {
 }
 
 .book-categories {
-  width: 100%;
-  margin: 0 auto;
   background: white;
+  margin: 1rem;
+  width: 50%;
 }
 
 .audio-area{
@@ -322,5 +350,107 @@ export default {
 .book-page{
     width: 50px;
     height: 50px;
+}
+
+
+
+/*******************************************************************************************/
+
+.form-style-3{
+    max-width: 450px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.form-style-3 label{
+    display:block;
+    margin-bottom: 10px;
+}
+.form-style-3 label > span{
+    float: left;
+    width: 100px;
+    color: #F072A9;
+    font-weight: bold;
+    font-size: 13px;
+    text-shadow: 1px 1px 1px #fff;
+}
+.form-style-3 fieldset{
+    border-radius: 10px;
+    margin: 0px 0px 10px 0px;
+    border: 1px solid #FFD2D2;
+    padding: 20px;
+    background: #FFF4F4;
+    box-shadow: inset 0px 0px 15px #FFE5E5;
+}
+.form-style-3 fieldset legend{
+    color: #FFA0C9;
+    border-top: 1px solid #FFD2D2;
+    border-left: 1px solid #FFD2D2;
+    border-right: 1px solid #FFD2D2;
+    border-radius: 5px 5px 0px 0px;
+    background: #FFF4F4;
+    padding: 0px 8px 3px 8px;
+    box-shadow: -0px -1px 2px #F1F1F1;
+    font-weight: normal;
+    font-size: 12px;
+}
+.form-style-3 textarea{
+    width:250px;
+    height:100px;
+}
+.form-style-3 input[type=text],
+.form-style-3 input[type=date],
+.form-style-3 input[type=datetime],
+.form-style-3 input[type=number],
+.form-style-3 input[type=search],
+.form-style-3 input[type=time],
+.form-style-3 input[type=url],
+.form-style-3 input[type=email],
+.form-style-3 select, 
+.form-style-3 textarea{
+    border-radius: 3px;
+    border: 1px solid #FFC2DC;
+    outline: none;
+    color: #F072A9;
+    padding: 5px 8px 5px 8px;
+    box-shadow: inset 1px 1px 4px #FFD5E7;
+    background: #FFEFF6;
+    width:50%;
+    margin: 1rem;
+}
+.form-style-3  input[type=submit],
+.form-style-3  input[type=button]{
+    background: #EB3B88;
+    border: 1px solid #C94A81;
+    padding: 5px 15px 5px 15px;
+    color: #FFCBE2;
+    box-shadow: inset -1px -1px 3px #FF62A7;
+    border-radius: 3px;
+    border-radius: 3px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.required{
+    color:red;
+    font-weight:normal;
+}
+
+/********************************************************************************************************/
+
+.round-button {
+    display:block;
+    width:50px;
+    height:50px;
+    line-height:50px;
+    border: 2px solid #f5f5f5;
+    border-radius: 50%;
+    color:#f5f5f5;
+    text-align:center;
+    text-decoration:none;
+    background: #464646;
+    box-shadow: 0 0 3px gray;
+    font-size:20px;
+    font-weight:bold;
+}
+.round-button:hover {
+    background: #262626;
 }
 </style>
