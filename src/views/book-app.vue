@@ -1,14 +1,8 @@
   <template>
         <section class="book-app">
             <div class="background-img-container">
-<<<<<<< HEAD
                 <div class="bg flex column align-center justify-center">
                     <h1>Look. Listen. Join the wonder.</h1>
-=======
-                <div class="bg flex align-center justify-center">
-                  <div class="flex column space-around filter-container">
-                    <div><h1><span class="black">Online</span>  <span class="white"> book</span></h1></div>
->>>>>>> master
                    <book-filter @searchStr="updateFilter"></book-filter>
                 </div>
             </div>
