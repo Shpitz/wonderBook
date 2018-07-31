@@ -106,44 +106,47 @@
 import logoCmp from "../components/logo-cmp.vue";
 import contactUs from "./Contact.vue";
 export default {
-    components: {
-      logoCmp,
-      contactUs
-    },
- 
-    data() {
-      return {
-        // element = document.getElementById("contact-us"),
-      }
-    },
-      mounted() {
-    this.goto("contact-us");
-    },
-    methods: {
-        goto(refName) {
-            console.log(this.$refs);
-            var element = this.$refs[refName];
-            element.scrollIntoView()
-    //   var top = element.offsetTop;
-    //   window.scrollTo(0, top);
+  components: {
+    logoCmp,
+    contactUs
+  },
+
+  data() {
+    return {
+      // element = document.getElementById("contact-us"),
+    };
+  },
+  mounted() {
+    if (this.$route.name === "contact") {
+      this.goto("contact-us");
     }
+  },
+  methods: {
+    goto(refName) {
+      console.log(this.$refs);
+      var element = this.$refs[refName];
+      element.scrollIntoView({
+        behavior: "smooth"
+      });
+      //   var top = element.offsetTop;
+      //   window.scrollTo(0, top);
     }
-}
+  }
+};
 </script>
 
 
 
 <style scoped>
-
 .page-container {
-    width: 100%;
-    align-items: center;
+  width: 100%;
+  align-items: center;
 }
 
 .about-cover {
-      /* The image used */
+  /* The image used */
   background-image: url("../../public/img/about-img.jpg");
-    
+
   /* Full height */
   height: 100%;
 
@@ -151,64 +154,65 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
 }
 
 .about-details {
-    align-items: center;
+  align-items: center;
 }
 
-.page-container.what{
-    /* background-color: #f1e88ad9; */
-    background-color: #efa6a0a1;
+.page-container.what {
+  /* background-color: #f1e88ad9; */
+  background-color: #efa6a0a1;
 }
-.page-container.team{
-    /* background-color: #a5e5f6; */
-    background-color: whitesmoke;
+.page-container.team {
+  /* background-color: #a5e5f6; */
+  background-color: whitesmoke;
 }
-.page-container.contact{
-    background-color: #559ec7;
-}
-
-
-.about-what-is, .about-our-team, .contact-us {
-    padding: 15px;
-    width: 75%;
-    text-align: left;
-    text-align: justify;
-    text-justify: inter-word;
+.page-container.contact {
+  background-color: #559ec7;
 }
 
-.about-our-team > h1, .about-what-is > h1 {
-    font-size: 2rem;
+.about-what-is,
+.about-our-team,
+.contact-us {
+  padding: 15px;
+  width: 75%;
+  text-align: left;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.about-our-team > h1,
+.about-what-is > h1 {
+  font-size: 2rem;
 }
 
 .team-member-left img {
-    border-radius: 50%;
-    float: left;
-    margin-right: 2em;
-    margin-bottom: 0.5em;
-    shape-outside: circle();
+  border-radius: 50%;
+  float: left;
+  margin-right: 2em;
+  margin-bottom: 0.5em;
+  shape-outside: circle();
 }
 .team-member-right img {
-    border-radius: 50%;
-    float: right;
-    margin-left: 2em;
-    margin-bottom: 0.5em;
-    shape-outside: circle();
+  border-radius: 50%;
+  float: right;
+  margin-left: 2em;
+  margin-bottom: 0.5em;
+  shape-outside: circle();
 }
 
 .member-title span {
-    font-size: 0.65em;
+  font-size: 0.65em;
 }
 
 .member-details img {
-    max-width: 40%;
+  max-width: 40%;
 }
 
 /* .about { */
-    /* background-color: #2eb398; */
-    /* color: #3a5195;
+/* background-color: #2eb398; */
+/* color: #3a5195;
     padding: 5px 0;
     display: flex;
     justify-content: center;
@@ -247,20 +251,18 @@ export default {
 } */
 
 /* .about-logo { */
-    /* background-size: contain; */
-    /* background-image: url("../../public/img/aboutlogo.jpg"); */
-    /* background-position: top; */
-    /* background-repeat: no-repeat; */
-    /* min-height: 100px; */
-    /* width: 50%; */
-    /* min-width: 100px; */
-    /* margin: 0 20px 0 0; */
-    /* font-size: 10rem; */
+/* background-size: contain; */
+/* background-image: url("../../public/img/aboutlogo.jpg"); */
+/* background-position: top; */
+/* background-repeat: no-repeat; */
+/* min-height: 100px; */
+/* width: 50%; */
+/* min-width: 100px; */
+/* margin: 0 20px 0 0; */
+/* font-size: 10rem; */
 /* } */
 
 /* .about-text-container {
     margin-left: 1rem;
 } */
-
-
 </style>
