@@ -3,3 +3,4 @@ import moment from 'moment';
 
 Vue.filter('date-format', (timestamps) => moment(timestamps).format("MMM Do YY"));
 Vue.filter('duration', (timestamps) => moment(timestamps).format("mm:ss"));
+Vue.filter('audio-time', (audioTime) => audioTime.toFixed(2))

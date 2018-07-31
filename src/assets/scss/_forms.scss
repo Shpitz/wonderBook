@@ -8,6 +8,7 @@
 
 .input-samll {
     width: 50px;
+    padding: .2rem;
 }
 
 .editor-text-area {
@@ -16,8 +17,11 @@
     border:none; 
 }
 .editor-text-area:focus {
-    background-color: #d3cdcd;
+    background-color: #e4ecd9;
     
+}
+.editor-text-area:hover{
+    box-shadow: 0 0 1px black;
 }
 /*******************************************************************************************/
 
@@ -98,33 +102,21 @@
     font-weight:normal;
 }
 
-/********************************************************************************************************/
-
-.round-button {
-    display:block;
-    width:50px;
-    height:50px;
-    line-height:50px;
-    border: 2px solid #f5f5f5;
-    border-radius: 50%;
-    color:#f5f5f5;
-    text-align:center;
-    text-decoration:none;
-    background: #464646;
-    box-shadow: 0 0 3px gray;
-    font-size:20px;
-    font-weight:bold;
-}
-.round-button:hover {
-    background: #262626;
-}
-
 
 /******************************************************************************************************/
 
+   /* upload input */
+.form-upload {
+    margin:0 0 10px;
+ }
+ 
+ .input-file-container {
+    position: relative;
+    width: 225px;
+  }
    .input-file-trigger {
     display: block;
-    padding: 14px 45px;
+    padding: 10px 45px;
     
     background: #323232;
     color: white;
@@ -146,4 +138,22 @@
    .input-file-trigger:focus {
     background: #2eb398;
     color: #fff;
+  }
+  
+  .file-return {
+    margin: 0;
+  }
+  .file-return:not(:empty) {
+    color: #bebebe;
+  }
+  
+ .file-return {
+    font-style: italic;
+    font-size: .9em;
+    font-weight: bold;
+  }
+  .file-return:not(:empty):before {
+    content: "Selected file: ";
+    font-style: normal;
+    font-weight: normal;
   }

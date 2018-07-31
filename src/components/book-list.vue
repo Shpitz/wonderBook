@@ -3,7 +3,7 @@
             <ul class="clean-list flex-warp justify-center">
                 <li v-for="(book,idx) in books" :key="idx" @click="watchBook(book._id)">
                     <book-preview  :book="book" title="show book">
-                        <button @click.stop="editBook(book._id)" class="btn-icon">
+                        <button @click.stop="editBook(book._id)" class="btn-icon  edit-btn">
                          <font-awesome-icon icon="edit" />
                         </button>
                     </book-preview>
@@ -38,4 +38,8 @@ export default {
 
 <style scoped lang="scss">
 
+.edit-btn {
+   position: absolute;
+   right: 0;
+}
 </style>

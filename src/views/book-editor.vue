@@ -1,107 +1,103 @@
-<template>
-    
-<section class="book-editor flex justify-center column align-center" >
+  <template>
+
+<section class="flex column">
     <div v-if="book">
-    <transition name="fade">
-    <div v-if="isFirstDetails" class="firstDetailsContainer">
-    <div class="firstDetails form-style-3">
-        <form id="form" class="topBefore flex justify-center column align-center">
-                <input class="form-control" type=text v-model="book.title" placeHolder="Book title">
-                <input class="form-control" type=text v-model="book.author" placeHolder="Author name">
-                <input class="form-control" type=text v-model="book.illustrator" placeHolder="Illustrator name">
-                <textarea rows="5" cols="500" class="form-control" v-model="book.description" placeHolder="Book description" />
-                <v-select class="book-categories form-control" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
-                <form method="POST" ref="coverImgInput" class="page-img-upload-form flex column">
-                    <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="input-file">
+        <transition name="fade">
+            <div v-if="isFirstDetails" class="firstDetailsContainer">
+                <div class="firstDetails form-style-3">
+                    <form id="form" class="topBefore flex justify-center column align-center">
+                        <input class="form-control" type=text v-model="book.title" placeHolder="Book title">
+                        <input class="form-control" type=text v-model="book.author" placeHolder="Author name">
+                        <input class="form-control" type=text v-model="book.illustrator" placeHolder="Illustrator name">
+                        <textarea rows="5" cols="500" class="form-control" v-model="book.description" placeHolder="Book description" />
+                        <v-select class="book-categories form-control" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
+                        <form method="POST" ref="coverImgInput" class="page-img-upload-form flex column">
+                            <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="input-file">
+                            <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
+                        </form>
+                        <div class="first-details-btn-container flex space-around">
+                            <input type="submit" @click.prevent="saveDetails" value="Save">
+                            <input type="button" @click.prevent="cancelFirstDetails" value="Cancel">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </transition>
+        <button v-if="!isFirstDetails" @click="editBookDetails" class="editor-btn editor-regular-btn details-btn self-start"> Book Details</button>
+
+        <div class="audio-area flex column align-center">
+            <form action="" ref="audioInput" class="page-form">
+                <div class="input-file-container">
+                    <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="input-file">
                     <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
-                </form>
+                </div>
+            </form>
+            <div class="flex align-center">
+                <audio ref="audio" :src="book.audio" controls />
+                <button @click="setTimingPage" class="set-btn editor-btn editor-regular-btn ">Set page Timing</button>
+                <input type="number" class="input-samll" v-model="book.pages[currPageIdx].time" step="0.01">
+            </div>
+            <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1>
+        </div>
 
-
-                    <!-- <div class="input-file-container">
-                        <input class="input-file" type="file" name="image" onchange="onFileInputChange(event)" />
+        <div class="page-container flex column">
+            <div class="flex page-ctr">
+                <form method="POST" class="img-form page-form " ref="imgInput">
+                    <div class="input-file-container ">
+                        <input type="file" accept="image/*" @change.prevent="setImgFile" class="input-file">
                         <label tabindex="0" for="my-file" class="input-file-trigger">Select a file...</label>
-                    </div> -->
-
-                <div class="first-details-btn-container flex space-around">
-                    <input type="submit" @click.prevent="saveDetails" value="Save">
-                    <input type="button" @click.prevent="cancelFirstDetails" value="Cancel">
-                </div>
-        </form>
-    </div>
-    </div>
-    </transition>
-    <button v-if="!isFirstDetails" @click="editBookDetails">Update Book Details</button>
-
- <div class="audio-area flex">
-      <h1>{{book.title}}</h1>
-        <form action="" ref="audioInput">
-            <input type="file" accept="audio/*" @change.prevent="setAudioFile">
-        </form>
-        <div class="flex align-center">
-        <audio ref="audio" :src="book.audio" controls />
-                    <button @click="setTimingPage">Page Timing</button>
-                    <input type="text" class="input-samll" v-model="book.pages[currPageIdx].time" >
-        </div>
-    </div>
-
-    <div class="page-container flex column">
-        <div class="flex page-ctr">
-               <form method="POST" ref="imgInput" class="page-img-upload-form  flex column">
-                    <input type="file" accept="image/*" @change.prevent="setImgFile">
+                    </div>
                 </form>
-                <div>
-                <h1>Page {{currPageIdx+1}}</h1>
-                <button class="round-btn" title="Add page" @click="addPage">
-                   <font-awesome-icon class="icon" icon="file-upload" /> 
-                </button>
-                <button class="round-btn" title="Delete page" @click="deletePage(currPageIdx)">
-                      <font-awesome-icon class="icon" icon="trash-alt" /> 
-                </button>
+                <div class="page-ctr-btn flex align-center">
+                    <h1>Page {{currPageIdx+1}}</h1>
+                    <button class="editor-btn round-btn set-btn" title="Add page" @click="addPage">
+                        <font-awesome-icon class="icon" icon="file-upload" />
+                    </button>
+                    <button class="editor-btn round-btn" title="Delete page" @click="deletePage(currPageIdx)">
+                        <font-awesome-icon class="icon" icon="trash-alt" />
+                    </button>
                 </div>
-                
             </div>
-  
-        <div class="page-area">
-            <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')' }">
-                <div class="par-area flex column">
-                    <button title="Add paragraf" class="self-end round-btn" @click="addPar">
-                      <font-awesome-icon class="icon" icon="plus-circle" /> 
-                      </button>
-                    <ul class="par-list clean-list">
-                        <li class="paragraphs-item relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
-                            <textarea autofocus class="editor-text-area" rows='3' cols='50' v-model="par.txt" 
-                            placeHolder="Your paragraph here" />
-                            <div class="par-btns-container absolute">
-                                <button class="round-btn" title="Delete paragraf" @click="deletePar(idx)">
-                                    <font-awesome-icon class="icon" icon="trash-alt" /> 
-                                </button>
-                                <div class="par-timing-container">
-                                    <button title="Set paragraf time" class="round-btn" @click="setTimingPar(idx)">
-                                      <font-awesome-icon class="icon" icon="clock" /> 
+
+            <div class="page-area">
+                <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')' }">
+                    <div class="par-area flex column">
+                        <button title="Add paragraf" class="editor-btn self-end round-btn" @click="addPar">
+                            <font-awesome-icon class="icon" icon="plus-circle" />
+                        </button>
+                        <ul class="par-list clean-list">
+                            <li class="paragraphs-item flex column relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
+                                <textarea autofocus class="editor-text-area" rows='3' cols='50' v-model="par.txt" placeHolder="Your paragraph here" />
+                                <div class="par-btns-container absolute">
+                                    <button class="editor-btn round-btn set-btn" title="Delete paragraf" @click="deletePar(idx)">
+                                        <font-awesome-icon class="icon" icon="trash-alt" />
                                     </button>
-                                    <input class="input-samll self-center" type="text" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime">
+                                    <button title="Set time set-btn" class="set-btn editor-btn round-btn" @click="setTimingPar(idx)">
+                                        <font-awesome-icon class="icon" icon="clock" />
+                                    </button>
+                                    <input class="input-samll self-center" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime" step="0.01">
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+
             </div>
-          
         </div>
+
+        <button @click="saveBook">Save</button>
+        <ul class="editor-previews clean-list flex">
+            <li @click="selectPage(pageIdx)" v-for="(page,pageIdx) in book.pages" :key="pageIdx">
+                <bookPage :pageData="page" :previewInEdit="true"></bookPage>
+            </li>
+        </ul>
     </div>
-   
-    <button @click="saveBook">Save</button>
-    <ul class="editor-previews clean-list flex">
-        <li @click="selectPage(pageIdx)" v-for="(page,pageIdx) in book.pages" :key="pageIdx">
-            <bookPage :pageData="page" :previewInEdit="true" ></bookPage>
-        </li>
-    </ul>
-</div>
 </section>
-</template>
+
+    </template>
 
 <script>
-import { SAVE_BOOK,LOAD_BOOK } from "../store/book-module.js";
+import { SAVE_BOOK, LOAD_BOOK } from "../store/book-module.js";
 import bookPage from "../components/book-page.vue";
 import cloudinaryService from "../services/cloudinary-service.js";
 export default {
@@ -126,35 +122,36 @@ export default {
     };
   },
   created() {
-    if (this.$route.params.bookId){
-        this.$store.dispatch({ type: LOAD_BOOK, bookId: this.$route.params.bookId })
-        .then((book) => {
-            console.log('book after dispach!!!!',book)
-            return this.book = book});
+    if (this.$route.params.bookId) {
+      this.$store
+        .dispatch({ type: LOAD_BOOK, bookId: this.$route.params.bookId })
+        .then(book => {
+          console.log("book after dispach!!!!", book);
+          return (this.book = book);
+        });
+    } else {
+      this.book = {
+        title: "",
+        author: "",
+        illustrator: "",
+        categories: [],
+        description: "",
+        rating: 0,
+        views: 0,
+        numOfPages: 0,
+        duration: 0,
+        audio: "",
+        coverImg: "",
+        pages: [],
+        reviews: [],
+        status: "inProgress",
+        createdAt: Date.now()
+      };
+      this.addPage();
     }
-    else {
-        this.book = {
-            title: "",
-            author: "",
-            illustrator: "",
-            categories: [],
-            description: "",
-            rating: 0,
-            views: 0,
-            numOfPages: 0,
-            duration: 0,
-            audio: "",
-            coverImg: "",
-            pages: [],
-            reviews: [],
-            status: "inProgress",
-            createdAt: Date.now()
-        };
-        this.addPage();
-    }
-    
   },
-  computed: {},
+  computed: {
+  },
   methods: {
     addPage() {
       this.pageNum += 1;
@@ -189,19 +186,15 @@ export default {
       this.book.pages[this.currPageIdx].paragraphs.splice(idx, 1);
     },
     deletePage(idx) {
-      console.log("before delete", this.book.pages);
-      console.log("before delete", this.pageNum);
       this.book.pages.splice(idx, 1);
       this.pageNum -= 1;
-      console.log("after delete", this.book.pages);
-      console.log("after delete", this.pageNum);
     },
     saveDetails() {
       this.isFirstDetails = false;
       this.saveBook();
     },
-    cancelFirstDetails(){
-        this.isFirstDetails = false;
+    cancelFirstDetails() {
+      this.isFirstDetails = false;
     },
     editBookDetails() {
       this.isFirstDetails = true;
@@ -223,7 +216,6 @@ export default {
       });
     },
     setTimingPage() {
-      console.log("start timing", this.$refs.audio.currentTime);
       this.book.pages[this.currPageIdx].time = this.$refs.audio.currentTime;
       this.$refs.audio.pause();
 
@@ -241,7 +233,6 @@ export default {
       // }
     },
     setTimingPar(idx) {
-      console.log("start timing", this.$refs.audio.currentTime);
       this.book.pages[this.currPageIdx].paragraphs[
         idx
       ].parStartTime = this.$refs.audio.currentTime;
@@ -251,11 +242,9 @@ export default {
       this.$store
         .dispatch({ type: SAVE_BOOK, book: this.book })
         .then(book => {
-          console.log("book", book);
           this.book = JSON.parse(JSON.stringify(book));
         })
         .catch(err => {});
-      console.log("book:", this.book);
     }
   },
   components: {
@@ -265,16 +254,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$editorInputColor: #f5c2bd;
+$editorButtonColor: #d49c97;
 
-$editorInputColor : #f5c2bd;
-$editorButtonColor : #d49c97;
 
-.book-editor{
+.editor-container {
+  padding: 1rem;
 }
 
-.upload-btn{
-    width: 100px;
-    height: 100px;
+audio {
+  margin: 0 0.5rem 0 0;
 }
 
 .firstDetailsContainer{
@@ -301,21 +290,30 @@ $editorButtonColor : #d49c97;
 
 }
 
-.form-control{
-    width: 50%;
+.form-control {
+  width: 50%;
 }
 
 .first-details-btn-container{
     margin: 1rem;
     width: 50%;
 }
+.page-form {
+  margin: 0 0 1rem;
+}
+.img-form {
+  margin: 0 1rem 0 0;
+}
 
+.first-details-btn-container {
+  margin: 1rem;
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+}
 
-
-.page-container{
-    width: 90%;
-    min-height: 500px;
-    margin: 1rem;
+.page-container {
+  min-height: 500px;
 }
 .page-area {
       min-height: inherit;
@@ -327,33 +325,38 @@ $editorButtonColor : #d49c97;
 
 .page-img-upload-form{
 
+  min-height: inherit;
+  box-shadow: 0 0 11px black;
+}
+.page-btns-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
-.paragraphs-item{
-    display: flex;
-    flex-direction: column;
+.page-ctr {
+  width: fit-content;
+  padding: 1rem;
+}
+.page-ctr-btn {
+  h1 {
+    margin: 0 0.5rem 0 0;
+  }
+}
+.par-btns-container {
+  display: flex;
+  justify-content: space-around;
+  right: 0;
+  padding: 0.3rem;
 }
 
-.par-btns-container{
-    display: flex;
-    justify-content: space-around;
-    right: 0;
-    padding: .3rem;
-
+.par-list {
+  margin: 0;
+  padding: 0;
+  li {
+    margin: 0 0 1rem;
+  }
 }
-
-.par-timing-container{
-    display: flex;
-}
-
-.par-list{
-    margin: 0;
-    padding: 0;
-    li {
-      margin: 0 0 1rem;
-    }
-}
-
 
 .book-categories {
   background: white;
@@ -361,20 +364,23 @@ $editorButtonColor : #d49c97;
   width: 50%;
 }
 
-
 .editor-previews {
   li {
-    margin:0 1rem 0 0;
+    margin: 0 1rem 0 0;
   }
 }
 
-
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
-  
+.set-btn {
+  margin: 0 0.5rem 0 0;
+}
+.details-btn {
+  margin: 0 0 0.5rem;
+}
 </style>
