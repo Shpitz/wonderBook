@@ -23,8 +23,16 @@ button {
     transition: all 0.3s;
     padding: .5rem;
     font-size: 1rem;
+    outline: none;
 }
-.clean-btn:hover{
-opacity: 0.7;
+.clean-btn:hover:enabled{
+   transform: scale(1.2);
 }
 
+.create-btn {
+    margin: 1rem;
+    padding: 0.5rem;
+    height: auto;
+    align-self: baseline;
+    border: none;
+}

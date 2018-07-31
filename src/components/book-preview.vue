@@ -1,8 +1,7 @@
 <template>
 <div class="blog-card spring-fever " :style="{backgroundImage:'url(' +backgroundImg+')'}">
-        <slot class="btn-edit-slot"></slot>
-
   <div class="title-content">
+    <slot class="btn-edit-slot"></slot>
     <h3>{{book.title}}</h3>
     <hr />
     <div class="intro">By {{book.author}}</div>
@@ -50,6 +49,9 @@ $card-height: 400px;
 $h-color:     #081641;
 $yellow:      #D0BB57;
 $txt-color:   #DCE3E7;
+$text-bg: rgba(255, 255, 255, 0.55);
+
+ $txt-pading:.5rem;
 .icon {
   color:$yellow;
 }
@@ -69,7 +71,6 @@ $txt-color:   #DCE3E7;
   text-align: center;
   
   &.spring-fever{
-    // background: url('../../public/img/books/page9.jpg') no-repeat;
     background-size: cover;
     background-position: bottom;
   }
@@ -87,9 +88,6 @@ $txt-color:   #DCE3E7;
   }
   .gradient-overlay{
     /* bg-gradient: */
-    background-image: -webkit-linear-gradient(rgba(0,0,0,0.00) 0%, rgba(0,0,0,.6) 21%);
-    background-image: -moz-linear-gradient(rgba(0,0,0,0.00) 0%, rgba(0,0,0,.6) 21%);
-    background-image: -o-linear-gradient(rgba(0,0,0,0.00) 0%, rgba(0,0,0,.6) 21%);
     background-image: linear-gradient(rgba(0,0,0,0.00) 0%, rgba(0,0,0,.6) 21%);
     width: $card-width;
     height: $card-height;
@@ -113,7 +111,7 @@ $txt-color:   #DCE3E7;
 
 .title-content{
   text-align: center;
-  margin: 50px 0 0 0;
+  // margin: 50px 0 0 0;
   position: absolute;
   z-index: 20;
   width: 100%;
@@ -123,11 +121,11 @@ $txt-color:   #DCE3E7;
 h3{
   font-size: 20px;
   font-weight: 500;
-  letter-spacing: 2px;
   color: $h-color;
-  background-color: #f5deb370;
+  background-color: $text-bg;
   font-family: 'Merriweather', sans-serif;
-  margin-bottom: 0;
+  margin: 0;
+  padding: $txt-pading;
 }
 hr{
   width: 50px;
@@ -170,9 +168,9 @@ hr{
 }
 .utility-list{
   list-style-type: none;
-  margin: 0 0 30px;
-  background-color: #f5deb370;
-  padding: 0;
+  // margin: 0 0 30px;
+  background-color: $text-bg;
+  padding:$txt-pading;
   width: 100%;
   
   li{

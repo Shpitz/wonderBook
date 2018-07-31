@@ -2,22 +2,20 @@
         <section class="book-filter-categories">
             <ul class="clean-list flex-warp justify-center" >
                 <li  class="categorie-container" v-for="(cat,idx) in categories"
-                :class="[cat.img === '' ? 'no-img' : '']"
+                :class="[cat.img === '' ? 'no-img' : '',filterBy.byCategorie === cat.catTxt ? 'active' : '']"
                  :key="idx" @click="setCategorie(cat.catTxt)" title='Search by categorie'   >
                     <div class="categorie-sub-container flex align-center">
                         <!-- <img :src="cat.img"/> -->
                     <div class="cat-img" :class="[cat.img === '' ? 'hidden' : '']"
                     :style="{ backgroundImage: 'url(' + cat.img + ')' }"/>
-                    <div>
+                    <div >
                      <p>
                      {{cat.catTxt}}
                      </p>
                     </div>
                     </div>
-                    
                 </li>
             </ul>
-
         </section>
     </template>
 
@@ -98,5 +96,6 @@ $container-bg:white;
     color:$main-color-hover;
     font-weight: bold;
 }
+
 
 </style>

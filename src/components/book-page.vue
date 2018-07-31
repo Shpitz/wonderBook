@@ -1,14 +1,20 @@
 <template>
-   <section >
-        <div :class="{collapsed:!pageData}" class="page-container flex space-between" ref="page-container" :style="{ backgroundImage: 'url(' + pageImg + ')' }">
+   <section class="book-page"  ref="bookPage" >
+      <div :class="{collapsed:!pageData}" class="page-container flex space-between relative"
+         ref="page-container"  :style="{ backgroundImage: 'url(' + pageImg + ')'}">
        <div class="p-container" ref="p-container">
        <p v-for="(p,idx) in pageData.paragraphs" :key="idx" 
        :class="[idx === parIdx ? 'active-p animated fadeIn' : '']" >
                  {{p.txt}}
                 </p>
-        </div>
+               </div>
               <slot></slot>
-             </div>
+         
+    
+        <button @click="fullScreen" slot="fullScreen" class="full-btn clean-btn">
+          <font-awesome-icon class="icon" icon="arrows-alt" />
+        </button>
+        </div>
      </section>
 </template>
 
@@ -35,6 +41,19 @@ export default {
       var top = element.offsetTop;
       window.scrollTo(0, top);
     },
+      fullScreen() {
+      debugger
+      var elem = this.$refs.bookPage;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      } else if (elem.mozRequestFullScreen) {
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      }
+    }
   },
  
 };
@@ -42,6 +61,14 @@ export default {
 
 <style scoped lang="scss">
 @import "./src/assets/scss/_vars.scss";
+
+.book-page {
+    background-position: center;
+    background-image: url("../../public/img/background/book-page.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+}
 
 .page-container {
   height: 85vh;
@@ -51,7 +78,14 @@ export default {
   border-radius: 10px;
   box-shadow: 0 0 11px black;
   background-position: center;
-  transition: all 1.5s;
+  transition:opacity 1s ease-in-out;
+  // img {
+  //    object-fit: cover;
+  //   width: 100%;
+  //   height: 100%;
+  //   border-radius: inherit;
+  //   z-index: -1;
+  // }
 }
 
 
@@ -59,25 +93,27 @@ export default {
   border-radius: 10px;
   background-color: #f0f8ff57;
   padding: 1rem;
+  // margin: 0.5rem;
+  max-width: 80%;
   p {
     word-wrap: break-word;
     text-align: left;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-family: $story-font;
-    // color: #2c3e50;
-    transition: all 0.5s;
+    // transition: all 0.3s;
   }
 
-  p::first-letter {
-    color:turquoise;
-}
+
   .active-p {
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
-   .active-p::first-letter {
-     color:orchid;
-   }
-}
 
+}
+.full-btn {
+  align-self: flex-end;
+  align-self: flex-end;
+ position: absolute;
+  left: 95%;
+}
 </style>
