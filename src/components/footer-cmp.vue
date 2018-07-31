@@ -1,16 +1,16 @@
 <template>
     <section>
         <div class="footer">
-            <div class="footer-icons social">
-               
-                    <i class="icon-facebook fb"></i>
-                    <i class="icon-twitter tw"></i>
-                    <i class="icon-youtube yt"></i>
-                    <i class="icon-dribble dr"></i>
-                    <i class="icon-skype sk"></i>
-                    <i class="icon-dropbox db"></i>
-                    <i class="icon-apple apple"></i>
-            </div>
+    <div class="footer-social-icons">
+    <ul class="social-icons">
+        <li><a  class="social-icon"> <i class="fa fa-facebook"></i></a></li>
+        <li><a  class="social-icon"> <i class="fa fa-twitter"></i></a></li>
+        <li><a  class="social-icon"> <i class="fa fa-rss"></i></a></li>
+        <li><a  class="social-icon"> <i class="fa fa-youtube"></i></a></li>
+        <li><a class="social-icon"> <i class="fa fa-linkedin"></i></a></li>
+        <li><a  class="social-icon"> <i class="fa fa-google-plus"></i></a></li>
+    </ul>
+</div>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
                  Quam atque aliquid dolorem minus quaerat facere, explicabo accusantium maiores aliquam quasi, rerum eligendi 
                 voluptas similique. Quidem voluptas fugit unde expedita quasi.
@@ -32,6 +32,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "./src/assets/scss/_vars.scss";
+
 $container-bg:#ecececb3;
 .footer {
     color:#404040;
@@ -70,25 +72,11 @@ $container-bg:#ecececb3;
   text-align: center;
 }
 
-.social {
-  padding: 1rem;
-  font-size: 1.5em;
-//   height: 50px;
-  overflow: hidden;
-}
 
-i {
-  position: relative;
-  margin: 0 10px;
-  @include iconTransition;
-
-  &:hover {
-    top: -5px;
-  }
-}
 .footer-creator {
     padding: .5rem;
 }
+
 
 
 </style>

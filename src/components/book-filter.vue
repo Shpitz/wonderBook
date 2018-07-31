@@ -33,7 +33,8 @@ export default {
       IsInputEmpty(){
           return this.filterBy.byTxt === '';
       }
-  }
+  },
+  
 
 };
 </script>

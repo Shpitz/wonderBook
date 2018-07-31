@@ -1,6 +1,5 @@
   <template>
         <section class="book-app">
-          <router-link to="/bookEditor">Add Book</router-link>
             <div class="background-img-container">
                 <div class="bg flex align-center justify-center">
                   <div>
@@ -9,9 +8,11 @@
                   </div>
                 </div>
             </div>
-            
-             <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter"></book-filter-categories>
-            <book-list :books="books"></book-list>
+            <div class="flex space-between">
+             <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter"/>
+               <button class="create-btn" @click="createBook">Cretae your book</button>
+            </div>
+            <book-list :user="user" :books="books"></book-list>
             <app-footer></app-footer>
         </section>
     </template>
@@ -36,6 +37,7 @@ export default {
   data(){
    return{
       filterCategories:bookSerivce.getCategories(),
+      user:null
    }
   },
   created() {
@@ -57,6 +59,9 @@ export default {
 
       this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy});
       this.loadBooks()
+    },
+    createBook(){
+      this.$router.push('/bookEditor')
     }
   },
   components: {

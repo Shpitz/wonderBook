@@ -9,6 +9,7 @@
 @import 'layout';
 @import 'base';
 @import 'forms';
+@import 'social';
 
 /* Components */
 * {
@@ -28,4 +29,8 @@ html,body {
 // section
 .section-container {
   padding: 1rem 3rem ;
+}
+
+.active {
+  color:$main-color-hover;
 }
