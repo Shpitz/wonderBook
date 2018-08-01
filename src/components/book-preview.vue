@@ -1,8 +1,11 @@
 <template>
 <div class="blog-card spring-fever " :style="{backgroundImage:'url(' +backgroundImg+')'}">
   <div class="title-content">
+  <div class="flex align-center card-header justify-center">
     <slot class="btn-edit-slot"></slot>
     <h3>{{book.title}}</h3>
+  </div>
+    
     <hr />
     <div class="intro">By {{book.author}}</div>
   </div><!-- /.title-content -->
@@ -123,15 +126,20 @@ $text-bg: rgba(255, 255, 255, 0.55);
   width: 100%;
   top: 0;
   left: 0;
+ 
 }
 h3{
   font-size: 20px;
   font-weight: 500;
   color: $h-color;
-  background-color: $text-bg;
   font-family: 'Merriweather', sans-serif;
-  margin: 0;
-  padding: $txt-pading;
+  margin: 0 auto;
+}
+.card-header {
+  background-color: $text-bg;
+    padding: $txt-pading;
+
+
 }
 hr{
   width: 50px;
