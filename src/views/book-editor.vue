@@ -19,18 +19,23 @@
               <v-select class="book-categories" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
             </label>
             <form method="POST" ref="coverImgInput" class="page-img-upload-form flex column">
-              <div class="file-upload">
-                <label for="upload" class="file-upload__label1">UPLOAD BOOK COVER IMAGE {{this.book.coverImg}}
-                  <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input">
+              <div class="file-upload input-file-container" >
+                <label for="upload" class="file-upload__label1 input-file-trigger">UPLOAD BOOK COVER IMAGE {{this.book.coverImg}}
+                  <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input input-file">
                 </label>
               </div>
             </form>
             <form action="" ref="audioInput" class="page-form">
-              <div class="file-upload">
-                <label for="upload" class="file-upload__label1">UPLOAD BOOK AUDIO FILE {{this.book.audio}}
-                  <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input">
+              <div class="file-upload input-file-container">
+                <label for="upload" class="file-upload__label1 input-file-trigger">UPLOAD BOOK AUDIO FILE {{this.book.audio}}
+                  <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input  input-file">
                 </label>
               </div>
+
+
+           
+
+
             </form>
             <div class="first-details-btn-container flex space-around">
               <input type="submit" @click.prevent="saveDetails" value="SAVE">
@@ -106,7 +111,12 @@
 
           </div>
           <form method="POST" class="img-form page-form " ref="imgInput">
-            <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input">
+            <div class="input-file-container">
+            <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input input-file">
+            <label tabindex="0" for="my-file" class="input-file-trigger">
+                            <font-awesome-icon  class="icon" icon="upload" />
+            </label>
+            </div>
           </form>
           <div class="show-carusale">
             <button class="editor-btn round-btn btn-margin-right" @click="showCarusale = !showCarusale">
@@ -474,10 +484,9 @@ textarea:hover:focus::placeholder {
 .categories label {
   text-align: left;
 }
-.file-upload {
-  position: relative;
-  // display: inline-block;
-}
+// .file-upload {
+//   position: relative;
+// }
 
 .file-upload__label1 {
   display: block;
