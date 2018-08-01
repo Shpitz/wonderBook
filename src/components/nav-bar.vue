@@ -5,7 +5,7 @@
              <div class="routes-container"> 
                 <router-link to="/" class="clean-link nav-route">Home</router-link> 
                 <router-link to="/about" class="clean-link nav-route">About</router-link>
-                <router-link to="/about/contact" class="clean-link nav-route">Contact</router-link>
+                <router-link to="/about/contact" class="clean-link nav-route" @click.native="gotoContact">Contact</router-link>
                 <router-link to="/login" class="clean-link nav-route">Login</router-link>
             </div>
 
@@ -24,6 +24,17 @@ import logoCmp from "./logo-cmp.vue";
 export default {
   components: {
     logoCmp
+  },
+  methods: {
+    gotoContact() {
+      if (this.$route.name === "about" || this.$route.name === "contact") {
+        var elContact = document.getElementById("contact-us");
+        if (elContact)
+          elContact.scrollIntoView({
+            behavior: "smooth"
+          });
+      }
+    }
   }
 };
 </script>
@@ -31,7 +42,7 @@ export default {
 <style scoped lang="scss">
 @import "./src/assets/scss/_vars.scss";
 
-$container-bg:#ececec4a;
+$container-bg: #ececec4a;
 .nav-bar {
     box-shadow: 0 0 5px black;
     margin: 0 0 0.4rem;
@@ -59,12 +70,12 @@ $container-bg:#ececec4a;
     align-items: center;
 }
 
-.nav-route{
-    font-size: 1.5rem;
-    font-family: Gaegu;
-    padding: 5px;
-    margin: 3px;
-    transition: all 0.2s
+.nav-route {
+  font-size: 1.5rem;
+  font-family: Gaegu;
+  padding: 5px;
+  margin: 3px;
+  transition: all 0.2s;
 }
 
 .nav-route:hover{
@@ -73,10 +84,7 @@ background-color: $main-color;
 
 }
 
-
-.clean-link{
-    text-decoration: none;
+.clean-link {
+  text-decoration: none;
 }
-
-
 </style>

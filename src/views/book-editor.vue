@@ -2,9 +2,40 @@
 
 <section class="flex column">
     <div v-if="book">
+            <div v-if="(!isFirstDetails && !book._id) || togelModal" class="firstDetailsContainer">
         <transition name="fade">
-            <div v-if="isFirstDetails" class="firstDetailsContainer">
-                <div class="firstDetails form-style-3">
+            <form id="form" class="topBefore">
+                <h1>Please enter the following details:</h1>
+		
+                <input type="text" v-model="book.title" placeholder="BOOK TITLE">
+                <input type="text" v-model="book.author" placeHolder="AUTHOR NAME">
+                <input type="text" v-model="book.illustrator" placeHolder="ILLUSTRATOR NAME">
+                <textarea type="text" v-model="book.description" placeHolder="DESCRIPTION"></textarea>
+                <label for="categories">
+                  Categories:
+                <v-select class="book-categories" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
+                </label>
+                <form method="POST" ref="coverImgInput" class="page-img-upload-form flex column">
+                  <div class="file-upload">
+                    <label for="upload" class="file-upload__label1">UPLOAD BOOK COVER IMAGE {{this.book.coverImg}}
+                      <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input">
+                    </label>
+                  </div>
+                </form>
+                <form action="" ref="audioInput" class="page-form">
+                  <div class="file-upload">
+                      <label for="upload" class="file-upload__label1">UPLOAD BOOK AUDIO FILE {{this.book.audio}}
+                        <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input">
+                      </label>
+                  </div>
+                </form>
+                  <div class="first-details-btn-container flex space-around">
+                      <input type="submit" @click.prevent="saveDetails" value="SAVE">
+                      <input type="button" @click.prevent="cancelFirstDetails" value="CANCEL">
+                  </div>
+            
+              </form>
+                <!-- <div class="firstDetails form-style-3">
                     <form id="form" class="topBefore flex justify-center column align-center">
                         <input class="form-control" type=text v-model="book.title" placeHolder="Book title">
                         <input class="form-control" type=text v-model="book.author" placeHolder="Author name">
@@ -22,18 +53,18 @@
                             <input type="button" @click.prevent="cancelFirstDetails" value="Cancel">
                         </div>
                     </form>
-                </div>
-            </div>
+                </div> -->
         </transition>
-        <button v-if="!isFirstDetails" @click="editBookDetails" class="editor-btn editor-regular-btn details-btn self-start"> Book Details</button>
+            </div>
+        <button @click="editBookDetails" class="editor-btn editor-regular-btn details-btn self-start"> Edit book details</button>
 
         <div class="audio-area flex column align-center">
-            <form action="" ref="audioInput" class="page-form">
+            <!-- <form action="" ref="audioInput" class="page-form">
                 <div class="file-upload">
                     <label for="upload" class="file-upload__label">Select a file...</label>
                     <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input">
                 </div>
-            </form>
+            </form> -->
             <div class="flex align-center">
                 <audio ref="audio" :src="book.audio" controls />
                 <button @click="setTimingPage" class="set-btn editor-btn editor-regular-btn ">Set page Timing</button>
@@ -110,7 +141,8 @@ export default {
     return {
       audioPath: "",
       imgPath: "",
-      isFirstDetails: true,
+      isFirstDetails: false,
+      togelModal: false,
       options: [
         "Toddlers",
         "Early Reader",
@@ -126,6 +158,8 @@ export default {
     };
   },
   created() {
+
+
     if (this.$route.params.bookId) {
       this.$store
         .dispatch({ type: LOAD_BOOK, bookId: this.$route.params.bookId })
@@ -155,6 +189,7 @@ export default {
     }
   },
   computed: {
+    
   },
   methods: {
     addPage() {
@@ -195,14 +230,28 @@ export default {
       this.pageNum -= 1;
     },
     saveDetails() {
-      this.isFirstDetails = false;
+      this.isFirstDetails = true;
+      console.log(this.isFirstDetails);
+      this.togelModal = false
+      console.log('togel', this.togelModal);
+      
       this.saveBook();
     },
     cancelFirstDetails() {
-      this.isFirstDetails = false;
+      if(!this.book._id) {
+          // this.isFirstDetails = false;
+          this.$router.push('./')
+          console.log(this.isFirstDetails);
+          this.togelModal = false
+          console.log('togel', this.togelModal);
+
+      }
     },
     editBookDetails() {
-      this.isFirstDetails = true;
+          this.togelModal = true
+          console.log('togel', this.togelModal);
+      // this.isFirstDetails = true;
+      console.log(this.isFirstDetails);
     },
     setAudioFile() {
       cloudinaryService.doUploadAudio(this.$refs.audioInput).then(url => {
@@ -214,6 +263,8 @@ export default {
       cloudinaryService.doUploadImg(this.$refs.imgInput).then(url => {
         this.book.pages[this.currPageIdx].img = url.secure_url;
       });
+      console.log(this.$refs.imgInput);
+      
     },
     setCoverImgFile() {
       cloudinaryService.doUploadImg(this.$refs.coverImgInput).then(url => {
@@ -260,6 +311,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+
+
 $editorInputColor: #f5c2bd;
 $editorButtonColor: #d49c97;
 
@@ -283,6 +337,10 @@ audio {
     justify-content: center;
     align-items: center;
     z-index: 1;
+    font-family: 'Lato', sans-serif;
+  background-color: #e2dedbf5;
+
+  color: #b3aca7;
 }
 
 .firstDetails {
@@ -300,10 +358,7 @@ audio {
   width: 50%;
 }
 
-.first-details-btn-container{
-    margin: 1rem;
-    width: 50%;
-}
+
 .page-form {
   margin: 0 0 1rem;
 }
@@ -312,10 +367,9 @@ audio {
 }
 
 .first-details-btn-container {
-  margin: 1rem;
-  display: flex;
-  justify-content: space-around;
-  width: 50%;
+  margin-top: 10px;
+  border-bottom: 1px solid  #b3aca7;
+  // width: 100%;
 }
 
 .page-container {
@@ -329,11 +383,7 @@ audio {
 
 
 
-.page-img-upload-form{
 
-//   min-height: inherit;
-//   box-shadow: 0 0 11px black;
-}
 .page-btns-container {
   width: 100%;
   display: flex;
@@ -365,9 +415,14 @@ audio {
 }
 
 .book-categories {
-  background: white;
-  margin: 1rem;
-  width: 50%;
+  // background: white;
+  // margin: 1rem;
+  width: 100%;
+}
+
+.book-categories:hover {
+  cursor: pointer;
+
 }
 
 .editor-previews {
@@ -388,5 +443,155 @@ audio {
 }
 .details-btn {
   margin: 0 0 0.5rem;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400);
+
+
+input::placeholder, textarea::placeholder {
+  color: #aca49c;
+  font-size: 0.875em;
+}
+
+input:focus::placeholder, textarea::focus:placeholder {
+  color: #bbb5af;
+}
+
+/* on hover placeholder */
+input:hover::placeholder, textarea:hover::placeholder {
+  color: #e2dedb;
+  font-size: 0.875em;
+}
+
+input:hover:focus::placeholder, textarea:hover:focus::placeholder {
+  color: #cbc6c1;
+}
+
+
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: #e2dedb;
+  color: #b3aca7;
+}
+
+header {
+  position: relative;
+  margin: 100px 0 25px 0;
+  font-size: 2.3em;
+  text-align: center;
+  letter-spacing: 7px;
+}
+
+#form {
+  position: relative;
+  width: 500px;
+  margin: 50px auto 100px auto;
+}
+
+input, .file-upload__label, .file-upload__input {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.875em;
+  width: 500px;
+  height: 40px;
+  padding: 0px 15px 0px 15px;
+  
+  background: transparent;
+  outline: none;
+  color: #726659;
+  
+  border: solid 1px #b3aca7;
+  border-bottom: none;
+  
+  transition: all 0.3s ease-in-out;
+
+}
+
+input:hover {
+  background: #b3aca7;
+  color: #e2dedb;
+}
+
+textarea {
+  width: 500px;
+  max-width: 500px;
+  height: 110px;
+  max-height: 110px;
+  padding: 15px;
+  
+  background: transparent;
+  outline: none;
+  
+  color: #726659;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.875em;
+  
+  border: solid 1px #b3aca7;
+  
+  transition: all 0.3s ease-in-out;
+}
+
+textarea:hover {
+  background: #b3aca7;
+  color: #e2dedb;
+}
+
+#submit {
+  width: 500px;
+  
+  padding: 0;
+  margin: 5px 0px 0px 0px;
+  
+  font-family: 'Lato', sans-serif;
+  font-size: 0.875em;
+  color: #b3aca7;
+  
+  outline:none;
+  cursor: pointer;
+  
+  border: solid 1px #b3aca7;
+}
+
+#submit:hover {
+  color: #e2dedb;
+}
+
+.categories label {
+  text-align: left;
+}
+.file-upload {
+	position: relative;
+	display: inline-block;
+}
+
+.file-upload__label1 {
+  display: block;
+  border-bottom: solid 1px #b3aca7;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.875em;
+  // padding: 1em 2em;
+  // color: #fff;
+  // background: rgb(68, 68, 68);
+  // border-radius: .4em;
+  // transition: background .3s;
+  
+  &:hover {
+    //  cursor: pointer;
+    //  background: #000;
+      background: #b3aca7;
+      color: #e2dedb;
+  }
+}
+    
+.file-upload__input1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 1;
+    width:0;
+    height: 100%;
+    opacity: 0;
 }
 </style>
