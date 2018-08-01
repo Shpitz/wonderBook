@@ -2,7 +2,7 @@
 
 <section class="flex column">
     <div v-if="book">
-            <div v-if="(!isFirstDetails && !book._id) || togelModal" class="firstDetailsContainer">
+            <div v-if="(!book._id || togelModal)" class="firstDetailsContainer">
         <transition name="fade">
             <form id="form" class="topBefore">
                 <h1>Please enter the following details:</h1>
@@ -245,9 +245,12 @@ export default {
           this.togelModal = false
           console.log('togel', this.togelModal);
 
+      } else {
+        this.togelModal = false
       }
     },
     editBookDetails() {
+      debugger
           this.togelModal = true
           console.log('togel', this.togelModal);
       // this.isFirstDetails = true;
