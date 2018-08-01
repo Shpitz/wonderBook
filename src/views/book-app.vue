@@ -6,7 +6,7 @@
                    <book-filter @searchStr="updateFilter"></book-filter>
                 </div>
             </div>
-            <button class="create-button" @click="createBook">Cretae your book</button>
+            <button class="create-button" @click="createBook">Create your book</button>
             <div class="flex justify-center">
              <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter"/>
             </div>
@@ -39,7 +39,7 @@ export default {
    return{
       filterCategories:bookSerivce.getCategories(),
       books:null,
-      user:null
+      user:null,
    }
   },
   created() {
@@ -53,7 +53,8 @@ export default {
   },
   methods: {
     loadBooks() {
-      this.$store.dispatch({ type: LOAD_BOOKS }).catch(err => {
+      this.$store.dispatch({ type: LOAD_BOOKS })
+      .catch(err => {
         console.log("error in book app loadBooks component", err);
       });
     },

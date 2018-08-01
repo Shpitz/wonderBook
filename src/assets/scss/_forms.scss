@@ -9,12 +9,16 @@
 .input-samll {
     width: 50px;
     padding: .2rem;
+    margin: 0 0 0 .3rem;
 }
 
 .editor-text-area {
+    width: -webkit-fill-available;
     padding: 0.3rem;
     background-color: rgba(255, 255, 255, 0.5);
     border:none; 
+    font-family: $story-font;
+    font-size: 1.3rem;
 }
 .editor-text-area:focus {
     background-color: #e4ecd9;

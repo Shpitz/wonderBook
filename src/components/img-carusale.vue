@@ -6,13 +6,6 @@
                 <slide class="slide-page-container"  v-for="(page,pageIdx) in pages" data-index="pageIdx" :key="pageIdx" data-name="MySlideName" @slideClick="handleSlideClick(pageIdx)">
                         <bookPage :pageData="page" :previewInEdit="true" ></bookPage>
                 </slide>
-                <!-- <slide data-index="1" data-name="MySlideName" @slideClick="handleSlideClick">
-                    <img src="../../public/img/3.jpg" alt="">
-                </slide>
-                <slide data-index="2" data-name="MySlideName" @slideClick="handleSlideClick">
-                    <img src="../../public/img/3.jpg" alt="">
-                </slide> -->
-
             </carousel>
         </div>
     </section>
@@ -56,5 +49,7 @@
 <style scoped>
 .slide-page-container {
     margin: 0 1rem 0 0;
+    padding: 1rem;
 }
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-<div class="blog-card spring-fever " :style="{backgroundImage:'url(' +backgroundImg+')'}">
+<div v-if="book" class="blog-card spring-fever " :style="{backgroundImage:'url(' +backgroundImg+')'}">
   <div class="title-content">
   <div class="flex align-center card-header justify-center">
     <slot class="btn-edit-slot"></slot>
