@@ -1,30 +1,30 @@
   <template>
 
 <section class="main-container flex column align-center">
-    <div v-if="book._id" class="main-editor-container outline">
-            <div v-if="(!book._id || togelModal)" class="firstDetailsContainer">
-              <transition name="fade">
-                <form id="form" class="topBefore">
+    <div v-if="book">
+            <div v-if="(togelModal)" class="firstDetailsContainer">
+        <transition name="fade">
+            <form id="form" class="topBefore">
                 <h1>Please enter the following details:</h1>
 		
-                <input type="text" v-model="book.title" placeholder="BOOK TITLE">
-                <input type="text" v-model="book.author" placeHolder="AUTHOR NAME">
-                <input type="text" v-model="book.illustrator" placeHolder="ILLUSTRATOR NAME">
-                <textarea type="text" v-model="book.description" placeHolder="DESCRIPTION"></textarea>
+                <input type="text" v-model="bookCopy.title" placeholder="BOOK TITLE">
+                <input type="text" v-model="bookCopy.author" placeHolder="AUTHOR NAME">
+                <input type="text" v-model="bookCopy.illustrator" placeHolder="ILLUSTRATOR NAME">
+                <textarea type="text" v-model="bookCopy.description" placeHolder="DESCRIPTION"></textarea>
                 <label for="categories">
                   Categories:
-                <v-select class="book-categories" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
+                <v-select class="book-categories" placeHolder="Categories" multiple v-model="bookCopy.categories" :options="options"></v-select>
                 </label>
                 <form method="POST" ref="coverImgInput" class="page-img-upload-form flex column">
                   <div class="file-upload">
-                    <label for="upload" class="file-upload__label1">UPLOAD BOOK COVER IMAGE {{this.book.coverImg}}
+                    <label for="upload" class="file-upload__label1">UPLOAD BOOK COVER IMAGE {{this.bookCopy.coverImg}}
                       <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input">
                     </label>
                   </div>
                 </form>
                 <form action="" ref="audioInput" class="page-form">
                   <div class="file-upload">
-                      <label for="upload" class="file-upload__label1">UPLOAD BOOK AUDIO FILE {{this.book.audio}}
+                      <label for="upload" class="file-upload__label1">UPLOAD BOOK AUDIO FILE {{this.bookCopy.audio}}
                         <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input">
                       </label>
                   </div>
@@ -42,8 +42,8 @@
             <div class="book-and-page-areas flex column">
             <div class="book-details outline">
               <button @click="editBookDetails" class="editor-btn editor-regular-btn details-btn self-start"> Edit book details</button>
-              <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1>
-              <audio ref="audio" :src="book.audio" controls />
+              <h1 :class="[bookCopy.title === '' ? 'hidden': '']">{{bookCopy.title}}</h1>
+              <audio ref="audio" :src="bookCopy.audio" controls />
               <button @click="saveBook">Save</button>
             </div> 
             <!-- title, auodio and edit details -->
@@ -65,7 +65,7 @@
                     <button @click="setTimingPage" class="set-btn editor-btn editor-regular-btn ">
                   <font-awesome-icon class="icon" icon="clock" />
                 </button>
-                <input type="number" class="input-samll" v-model="book.pages[currPageIdx].time" step="0.01">
+                <input type="number" class="input-samll" v-model="bookCopy.pages[currPageIdx].time" step="0.01">
                 </form>
                 </div>
             </div>
@@ -73,13 +73,13 @@
             </div>
 
             <div class="page-and-pars-area">
-                <div class="img-container" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')' }">
+                <div class="img-container" :style="{ backgroundImage: 'url(' + bookCopy.pages[currPageIdx].img + ')' }">
                     <div class="par-area flex column">
-                        <button title="Add paragraf" class="editor-btn self-end round-btn" @click="addPar">
+                        <button title="Add paragraph" class="editor-btn self-end round-btn" @click="addPar">
                             <font-awesome-icon class="icon" icon="plus-circle" />
                         </button>
                         <ul class="par-list clean-list">
-                            <li class="paragraphs-item flex column relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
+                            <li class="paragraphs-item flex column relative" v-for="(par,idx) in bookCopy.pages[currPageIdx].paragraphs" :key="idx">
                                 <textarea autofocus class="editor-text-area" rows='3' cols='50' v-model="par.txt" placeHolder="Your paragraph here" />
                                 <div class="par-btns-container absolute">
                                     <button class="editor-btn round-btn set-btn" title="Delete paragraf" @click="deletePar(idx)">
@@ -88,7 +88,7 @@
                                     <button title="Set time set-btn" class="set-btn editor-btn round-btn" @click="setTimingPar(idx)">
                                         <font-awesome-icon class="icon" icon="clock" />
                                     </button>
-                                    <input class="input-samll self-center" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime" step="0.01">
+                                    <input class="input-samll self-center" type="number" v-model="bookCopy.pages[currPageIdx].paragraphs[idx].parStartTime" step="0.01">
                                 </div>
                             </li>
                         </ul>
@@ -100,7 +100,7 @@
             <!-- book details (audio, title and edit btn), page controls and page and params -->
                 <button @click="showCarusale = !showCarusale">show</button>
               <div v-if="showCarusale" class="carusale-area outline">
-              <imgCarusale :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
+              <imgCarusale :pages="bookCopy.pages" @onPreviewClicked="selectPage"></imgCarusale>
               </div>
     </div>
 </section>
@@ -118,7 +118,6 @@ export default {
     return {
       audioPath: "",
       imgPath: "",
-      isFirstDetails: false,
       togelModal: false,
       options: [
         "Toddlers",
@@ -132,6 +131,7 @@ export default {
       pageNum: 0,
       currPageIdx: 0,
       parNum: 1,
+      bookCopy : null,
       showCarusale: true,
  
     };
@@ -143,8 +143,8 @@ export default {
       this.$store
         .dispatch({ type: LOAD_BOOK, bookId: this.$route.params.bookId })
         .then(book => {
-          console.log("book after dispach!!!!", book);
-          return (this.book = book);
+            this.book = book;
+            this.bookCopy =JSON.parse(JSON.stringify(this.book));
         });
     } else {
       this.book = {
@@ -164,7 +164,9 @@ export default {
         status: "inProgress",
         createdAt: Date.now()
       };
+      this.bookCopy =JSON.parse(JSON.stringify(this.book));
       this.addPage();
+      this.togelModal = true;
     }
   },
   computed: {
@@ -185,13 +187,11 @@ export default {
           }
         ]
       };
+    if (this.$refs.imgInput) this.$refs.imgInput[0].value = '';
       this.currPageIdx = this.pageNum - 1;
-      this.book.pages.push(newPage);
-      console.log(this.book.pages);
-      console.log(this.pageNum);
+      this.bookCopy.pages.push(newPage);
     },
     selectPage(idx) {
-        console.log('page idx from carusale: ', idx);
       this.currPageIdx = idx;
     },
     addPar() {
@@ -200,62 +200,51 @@ export default {
         parStartTime: 0,
         parEndTime: 0
       };
-      this.book.pages[this.currPageIdx].paragraphs.push(newPar);
+      this.bookCopy.pages[this.currPageIdx].paragraphs.push(newPar);
     },
     deletePar(idx) {
-      this.book.pages[this.currPageIdx].paragraphs.splice(idx, 1);
+      this.bookCopy.pages[this.currPageIdx].paragraphs.splice(idx, 1);
     },
     deletePage(idx) {
-      this.book.pages.splice(idx, 1);
+      this.bookCopy.pages.splice(idx, 1);
       this.pageNum -= 1;
     },
     saveDetails() {
-      this.isFirstDetails = true;
-      console.log(this.isFirstDetails);
-      this.togelModal = false
-      console.log('togel', this.togelModal);
-      
-      this.saveBook();
+      this.togelModal = false;
+    //   this.saveBook();
     },
     cancelFirstDetails() {
+        this.bookCopy = JSON.parse(JSON.stringify(this.book));
       if(!this.book._id) {
-          // this.isFirstDetails = false;
           this.$router.push('./')
-          console.log(this.isFirstDetails);
           this.togelModal = false
-          console.log('togel', this.togelModal);
 
       } else {
         this.togelModal = false
       }
     },
     editBookDetails() {
-      debugger
           this.togelModal = true
-          console.log('togel', this.togelModal);
-      // this.isFirstDetails = true;
-      console.log(this.isFirstDetails);
     },
     setAudioFile() {
       cloudinaryService.doUploadAudio(this.$refs.audioInput).then(url => {
-        this.book.audio = url.secure_url;
+        this.bookCopy.audio = url.secure_url;
       });
     },
 
     setImgFile() {
+        console.log('this.$refs.imgInput',this.$refs.imgInput[0].value)
       cloudinaryService.doUploadImg(this.$refs.imgInput).then(url => {
-        this.book.pages[this.currPageIdx].img = url.secure_url;
+        this.bookCopy.pages[this.currPageIdx].img = url.secure_url;
       });
-      console.log(this.$refs.imgInput);
-      
     },
     setCoverImgFile() {
       cloudinaryService.doUploadImg(this.$refs.coverImgInput).then(url => {
-        this.book.coverImg = url.secure_url;
+        this.bookCopy.coverImg = url.secure_url;
       });
     },
     setTimingPage() {
-      this.book.pages[this.currPageIdx].time = this.$refs.audio.currentTime;
+      this.bookCopy.pages[this.currPageIdx].time = this.$refs.audio.currentTime;
       this.$refs.audio.pause();
 
       //VALIDATIONS
@@ -272,18 +261,20 @@ export default {
       // }
     },
     setTimingPar(idx) {
-      this.book.pages[this.currPageIdx].paragraphs[
-        idx
-      ].parStartTime = this.$refs.audio.currentTime;
+      this.bookCopy.pages[this.currPageIdx].paragraphs[idx].parStartTime = this.$refs.audio.currentTime;
       this.$refs.audio.pause();
     },
     saveBook() {
+        this.book = JSON.parse(JSON.stringify(this.bookCopy));
       this.$store
         .dispatch({ type: SAVE_BOOK, book: this.book })
         .then(book => {
+            console.log('2111111111111111111111')
           this.book = JSON.parse(JSON.stringify(book));
+          this.$router.push('./')
         })
         .catch(err => {});
+        
     }
   },
   toggleCarusale() {
