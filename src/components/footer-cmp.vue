@@ -78,5 +78,9 @@ $container-bg:#ecececb3;
 }
 
 
-
+@media(max-width: 380px) {
+    p {
+            font-size: .8rem;
+    }
+}
 </style>
