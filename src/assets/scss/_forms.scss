@@ -104,56 +104,36 @@
 
 
 /******************************************************************************************************/
+/*****************************************
+  upload button styles
+******************************************/
+// .file-upload {
+// 	position: relative;
+// 	display: inline-block;
+// }
 
-   /* upload input */
-.form-upload {
-    margin:0 0 10px;
- }
- 
- .input-file-container {
-    position: relative;
-    width: 225px;
-  }
-   .input-file-trigger {
-    display: block;
-    padding: 10px 45px;
+// .file-upload__label {
+//   display: block;
+//   padding: 1em 2em;
+//   color: #fff;
+//   background: rgb(68, 68, 68);
+//   border-radius: .4em;
+//   transition: background .3s;
+  
+//   &:hover {
+//      cursor: pointer;
+//      background: #000;
+//   }
+// }
     
-    background: #323232;
-    color: white;
-    font-size: 1em;
-    transition: all .4s;
-    cursor: pointer;
-  }
-   .input-file {
-    position: absolute;
-    top: 0; left: 0;
-    width: 225px;
-    opacity: 0;
-    padding: 14px 0;
-    cursor: pointer;
-  }
-   .input-file:hover + .input-file-trigger,
- .input-file:focus + .input-file-trigger,
-   .input-file-trigger:hover,
-   .input-file-trigger:focus {
-    background: #2eb398;
-    color: #fff;
-  }
-  
-  .file-return {
-    margin: 0;
-  }
-  .file-return:not(:empty) {
-    color: #bebebe;
-  }
-  
- .file-return {
-    font-style: italic;
-    font-size: .9em;
-    font-weight: bold;
-  }
-  .file-return:not(:empty):before {
-    content: "Selected file: ";
-    font-style: normal;
-    font-weight: normal;
-  }
+// .file-upload__input1 {
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     right: 0;
+//     bottom: 0;
+//     font-size: 1;
+//     width:0;
+//     height: 100%;
+//     opacity: 0;
+// }

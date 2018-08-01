@@ -1,6 +1,8 @@
 <template>
     <section class="logo">
-        Wonder-Book
+        <h1>
+            Wonder-Book
+        </h1>
     </section>
 </template>
 
@@ -14,8 +16,13 @@ export default {};
 
     .logo {
     font-family: $logo-font;
-    font-size: 3.5rem;
+    font-size: 3rem;
     color:$main-color-hover;
     margin:$margin-bM;
+    display: flex;
+    padding: .5rem;
+    h1 {
+        margin:0;
+            }
     }
 </style>

@@ -60,12 +60,9 @@ $container-bg: #ececec4a;
 }
 
 .routes-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-
-  border-bottom: 1px solid #2828287d;
-  border-top: 1px solid #2828287d;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .nav-route {
