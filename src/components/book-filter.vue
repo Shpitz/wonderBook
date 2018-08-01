@@ -52,7 +52,7 @@ $size: 20px;
   
   input {
     height: 44px;
-    width: 44px;
+          width: 300px;
     padding: 10px 20px;
     box-sizing: border-box;
     font-size: 18px;
@@ -77,7 +77,6 @@ $size: 20px;
     }
     
     &:focus, &:valid {
-      width: 300px;
       border: $size/10 solid #CCC;
       outline: none;
       cursor: auto;
@@ -101,4 +100,21 @@ $size: 20px;
   }
 }
 
+@media (max-width: 380px) {
+  .search-bar {
+    input {
+      width: 60px;
+     
+    }
+     
+  }
+    .search-bar {
+    input:focus ,input:hover{
+         width: 200px;
+       }
+     
+  }
+    
+
+}
 </style>
