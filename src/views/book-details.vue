@@ -130,7 +130,7 @@ export default {
 
 .img-details:hover {
   .play-mask {
-    color: $dark-main-color;
+    color: $main-color-hover;
   }
   .play-ctr {
     transform: scale(1.2);
