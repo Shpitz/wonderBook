@@ -49,6 +49,7 @@ html,body {
   background-color: #f0f8ff57;
   padding: 1rem;
   overflow: auto;
+  max-height: -webkit-fill-available;
   p {
     font-size: 1rem;
     overflow-wrap: break-word;
