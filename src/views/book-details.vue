@@ -33,7 +33,7 @@
                     <font-awesome-icon class="clock" icon="clock" /> {{book.duration}}</li>
                 <li> <font-awesome-icon class="clock" icon="calendar-alt" /> {{book.createdAt | date-format}}</li>
             </ul>
-             <book-filter-categories @@searchCategorie="updateFilter" :categories="bookCategories" ></book-filter-categories>
+             <book-filter-categories @searchCategorie="updateFilter" :categories="bookCategories" ></book-filter-categories>
             </div>
           </div>
     </section>
@@ -72,9 +72,8 @@ export default {
       this.$router.push(`/bookReading/${this.book._id}`);
     },
      updateFilter(filterBy) {
-
       this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy});
-      // this.$router.push(`/contact`);
+      this.$router.push(`/`);
     }
   },
   components: {

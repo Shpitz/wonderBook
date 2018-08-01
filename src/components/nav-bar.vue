@@ -44,19 +44,26 @@ export default {
 
 $container-bg: #ececec4a;
 .nav-bar {
+    box-shadow: 0 0 5px black;
+    margin: 0 0 0.4rem;
+
   a {
     font-weight: bold;
     color: $main-color;
+    background-color: #a3a3a35c;
     &.router-link-exact-active {
-      color: $main-color-hover;
+      color:white;
     }
   }
 }
 
-.nav-bar-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+
+.nav-bar-container{
+    padding: .5rem;
+    display: flex;
+    justify-content: space-between;
+   
+
 }
 
 .routes-container {
@@ -73,8 +80,10 @@ $container-bg: #ececec4a;
   transition: all 0.2s;
 }
 
-.nav-route:hover {
-  color: $main-color-hover;
+.nav-route:hover{
+color:white;
+background-color: $main-color;
+
 }
 
 .clean-link {
