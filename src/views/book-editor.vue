@@ -2,11 +2,14 @@
 
  <section class="main-container">
     <div class="main-editor-container" v-if="book">
-      <div v-if="(togelModal)" class="firstDetailsContainer">
+      <div v-if="(togelModal)" class="first-details-container">
+        <button @click="cancelFirstDetails" 
+          class="btn-exit-modal editor-btn editor-regular-btn ">
+           <font-awesome-icon class="icon" icon="times" />
+          </button>
         <transition name="fade">
-          <form id="form" class="topBefore">
-            <h1>Please enter the following details:</h1>
-
+          <form  class="details-modal">
+            <h1>Share youre wonder:</h1>
             <input type="text" v-model="book.title" placeholder="BOOK TITLE">
             <input type="text" v-model="book.author" placeHolder="AUTHOR NAME">
             <input type="text" v-model="book.illustrator" placeHolder="ILLUSTRATOR NAME">
@@ -220,11 +223,10 @@ export default {
     },
     saveDetails() {
       this.togelModal = false;
-      //   this.saveBook();
     },
+
     cancelFirstDetails() {
-      // this.book = JSON.parse(JSON.stringify(this.book));
-      if (!this.book._id) {
+      if (!this.book._id ) {
         this.$router.push("./");
         this.togelModal = false;
       } else {
@@ -310,7 +312,7 @@ h1 {
 
 .main-container {
   min-height: 80vh;
-  background-color: wheat;
+  background-color: #f6f4f4;
 }
 .main-editor-container {
   height: 100%;
@@ -340,21 +342,25 @@ audio {
   margin: 0 0.5rem 0 0;
 }
 
-.firstDetailsContainer {
+.btn-exit-modal {
+     position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.first-details-container {
   position: fixed;
   top: 0;
   right: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.726);
+  background-color:rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1;
   font-family: "Lato", sans-serif;
-  background-color: #e2dedbf5;
-
-  color: #b3aca7;
+  color: #393e56de;
 }
 
 .firstDetails {
@@ -399,24 +405,26 @@ textarea:hover:focus::placeholder {
   color: #cbc6c1;
 }
 
-#form {
+.details-modal {
   position: relative;
-  width: 500px;
-  margin: 50px auto 100px auto;
+  width: 60%;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  padding: 1rem;
 
   input,
   .file-upload__label,
   .file-upload__input {
-    font-family: "Lato", sans-serif;
+    // font-family: "Lato", sans-serif;
     font-size: 0.875em;
-    width: 500px;
+    width: 100%;
     height: 40px;
     padding: 0px 15px 0px 15px;
 
     background: transparent;
     outline: none;
-    color: #726659;
-
+    color: inherit;
     border: solid 1px #b3aca7;
     border-bottom: none;
 
@@ -429,21 +437,16 @@ textarea:hover:focus::placeholder {
   }
 }
 .textarea-modal {
-  width: 500px;
-  max-width: 500px;
+  width: 100%;
+  max-width: 100%;
   height: 110px;
   max-height: 110px;
   padding: 15px;
-
+  color: inherit;
   background: transparent;
   outline: none;
-
-  color: #726659;
-  font-family: "Lato", sans-serif;
-  font-size: 0.875em;
-
+  font-size: 1.3rem;
   border: solid 1px #b3aca7;
-
   transition: all 0.3s ease-in-out;
 }
 
@@ -453,18 +456,14 @@ textarea:hover:focus::placeholder {
 }
 
 #submit {
-  width: 500px;
-
+  width: 100%;
   padding: 0;
   margin: 5px 0px 0px 0px;
-
-  font-family: "Lato", sans-serif;
+  // font-family: "Lato", sans-serif;
   font-size: 0.875em;
-  color: #b3aca7;
-
+  // color: #b3aca7;
   outline: none;
   cursor: pointer;
-
   border: solid 1px #b3aca7;
 }
 
@@ -477,23 +476,14 @@ textarea:hover:focus::placeholder {
 }
 .file-upload {
   position: relative;
-  display: inline-block;
+  // display: inline-block;
 }
 
 .file-upload__label1 {
   display: block;
   border-bottom: solid 1px #b3aca7;
-  font-family: "Lato", sans-serif;
   font-size: 0.875em;
-  // padding: 1em 2em;
-  // color: #fff;
-  // background: rgb(68, 68, 68);
-  // border-radius: .4em;
-  // transition: background .3s;
-
   &:hover {
-    //  cursor: pointer;
-    //  background: #000;
     background: #b3aca7;
     color: #e2dedb;
   }
@@ -510,6 +500,10 @@ textarea:hover:focus::placeholder {
   height: 100%;
   opacity: 0;
 }
+.first-details-btn-container input {
+  cursor: pointer;
+  border-bottom: solid 1px #b3aca7;
+}
 
 @media (max-width: 520px) {
   .show-carusale {
@@ -517,6 +511,9 @@ textarea:hover:focus::placeholder {
     button {
       margin: 0;
     }
+  }
+  .details-modal {
+    width: 80%;
   }
 }
 </style>

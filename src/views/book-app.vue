@@ -97,10 +97,10 @@ export default {
   padding: .5rem;
   h1 {
   font-family: 'Cinzel', serif;
-      text-transform: capitalize;
-     color: white;
-    font-size: 3rem;
-    text-shadow: 0 0 4px black;
+  text-transform: capitalize;
+  color: white;
+  font-size: 3rem;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   
   }
 }

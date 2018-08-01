@@ -1,5 +1,5 @@
 import axios from 'axios'
-const BASE_URL = (process.env.NODE_ENV !== 'development') ? '' : 'http://localhost:3000/book';
+const BASE_URL = (process.env.NODE_ENV !== 'development') ? '/book' : 'http://localhost:3000/book';
 
 
 // const BOOK_URL = 'http://localhost:3000/book'

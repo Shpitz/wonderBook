@@ -1,8 +1,8 @@
 <template>
     <section class="logo">
-         <div class="img"></div>
+         <!-- <div class="img"></div> -->
         <h1>
-            Wonder-<span>B</span>ook
+            WONDER <span>B</span>OOK
         </h1>
     </section>
 </template>
