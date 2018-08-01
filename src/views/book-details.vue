@@ -1,6 +1,6 @@
 <template>
         <section  class="book-details section-container" >
-          <div v-if="book" class="flex">
+          <div v-if="book" class="book-details-cotainer flex">
             <div class="img-details">
               <h1>{{book.title}}</h1>
               <div class="relative" @click="playBook()">
@@ -17,6 +17,7 @@
             </div>
 
             <div class="txt-details">
+              <div class="txt-details-container flex column">
               <p>" {{book.description}} "</p>
               <div class="hr"></div>
                 <div class="flex column space-around">
@@ -24,7 +25,7 @@
                 <h4 class="italic last">Illustrated by {{book.illustrator}}</h4>
                 </div>
                 
-            <ul class="details flex justify-center space-between align-center no-padding clean-list">
+                <ul class="details flex justify-center space-between align-center no-padding clean-list">
                 <li>
                     <font-awesome-icon class="star" icon="star" /> {{book.rating}}</li>
                 <li>
@@ -32,8 +33,10 @@
                 <li>
                     <font-awesome-icon class="clock" icon="clock" /> {{book.duration}}</li>
                 <li> <font-awesome-icon class="clock" icon="calendar-alt" /> {{book.createdAt | date-format}}</li>
-            </ul>
-             <book-filter-categories @searchCategorie="updateFilter" :categories="bookCategories" ></book-filter-categories>
+               </ul>
+              </div>
+             <book-filter-categories class="categories-filter"
+              @searchCategorie="updateFilter" :categories="bookCategories" ></book-filter-categories>
             </div>
           </div>
     </section>
@@ -145,6 +148,34 @@ export default {
   h4.last {
     margin: 0 0 1rem;
   }
+}
+
+@media(max-width: 600px) {
+  .book-details-cotainer {
+    flex-direction: column;
+  }
+  .img-details {
+  width: 100%;
+  }
+  .txt-details {
+    width: 100%;
+  }
+  .txt-details-container  {
+    flex-direction: column-reverse;
+  }
+ h1 {
+       margin: 0 0 .5rem;
+ }
+ img {
+       max-height: 350px;
+ }
+ 
+}
+@media(max-width: 820px) { 
+  .categories-filter {
+   position: absolute;
+   left:0;
+ }
 }
 
 </style>

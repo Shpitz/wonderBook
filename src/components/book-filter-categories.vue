@@ -4,8 +4,7 @@
                 <li  class="categorie-container" v-for="(cat,idx) in categories"
                 :class="[cat.img === '' ? 'no-img' : '',filterBy.byCategorie === cat.catTxt ? 'active' : '']"
                  :key="idx" @click="setCategorie(cat.catTxt)" title='Search by categorie'   >
-                    <div class="categorie-sub-container flex align-center">
-                        <!-- <img :src="cat.img"/> -->
+                    <div class="justify-center flex align-center">
                     <div class="cat-img" :class="[cat.img === '' ? 'hidden' : '']"
                     :style="{ backgroundImage: 'url(' + cat.img + ')' }"/>
                     <div class="txt">
