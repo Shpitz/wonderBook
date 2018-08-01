@@ -110,7 +110,6 @@ export default {
   .play-mask {
     height: 100%;
     width: 100%;
-    background-color: #0000006e;
     align-items: center;
     justify-content: center;
   }

@@ -1,7 +1,7 @@
 import StorageService from '../services/StorageService.js'
 import axios from 'axios'
 var STORAGE_KEY = 'loggedinUser';
-const BASE_URL = (process.env.NODE_ENV !== 'development') ? '' : 'http://localhost:3000';
+const BASE_URL = (process.env.NODE_ENV !== 'development') ? '/' : 'http://localhost:3000';
 
 var loggedinUser = StorageService.load(STORAGE_KEY) || null;
 if (loggedinUser) {

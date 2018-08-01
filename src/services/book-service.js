@@ -1,5 +1,5 @@
 import axios from 'axios'
-const BASE_URL = (process.env.NODE_ENV !== 'development') ? '' : 'http://localhost:3000/book';
+const BASE_URL = (process.env.NODE_ENV !== 'development') ? '/book' : 'http://localhost:3000/book';
 
 
 // const BOOK_URL = 'http://localhost:3000/book'
@@ -8,6 +8,7 @@ function query(booksFilter = {}) {
     var queryParams  = new URLSearchParams()
     if (booksFilter.byTxt) queryParams.append('txt', booksFilter.byTxt)
     if (booksFilter.byCategorie ) queryParams.set('categorie', booksFilter.byCategorie)
+    console.log('url in query is:', `${BASE_URL}?${queryParams}`);
     return axios.get(`${BASE_URL}?${queryParams}`)
         .then(res => {
             console.log(res.data)
