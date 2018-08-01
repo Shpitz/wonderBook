@@ -5,10 +5,9 @@ const BASE_URL = (process.env.NODE_ENV !== 'development') ? '/book' : 'http://lo
 // const BOOK_URL = 'http://localhost:3000/book'
 
 function query(booksFilter = {}) {
-    var queryParams  = new URLSearchParams()
+    var queryParams = new URLSearchParams()
     if (booksFilter.byTxt) queryParams.append('txt', booksFilter.byTxt)
-    if (booksFilter.byCategorie ) queryParams.set('categorie', booksFilter.byCategorie)
-    console.log('url in query is:', `${BASE_URL}?${queryParams}`);
+    if (booksFilter.byCategorie) queryParams.set('categorie', booksFilter.byCategorie)
     return axios.get(`${BASE_URL}?${queryParams}`)
         .then(res => {
             console.log(res.data)
@@ -43,14 +42,14 @@ function saveBook(book) {
     }
 }
 
-function getCategories(){
+function getCategories() {
     var categories = [
-    {catTxt:'All',img:'./img/categories/All.jpeg'},
-    {catTxt:'Animals',img:'./img/categories/Animals.jpeg'},
-    {catTxt:'Family',img:'./img/categories/Family.jpeg'},
-    {catTxt:'Friends',img:'./img/categories/Friends.jpeg'}
-    
-]
+        { catTxt: 'All', img: './img/categories/All.jpeg' },
+        { catTxt: 'Animals', img: './img/categories/Animals.jpeg' },
+        { catTxt: 'Family', img: './img/categories/Family.jpeg' },
+        { catTxt: 'Friends', img: './img/categories/Friends.jpeg' }
+
+    ]
     return categories
 }
 
@@ -60,9 +59,6 @@ export default {
     getCategories,
     saveBook,
     remove
-    // getToyById,
-    // remove,
-    // add,
-    // update
+
 }
 

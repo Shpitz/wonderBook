@@ -35,8 +35,7 @@ function getLoggedinUser() {
 
 function _setLoggedinUser(user) {
     loggedinUser = user;
-    StorageService.store(STORAGE_KEY, loggedinUser)
-    console.log('succesful-login');
+    StorageService.store(STORAGE_KEY, loggedinUser);
 }
 
 

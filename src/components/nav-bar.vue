@@ -57,7 +57,7 @@ $container-bg: #ececec4a;
     color: $main-color;
     background-color: #a3a3a35c;
     &.router-link-exact-active {
-      color:white;
+      color:$main-color-hover;
     }
   }
 }
@@ -85,9 +85,7 @@ $container-bg: #ececec4a;
 }
 
 .nav-route:hover{
-color:white;
-background-color: $main-color;
-
+color:$main-color-hover;
 }
 
 .clean-link {
