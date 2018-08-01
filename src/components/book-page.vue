@@ -1,7 +1,9 @@
  <template>
         <section  class="book-page " ref="bookPage">
-            <!-- -->
-            <div v-if="!previewInEdit" :class="{collapsed:!pageData}"  class="animate tada page-container page-display  relative" ref="page-container" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
+            <!-- <loader v-if="!pageData"></loader> -->
+            <div v-if="!previewInEdit" :class="{collapsed:!pageData , fullImg:isFullScrean}"  
+              class="animate tada page-container page-display  relative" ref="page-container" 
+              :style="{ backgroundImage: 'url(' + pageImg + ')'}">
                 <div class="p-container" ref="p-container">
                     <p v-for="(p,idx) in pageData.paragraphs" :key="idx"
                      :class="[idx === parIdx ? 'active-p animated fadeIn' : '']">
@@ -29,6 +31,9 @@
 import StorageService from "../services/book-service.js";
 
 export default {
+  data() {return {
+    isFullScrean : false
+  }},
   props: {
     pageData: Object,
     parIdx: Number,
@@ -51,15 +56,29 @@ export default {
     },
     fullScreen() {
       var elem = this.$refs.bookPage;
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
-      } else if (elem.mozRequestFullScreen) {
-        elem.mozRequestFullScreen();
-      } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
+      if (!this.isFullScrean){        
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+          elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen();
+        }
       }
+      else{
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+      }
+      this.isFullScrean = !this.isFullScrean;
     }
   }
 };
@@ -116,5 +135,10 @@ export default {
   align-self: flex-end;
   position: absolute;
   left: 95%;
+}
+
+.fullImg{
+  height: 100vh;
+  width: 100vw;
 }
 </style>
