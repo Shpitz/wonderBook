@@ -62,8 +62,6 @@ $container-bg: #ececec4a;
     padding: .5rem;
     display: flex;
     justify-content: space-between;
-   
-
 }
 
 .routes-container {
