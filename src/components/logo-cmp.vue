@@ -2,7 +2,7 @@
     <section class="logo">
          <div class="img"></div>
         <h1>
-            Wonder-Book
+            Wonder-<span>B</span>ook
         </h1>
     </section>
 </template>
@@ -30,6 +30,9 @@ export default {};
     }
     h1 {
         margin:0;
+            }
+            span {
+                color:$main-color-hover;
             }
     }
 </style>
