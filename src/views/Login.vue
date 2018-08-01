@@ -8,21 +8,20 @@
                         </div>
                     </div>
                     <div class="form form--signup">
-                        <div class="form--heading">Welcome! Sign Up</div>
-                        <form autocomplete="off">
-                        <input type="text" placeholder="Name">
-                        <input type="email" placeholder="Email">
-                        <input type="password" placeholder="Password">
-                        <button class="button">Sign Up</button>
-                        </form>
+                      <div class="form--heading">Welcome! Sign Up</div>
+                      <form autocomplete="off" @submit.prevent="signup">
+                        <input type="text" placeholder="Name" v-model="signupDetails.name">
+                        <input type="password" placeholder="Password" v-model="signupDetails.password">
+                        <button class="button" type="submit">Sign Up</button>
+                      </form>
                     </div>
                     <div class="form form--login">
-                        <div class="form--heading">Welcome back! </div>
-                        <form autocomplete="off">
-                        <input type="text" placeholder="Name">
-                        <input type="password" placeholder="Password">
-                        <button class="button">Login</button>
-                        </form>
+                      <div class="form--heading">Welcome back! </div>
+                      <form autocomplete="off" @submit.prevent="login">
+                        <input type="text" placeholder="Name" v-model="loginDetails.name">
+                        <input type="password" placeholder="Password" v-model="loginDetails.password">
+                        <button class="button" type="submit">Login</button>
+                      </form>
                     </div>
                 </div>
 
@@ -79,7 +78,6 @@ export default {
         vlogin() {
             [].forEach.call( document.querySelectorAll('.message'), function(el) {
             el.style.transform = 'translateX(0)';
-            console.log(el);
             if(el.classList.contains(login)) {
                 el.classList.remove('signup')
             }
@@ -89,7 +87,6 @@ export default {
         vsignup() {
             [].forEach.call( document.querySelectorAll('.message'), function(el) {
                 el.style.transform = 'translateX(100%)';
-            console.log(el);
             if(el.classList.contains(login)) {
                 el.classList.remove('login')
             }

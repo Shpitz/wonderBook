@@ -8,17 +8,15 @@
         @seeking="onSeeking"
         controls
         autoplay/>
-       <book-page :pageData= "getPage" :previewInEdit="false"  :parIdx= "getParIdx" >
-         <div>
-         
-             <button @click="manualMovePage(-1)" class="btn-page-control clean-btn" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" >
-                              <font-awesome-icon class="icon" icon="backward" /> 
-           </button>
-           <button class="btn-page-control clean-btn" :class="[disabledNextBtn ? 'btnDisabled' : '']" 
+      <book-page :pageData= "getPage" :previewInEdit="false"  :parIdx= "getParIdx" :class="[pageFlipped ? 'animated lightSpeedIn' : '']">
+      <div>  
+        <button @click="manualMovePage(-1)" class="btn-page-control clean-btn" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" >
+          <font-awesome-icon class="icon" icon="backward" /> 
+        </button>
+        <button class="btn-page-control clean-btn" :class="[disabledNextBtn ? 'btnDisabled' : '']" 
            @click="manualMovePage(+1)">
-               <font-awesome-icon class="icon" icon="forward" /> 
-           </button>
-
+            <font-awesome-icon class="icon" icon="forward" /> 
+        </button>
        </div>
    </book-page>
 </div>
@@ -38,12 +36,16 @@ export default {
       currPageIdx: 0,
       currentTime: 0,
       currPar: null,
-      currParIdx: 0
+      currParIdx: 0,
+      pageFlipped : false
     };
   },
   created() {
     var bookId = this.$route.params.bookId;
     this.getBook(bookId);
+    if (screen.width < screen.height){
+      screen.orientation.lock('landscape');
+    }
   },
   mounted() {},
   computed: {
@@ -51,6 +53,8 @@ export default {
       return this.currParIdx;
     },
     getPage() {
+      this.pageFlipped = true;
+      setTimeout(()=>{this.pageFlipped=false},2000);
       return this.currPage;
     },
     disabledNextBtn() {
@@ -134,11 +138,15 @@ export default {
       this.currentTime = currPageTime;
       this.$refs.audio.currentTime = currPageTime;
     },
-    
   
   },
   components: {
     bookPage
+  },
+  destroyed(){
+    if (screen.width < screen.height){
+      screen.orientation.lock('portrait');
+    }
   }
 };
 </script>
