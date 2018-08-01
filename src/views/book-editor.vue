@@ -1,6 +1,6 @@
   <template>
 
-<section class="flex column">
+<section class="main-container flex column align-center">
     <div v-if="book">
             <div v-if="(togelModal)" class="firstDetailsContainer">
         <transition name="fade">
@@ -34,53 +34,21 @@
                       <input type="button" @click.prevent="cancelFirstDetails" value="CANCEL">
                   </div>
             
-              </form>
-                <!-- <div class="firstDetails form-style-3">
-                    <form id="form" class="topBefore flex justify-center column align-center">
-                        <input class="form-control" type=text v-model="book.title" placeHolder="Book title">
-                        <input class="form-control" type=text v-model="book.author" placeHolder="Author name">
-                        <input class="form-control" type=text v-model="book.illustrator" placeHolder="Illustrator name">
-                        <textarea rows="5" cols="500" class="form-control" v-model="book.description" placeHolder="Book description" />
-                        <v-select class="book-categories form-control" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
-                        <form method="POST" ref="coverImgInput" class="page-img-upload-form flex column">
-                            <div class="file-upload">
-                                <label for="upload" class="file-upload__label">Select a file...</label>
-                                <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input">
-                            </div>
-                        </form>
-                        <div class="first-details-btn-container flex space-around">
-                            <input type="submit" @click.prevent="saveDetails" value="Save">
-                            <input type="button" @click.prevent="cancelFirstDetails" value="Cancel">
-                        </div>
-                    </form>
-                </div> -->
-        </transition>
-            </div>
-        <button @click="editBookDetails" class="editor-btn editor-regular-btn details-btn self-start"> Edit book details</button>
-
-        <div class="audio-area flex column align-center">
-            <!-- <form action="" ref="audioInput" class="page-form">
-                <div class="file-upload">
-                    <label for="upload" class="file-upload__label">Select a file...</label>
-                    <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input">
-                </div>
-            </form> -->
-            <div class="flex align-center">
-                <audio ref="audio" :src="bookCopy.audio" controls />
-                <button @click="setTimingPage" class="set-btn editor-btn editor-regular-btn ">Set page Timing</button>
-                <input type="number" class="input-samll" v-model="bookCopy.pages[currPageIdx].time" step="0.01">
-            </div>
-            <h1 :class="[bookCopy.title === '' ? 'hidden': '']">{{bookCopy.title}}</h1>
-        </div>
-
-        <div class="page-container flex column">
-            <div class="flex page-ctr">
-                <form method="POST" class="img-form page-form " ref="imgInput">
-                    <div class="file-upload">
-                        <label for="upload" class="file-upload__label">Select a file...</label>
-                        <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input">
-                    </div>
                 </form>
+              </transition>
+            </div>
+            <!-- modal - first details -->
+            <div  class="book-page-and-pars-area flex "> 
+            <div class="book-and-page-areas flex column">
+            <div class="book-details outline">
+              <button @click="editBookDetails" class="editor-btn editor-regular-btn details-btn self-start"> Edit book details</button>
+              <h1 :class="[bookCopy.title === '' ? 'hidden': '']">{{bookCopy.title}}</h1>
+              <audio ref="audio" :src="bookCopy.audio" controls />
+              <button @click="saveBook">Save</button>
+            </div> 
+            <!-- title, auodio and edit details -->
+        <div class="page-container flex column outline">
+            <div class="flex page-ctr">
                 <div class="page-ctr-btn flex align-center">
                     <h1>Page {{currPageIdx+1}}</h1>
                     <button class="editor-btn round-btn set-btn" title="Add page" @click="addPage">
@@ -89,10 +57,22 @@
                     <button class="editor-btn round-btn" title="Delete page" @click="deletePage(currPageIdx)">
                         <font-awesome-icon class="icon" icon="trash-alt" />
                     </button>
+                    <form method="POST" class="img-form page-form " ref="imgInput">
+                    <div class="file-upload">
+                        <label for="upload" class="file-upload__label">Select a file...</label>
+                        <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input">
+                    </div>
+                    <button @click="setTimingPage" class="set-btn editor-btn editor-regular-btn ">
+                  <font-awesome-icon class="icon" icon="clock" />
+                </button>
+                <input type="number" class="input-samll" v-model="bookCopy.pages[currPageIdx].time" step="0.01">
+                </form>
                 </div>
             </div>
+            </div>
+            </div>
 
-            <div class="page-area">
+            <div class="page-and-pars-area">
                 <div class="img-container" :style="{ backgroundImage: 'url(' + bookCopy.pages[currPageIdx].img + ')' }">
                     <div class="par-area flex column">
                         <button title="Add paragraph" class="editor-btn self-end round-btn" @click="addPar">
@@ -114,17 +94,14 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
-        </div>
-
-                <button @click="saveBook">Save</button>
-    <!-- <ul class="editor-previews clean-list flex">
-        <li @click="selectPage(pageIdx)" v-for="(page,pageIdx) in book.pages" :key="pageIdx">
-            <bookPage :pageData="page" :previewInEdit="true" ></bookPage>
-        </li>
-    </ul> -->
-    <imgCarusale :pages="bookCopy.pages" @onPreviewClicked="selectPage"></imgCarusale>
+            <!-- page and params -->
+            </div>
+            <!-- book details (audio, title and edit btn), page controls and page and params -->
+                <button @click="showCarusale = !showCarusale">show</button>
+              <div v-if="showCarusale" class="carusale-area outline">
+              <imgCarusale :pages="bookCopy.pages" @onPreviewClicked="selectPage"></imgCarusale>
+              </div>
     </div>
 </section>
 
@@ -154,7 +131,9 @@ export default {
       pageNum: 0,
       currPageIdx: 0,
       parNum: 1,
-      bookCopy : null
+      bookCopy : null,
+      showCarusale: true,
+ 
     };
   },
   created() {
@@ -191,6 +170,7 @@ export default {
     }
   },
   computed: {
+         
     
   },
   methods: {
@@ -297,6 +277,11 @@ export default {
         
     }
   },
+  toggleCarusale() {
+      this.showCarusale = !this.showCarusale
+      console.log(this.showCarusale);
+      
+  },
   components: {
     bookPage,
     imgCarusale
@@ -304,288 +289,297 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+// <style scoped lang="scss">
 
 
 
-$editorInputColor: #f5c2bd;
-$editorButtonColor: #d49c97;
+// $editorInputColor: #f5c2bd;
+// $editorButtonColor: #d49c97;
+
+// .outline {
+//   outline: 1px solid hotpink;
+// }
+
+// .main-container {
+//   height: 100vh;
+// }
+// .main-editor-container{
+//   width: 90%;
+//   height: 90vh;
+
+// }
+
+// .editor-container {
+//   padding: 1rem;
+// }
+
+// audio {
+//   margin: 0 0.5rem 0 0;
+// }
+
+// .firstDetailsContainer{
+//     position: fixed;
+//     top: 0;
+//     right: 0;
+//     width: 100%;
+//     height: 100%;
+//     background-color: rgba(0, 0, 0, 0.726);
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     z-index: 1;
+//     font-family: 'Lato', sans-serif;
+//   background-color: #e2dedbf5;
+
+//   color: #b3aca7;
+// }
+
+// .firstDetails {
+//     margin: 1rem;
+//     border: solid 1px lightgray;
+//     box-shadow: 0px 0px 11px black;
+//     background-color: rgb(146, 133, 133);
+// }
 
 
-.editor-container {
-  padding: 1rem;
-}
-
-audio {
-  margin: 0 0.5rem 0 0;
-}
-
-.firstDetailsContainer{
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.726);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    font-family: 'Lato', sans-serif;
-  background-color: #e2dedbf5;
-
-  color: #b3aca7;
-}
-
-.firstDetails {
-    margin: 1rem;
-    border: solid 1px lightgray;
-    box-shadow: 0px 0px 11px black;
-    background-color: rgb(146, 133, 133);
-}
-
-.topBefore {
-
-}
-
-.form-control {
-  width: 50%;
-}
+// .form-control {
+//   width: 50%;
+// }
 
 
-.page-form {
-  margin: 0 0 1rem;
-}
-.img-form {
-  margin: 0 1rem 0 0;
-}
+// .page-form {
+//   margin: 0 0 1rem;
+// }
+// .img-form {
+//   margin: 0 1rem 0 0;
+// }
 
-.first-details-btn-container {
-  margin-top: 10px;
-  border-bottom: 1px solid  #b3aca7;
-  // width: 100%;
-}
+// .first-details-btn-container {
+//   margin-top: 10px;
+//   border-bottom: 1px solid  #b3aca7;
+//   // width: 100%;
+// }
 
-.page-container {
-  min-height: 500px;
-}
-.page-area {
-      min-height: inherit;
-      box-shadow: 0 0 11px black;
-}
-
-
-
-
-
-.page-btns-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.page-ctr {
-  width: fit-content;
-  padding: 1rem;
-}
-.page-ctr-btn {
-  h1 {
-    margin: 0 0.5rem 0 0;
-  }
-}
-.par-btns-container {
-  display: flex;
-  justify-content: space-around;
-  right: 0;
-  padding: 0.3rem;
-}
-
-.par-list {
-  margin: 0;
-  padding: 0;
-  li {
-    margin: 0 0 1rem;
-  }
-}
-
-.book-categories {
-  // background: white;
-  // margin: 1rem;
-  width: 100%;
-}
-
-.book-categories:hover {
-  cursor: pointer;
-
-}
-
-.editor-previews {
-  li {
-    margin: 0 1rem 0 0;
-  }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-.set-btn {
-  margin: 0 0.5rem 0 0;
-}
-.details-btn {
-  margin: 0 0 0.5rem;
-}
-
-@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400);
-
-
-input::placeholder, textarea::placeholder {
-  color: #aca49c;
-  font-size: 0.875em;
-}
-
-input:focus::placeholder, textarea::focus:placeholder {
-  color: #bbb5af;
-}
-
-/* on hover placeholder */
-input:hover::placeholder, textarea:hover::placeholder {
-  color: #e2dedb;
-  font-size: 0.875em;
-}
-
-input:hover:focus::placeholder, textarea:hover:focus::placeholder {
-  color: #cbc6c1;
-}
+// .page-container {
+//   min-height: 500px;
+// }
+// .page-area {
+//       min-height: inherit;
+//       box-shadow: 0 0 11px black;
+// }
 
 
 
-body {
-  font-family: 'Lato', sans-serif;
-  background: #e2dedb;
-  color: #b3aca7;
-}
 
-header {
-  position: relative;
-  margin: 100px 0 25px 0;
-  font-size: 2.3em;
-  text-align: center;
-  letter-spacing: 7px;
-}
 
-#form {
-  position: relative;
-  width: 500px;
-  margin: 50px auto 100px auto;
-}
+// .page-btns-container {
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+// }
 
-input, .file-upload__label, .file-upload__input {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.875em;
-  width: 500px;
-  height: 40px;
-  padding: 0px 15px 0px 15px;
+// .page-ctr {
+//   width: fit-content;
+//   padding: 1rem;
+// }
+// .page-ctr-btn {
+//   h1 {
+//     margin: 0 0.5rem 0 0;
+//   }
+// }
+// .par-btns-container {
+//   display: flex;
+//   justify-content: space-around;
+//   right: 0;
+//   padding: 0.3rem;
+// }
+
+// .par-list {
+//   margin: 0;
+//   padding: 0;
+//   li {
+//     margin: 0 0 1rem;
+//   }
+// }
+
+// .book-categories {
+//   // background: white;
+//   // margin: 1rem;
+//   width: 100%;
+// }
+
+// .book-categories:hover {
+//   cursor: pointer;
+
+// }
+
+// .editor-previews {
+//   li {
+//     margin: 0 1rem 0 0;
+//   }
+// }
+
+// .fade-enter-active,
+// .fade-leave-active {
+//   transition: opacity 0.5s;
+// }
+// .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+//   opacity: 0;
+// }
+// .set-btn {
+//   margin: 0 0.5rem 0 0;
+// }
+// .details-btn {
+//   margin: 0 0 0.5rem;
+// }
+
+// @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400);
+
+
+// input::placeholder, textarea::placeholder {
+//   color: #aca49c;
+//   font-size: 0.875em;
+// }
+
+// input:focus::placeholder, textarea::focus:placeholder {
+//   color: #bbb5af;
+// }
+
+// /* on hover placeholder */
+// input:hover::placeholder, textarea:hover::placeholder {
+//   color: #e2dedb;
+//   font-size: 0.875em;
+// }
+
+// input:hover:focus::placeholder, textarea:hover:focus::placeholder {
+//   color: #cbc6c1;
+// }
+
+
+
+// body {
+//   font-family: 'Lato', sans-serif;
+//   background: #e2dedb;
+//   color: #b3aca7;
+// }
+
+// header {
+//   position: relative;
+//   margin: 100px 0 25px 0;
+//   font-size: 2.3em;
+//   text-align: center;
+//   letter-spacing: 7px;
+// }
+
+// #form {
+//   position: relative;
+//   width: 500px;
+//   margin: 50px auto 100px auto;
+// }
+
+// input, .file-upload__label, .file-upload__input {
+//   font-family: 'Lato', sans-serif;
+//   font-size: 0.875em;
+//   width: 500px;
+//   height: 40px;
+//   padding: 0px 15px 0px 15px;
   
-  background: transparent;
-  outline: none;
-  color: #726659;
+//   background: transparent;
+//   outline: none;
+//   color: #726659;
   
-  border: solid 1px #b3aca7;
-  border-bottom: none;
+//   border: solid 1px #b3aca7;
+//   border-bottom: none;
   
-  transition: all 0.3s ease-in-out;
+//   transition: all 0.3s ease-in-out;
 
-}
+// }
 
-input:hover {
-  background: #b3aca7;
-  color: #e2dedb;
-}
+// input:hover {
+//   background: #b3aca7;
+//   color: #e2dedb;
+// }
 
-textarea {
-  width: 500px;
-  max-width: 500px;
-  height: 110px;
-  max-height: 110px;
-  padding: 15px;
+// textarea {
+//   width: 500px;
+//   max-width: 500px;
+//   height: 110px;
+//   max-height: 110px;
+//   padding: 15px;
   
-  background: transparent;
-  outline: none;
+//   background: transparent;
+//   outline: none;
   
-  color: #726659;
-  font-family: 'Lato', sans-serif;
-  font-size: 0.875em;
+//   color: #726659;
+//   font-family: 'Lato', sans-serif;
+//   font-size: 0.875em;
   
-  border: solid 1px #b3aca7;
+//   border: solid 1px #b3aca7;
   
-  transition: all 0.3s ease-in-out;
-}
+//   transition: all 0.3s ease-in-out;
+// }
 
-textarea:hover {
-  background: #b3aca7;
-  color: #e2dedb;
-}
+// textarea:hover {
+//   background: #b3aca7;
+//   color: #e2dedb;
+// }
 
-#submit {
-  width: 500px;
+// #submit {
+//   width: 500px;
   
-  padding: 0;
-  margin: 5px 0px 0px 0px;
+//   padding: 0;
+//   margin: 5px 0px 0px 0px;
   
-  font-family: 'Lato', sans-serif;
-  font-size: 0.875em;
-  color: #b3aca7;
+//   font-family: 'Lato', sans-serif;
+//   font-size: 0.875em;
+//   color: #b3aca7;
   
-  outline:none;
-  cursor: pointer;
+//   outline:none;
+//   cursor: pointer;
   
-  border: solid 1px #b3aca7;
-}
+//   border: solid 1px #b3aca7;
+// }
 
-#submit:hover {
-  color: #e2dedb;
-}
+// #submit:hover {
+//   color: #e2dedb;
+// }
 
-.categories label {
-  text-align: left;
-}
-.file-upload {
-	position: relative;
-	display: inline-block;
-}
+// .categories label {
+//   text-align: left;
+// }
+// .file-upload {
+// 	position: relative;
+// 	display: inline-block;
+// }
 
-.file-upload__label1 {
-  display: block;
-  border-bottom: solid 1px #b3aca7;
-    font-family: 'Lato', sans-serif;
-    font-size: 0.875em;
-  // padding: 1em 2em;
-  // color: #fff;
-  // background: rgb(68, 68, 68);
-  // border-radius: .4em;
-  // transition: background .3s;
+// .file-upload__label1 {
+//   display: block;
+//   border-bottom: solid 1px #b3aca7;
+//     font-family: 'Lato', sans-serif;
+//     font-size: 0.875em;
+//   // padding: 1em 2em;
+//   // color: #fff;
+//   // background: rgb(68, 68, 68);
+//   // border-radius: .4em;
+//   // transition: background .3s;
   
-  &:hover {
-    //  cursor: pointer;
-    //  background: #000;
-      background: #b3aca7;
-      color: #e2dedb;
-  }
-}
+//   &:hover {
+//     //  cursor: pointer;
+//     //  background: #000;
+//       background: #b3aca7;
+//       color: #e2dedb;
+//   }
+// }
     
-.file-upload__input1 {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    font-size: 1;
-    width:0;
-    height: 100%;
-    opacity: 0;
-}
-</style>
+// .file-upload__input1 {
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     right: 0;
+//     bottom: 0;
+//     font-size: 1;
+//     width:0;
+//     height: 100%;
+//     opacity: 0;
+// }
+// </style>

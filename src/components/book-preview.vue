@@ -224,4 +224,39 @@ hr{
     }
   }
 
+
+  @media (max-width: 550px){
+    $card-width-max:350px;
+   .blog-card {
+     margin: 0 0 20px ;
+     width: $card-width-max;
+     .color-overlay { 
+      width: $card-width-max;
+   }
+    .gradient-overlay {
+       width: $card-width-max;
+
+    }
+   }
+   
+  }
+
+  @media (max-width: 360px){
+    $card-width-max:250px;
+   .blog-card {
+     margin: 0 0 20px ;
+     width: $card-width-max;
+     .color-overlay { 
+      width: $card-width-max;
+   }
+    .gradient-overlay {
+       width: $card-width-max;
+
+    }
+   }
+   
+  }
+
+  
+
 </style>
