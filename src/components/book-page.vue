@@ -1,7 +1,7 @@
  <template>
         <section  class="book-page " ref="bookPage">
-            <!-- :class="{collapsed:!pageData}" -->
-            <div v-if="!previewInEdit" class="animate fade page-container page-display  relative" ref="page-container" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
+            <!-- -->
+            <div v-if="!previewInEdit" :class="{collapsed:!pageData}"  class="animate tada page-container page-display  relative" ref="page-container" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
                 <div class="p-container" ref="p-container">
                     <p v-for="(p,idx) in pageData.paragraphs" :key="idx"
                      :class="[idx === parIdx ? 'active-p animated fadeIn' : '']">
@@ -93,17 +93,18 @@ export default {
 
 }
 
+ p {
+    word-wrap: break-word;
+    text-align: left;
+    font-size: 1.3rem;
+  }
 
 .p-container {
   border-radius: 10px;
   background-color: #f0f8ff57;
   padding: 1rem;
   max-width: 80%;
-  p {
-    word-wrap: break-word;
-    text-align: left;
-    font-size: 1.3rem;
-  }
+ 
 
   .active-p {
     font-weight: bold;

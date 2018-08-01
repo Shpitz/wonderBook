@@ -1,18 +1,17 @@
   <template>
         <section class="book-app">
             <div class="background-img-container">
-                <div class="bg flex align-center justify-center">
-                  <div class="flex column space-around filter-container">
-                    <div><h1><span class="black">Online</span>  <span class="white"> book</span></h1></div>
+                <div class="bg flex column align-center justify-center">
+                    <h1>Look. Listen. Join the wonder.</h1>
                    <book-filter @searchStr="updateFilter"></book-filter>
-                  </div>
                 </div>
             </div>
             <button class="create-button" @click="createBook">Cretae your book</button>
             <div class="flex justify-center">
              <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter"/>
             </div>
-            <book-list :user="user" :books="books"></book-list>
+            <loader v-if="!books"></loader>
+            <book-list :user="user" :books="booksToShow"></book-list>
             <app-footer></app-footer>
         </section>
     </template>
@@ -30,6 +29,7 @@ import bookList from "../components/book-list.vue";
 import bookFilter from "../components/book-filter.vue";
 import bookFilterCategories from "../components/book-filter-categories.vue"
 import appFooter from "../components/footer-cmp.vue"
+import loader from "../components/loader-cmp.vue"
 
 
 
@@ -38,16 +38,17 @@ export default {
   data(){
    return{
       filterCategories:bookSerivce.getCategories(),
+      books:null,
       user:null
    }
   },
   created() {
     this.loadBooks();
-   
   },
   computed: {
-    books() {
-      return this.$store.getters[BOOKS_FOR_DISPLAY];
+    booksToShow() {
+      this.books  = this.$store.getters[BOOKS_FOR_DISPLAY];
+      return this.books;
     },
   },
   methods: {
@@ -69,19 +70,13 @@ export default {
     bookFilter,
     bookFilterCategories,
     appFooter,
+    loader
   }
 };
 </script>
 
 <style lang="scss">
-.book-app{
-  // background-image: url("../../public/img/background/wonderbookback.jpg");
-}
-
-.filter-container{
-  height: 80%;
-}
-
+@import url('https://fonts.googleapis.com/css?family=Cinzel');
 .background-img-container {
   height: 400px;
   margin: 0;
@@ -98,16 +93,14 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  padding: .5rem;
   h1 {
-  
+  font-family: 'Cinzel', serif;
       text-transform: capitalize;
-    .black {
-      margin: 0 .5rem;
-      color:black;
-    }
-    .white {
-      color:white;
-    }
+     color: white;
+    font-size: 3rem;
+    text-shadow: 0 0 4px black;
+  
   }
 }
 </style>

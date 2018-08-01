@@ -130,14 +130,14 @@ export default {
     border: none;
     width: 70px;
     height: 40px;
-    margin: 1rem;
+    margin: 1rem 0;
     font-family: Maven Pro, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .send-btn-container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
 .get-in-touch-detail{
