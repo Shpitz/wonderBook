@@ -1,5 +1,6 @@
 <template>
     <section class="logo">
+         <div class="img"></div>
         <h1>
             Wonder-Book
         </h1>
@@ -16,11 +17,17 @@ export default {};
 
     .logo {
     font-family: $logo-font;
-    font-size: 3rem;
-    color:$main-color-hover;
-    margin:$margin-bM;
+    font-size: 2.5rem;
+    color:$main-color;
     display: flex;
     padding: .5rem;
+    .img {
+     height: 50px;
+    width: 100px;
+   background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("../../public/img/background/logo.png");
+    }
     h1 {
         margin:0;
             }

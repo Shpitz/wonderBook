@@ -39,7 +39,7 @@ html,body {
 //book page in editor
 
 .page-edit-preview {
-  min-height: 30vh;
+  height: 30vh;
   min-width: 80px;
   width: 100%;
 }
@@ -48,8 +48,9 @@ html,body {
   border-radius: 10px;
   background-color: #f0f8ff57;
   padding: 1rem;
+  overflow: auto;
   p {
-    font-size: bold;
+    font-size: 1rem;
     overflow-wrap: break-word;
     max-width: 250px;
     margin: 0 .5rem 0 0;
