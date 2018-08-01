@@ -8,7 +8,7 @@
                         <!-- <img :src="cat.img"/> -->
                     <div class="cat-img" :class="[cat.img === '' ? 'hidden' : '']"
                     :style="{ backgroundImage: 'url(' + cat.img + ')' }"/>
-                    <div >
+                    <div class="txt">
                      <p>
                      {{cat.catTxt}}
                      </p>
@@ -76,7 +76,6 @@ $container-bg:white;
     background-size: cover ;
     background-position: 50% 50% ;
     background-repeat: no-repeat;
-    margin: 0 1rem 0 0;
     }
 }
  .categorie-container:last-child {
@@ -88,6 +87,9 @@ $container-bg:white;
       }
 }
 
+.txt {
+    padding: .5rem;
+}
 .no-img {
        width: auto;
        padding: .3rem;
@@ -97,5 +99,16 @@ $container-bg:white;
     font-weight: bold;
 }
 
+@media (max-width: 415px) {
+    .categorie-container {
+        width: 100px;
+        .cat-img  {
+                height: 45px;
+        }
+    }
+    .txt {
+        font-size: .8rem;
+    }
 
+}
 </style>
