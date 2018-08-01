@@ -144,23 +144,41 @@ color:$main-color-hover;
   top: 13px;
 }
 
+
+
 @media (max-width: 768px) {
     .routes-container {
+    position: fixed;
+    transform: translate(105%);
+    transition: all 0.9s;
     z-index: 2;
     flex-direction: column;
     box-shadow: 0 0 2px black;
     background-color: white;
     align-items: normal;
-    position: absolute;
-    transform: translateX(-100vw);
-    right: 3px;
-    top: 95px;
+    // position: absolute;
+    // transform: translateX(-100vw);
+    right: 0;
+    top: 93px;
+    }
+    .routes-container .clean-link{
+        height: 80px;
+        line-height: 80px;
+        width: 100px;
     }
     .routes-container.show {
-        transform: translateX(0);
+        transform: translate(0);
     }
     .nav-menu {
         display: block;
     }
 }
+
+@media (max-width: 570px) {
+    .routes-container {
+        top: 64px;
+    }
+
+}
+
 </style>

@@ -2,7 +2,12 @@
     <section>
         <div>
             <!-- <carousel :navigationEnabled="true">' + buildSlideMarkup(10) + '</carousel> -->
-              <carousel :per-page="3" :mouse-drag="true">
+              <carousel :per-page="2" :mouse-drag="true" 
+              :navigationEnabled="true"
+                navigationNextLabel="▶"
+                navigationPrevLabel="◀">
+               
+               
                 <slide class="slide-page-container"  v-for="(page,pageIdx) in pages" data-index="pageIdx" :key="pageIdx" data-name="MySlideName" @slideClick="handleSlideClick(pageIdx)">
                         <bookPage :pageData="page" :previewInEdit="true" ></bookPage>
                 </slide>

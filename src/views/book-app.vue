@@ -48,6 +48,7 @@ export default {
   computed: {
     booksToShow() {
       this.books  = this.$store.getters[BOOKS_FOR_DISPLAY];
+      console.log('this.books is:', this.books)
       return this.books;
     },
   },

@@ -59,9 +59,6 @@ export default {
     getCategories,
     saveBook,
     remove
-    // getToyById,
-    // remove,
-    // add,
-    // update
+
 }
 
