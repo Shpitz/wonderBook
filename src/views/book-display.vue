@@ -22,6 +22,7 @@ import bookPage from "../components/book-page.vue";
 
 export default {
   name: "bookReading",
+  props: ['bookIdFromEditor'],
   data() {
     return {
       book: null,
@@ -30,15 +31,18 @@ export default {
       currentTime: 0,
       currPar: null,
       currParIdx: 0,
-      pageFlipped : false
+      pageFlipped: false
     };
   },
   created() {
     var bookId = this.$route.params.bookId;
+    if (!bookId) bookId = this.bookIdFromEditor
     this.getBook(bookId);
-    if (screen.width < screen.height){
-      screen.orientation.lock('landscape');
+    if (screen.width < screen.height) {
+      screen.orientation.lock("landscape");
     }
+    console.log('id from editor', this.bookIdFromEditor);
+    
   },
   mounted() {},
   computed: {
@@ -47,7 +51,9 @@ export default {
     },
     getPage() {
       this.pageFlipped = true;
-      setTimeout(()=>{this.pageFlipped=false},2000);
+      setTimeout(() => {
+        this.pageFlipped = false;
+      }, 2000);
       return this.currPage;
     },
     disabledNextBtn() {
@@ -130,15 +136,14 @@ export default {
       var currPageTime = this.currPage.time;
       this.currentTime = currPageTime;
       this.$refs.audio.currentTime = currPageTime;
-    },
-  
+    }
   },
   components: {
     bookPage
   },
-  destroyed(){
-    if (screen.width < screen.height){
-      screen.orientation.lock('portrait');
+  destroyed() {
+    if (screen.width < screen.height) {
+      screen.orientation.lock("portrait");
     }
   }
 };

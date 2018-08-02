@@ -1,6 +1,15 @@
   <template>
 
  <section class="main-container">
+
+      <div v-if="previewModal" class="show-preview">
+          <button @click="showPreview" 
+          class="btn-exit-modal editor-btn editor-regular-btn ">
+           <font-awesome-icon class="icon" icon="times" />
+          </button>
+        <book-display  :bookIdFromEditor="book._id" ></book-display>
+      </div>
+
     <div class="main-editor-container" v-if="book">
       <div v-if="(togelModal)" class="first-details-container">
         <button @click="cancelFirstDetails" 
@@ -37,6 +46,7 @@
 
 
             </form>
+
             <div class="first-details-btn-container flex space-around">
               <input type="submit" @click.prevent="saveDetails" value="SAVE">
               <input type="button" @click.prevent="cancelFirstDetails" value="CANCEL">
@@ -55,6 +65,10 @@
         <font-awesome-icon class="icon" icon="save" />
           Save
           </div>
+          </button>
+            <button @click="showPreview" 
+          class=" editor-btn editor-regular-btn ">
+           <font-awesome-icon class="icon" icon="play" />
           </button>
       </div>
 
@@ -154,6 +168,7 @@ import cloudinaryService from "../services/cloudinary-service.js";
 import imgCarusale from "../components/img-carusale.vue";
 import loader from "../components/loader-cmp.vue";
 import bookSerivce from "../services/book-service.js";
+import bookDisplay from "./book-display.vue";
 
 export default {
   name: "bookEditor",
@@ -162,6 +177,7 @@ export default {
       audioPath: "",
       imgPath: "",
       togelModal: false,
+      previewModal: false,
       options: [
         "Toddlers",
         "Early Reader",
@@ -179,6 +195,8 @@ export default {
     };
   },
   created() {
+    console.log(this.previewModal);
+    
     if (this.$route.params.bookId) {
       this.$store
         .dispatch({ type: LOAD_BOOK, bookId: this.$route.params.bookId })
@@ -262,6 +280,12 @@ export default {
     },
     editBookDetails() {
       this.togelModal = true;
+      console.log(this.previewModal);
+      
+    },
+    showPreview() {
+      this.previewModal = !this.previewModal;
+      
     },
     setAudioFile() {
       cloudinaryService.doUploadAudio(this.$refs.audioInput).then(url => {
@@ -326,7 +350,8 @@ export default {
   components: {
     bookPage,
     imgCarusale,
-    loader
+    loader,
+    bookDisplay
   }
 };
 </script>
@@ -357,6 +382,7 @@ h1 {
 .main-editor-container {
   height: 100%;
   padding: 1rem;
+  padding-top: 0.5rem;
 }
 .sub-editor-container {
   min-height: 400px;
@@ -390,7 +416,7 @@ audio {
 }
 
 
-.first-details-container {
+.first-details-container, .show-preview {
   position: fixed;
   top: 0;
   right: 0;

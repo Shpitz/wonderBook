@@ -125,6 +125,7 @@ export default {
   .active-p {
     font-weight: bold;
     font-size: 1.5rem;
+    color: #ff2121;
   }
 }
 .full-btn {
