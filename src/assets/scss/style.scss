@@ -67,3 +67,12 @@ html,body {
 }
 
 
+// vselect npm style
+.dropdown-toggle {
+  max-height: 80px;
+overflow: auto;
+}
+.open-indicator {
+  margin: 0 1rem;
+}
+ 

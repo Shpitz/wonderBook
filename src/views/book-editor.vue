@@ -1,195 +1,187 @@
-  <template>
+ <template>
 
- <section class="main-container">
+    <section class="main-container">
 
       <div v-if="previewModal" class="show-preview">
-          <button @click="showPreview" 
-          class="btn-exit-modal editor-btn editor-regular-btn ">
-           <font-awesome-icon class="icon" icon="times" />
-          </button>
-        <book-display  :bookIdFromEditor="book._id" ></book-display>
+        <button @click="showPreview" class="btn-exit-modal editor-btn editor-regular-btn ">
+          <font-awesome-icon class="icon" icon="times" />
+        </button>
+        <book-display :bookIdFromEditor="book._id"></book-display>
       </div>
 
-    <div class="main-editor-container" v-if="book">
-      <div v-if="(togelModal)" class="first-details-container">
-        <button @click="cancelFirstDetails" 
-          class="btn-exit-modal editor-btn editor-regular-btn ">
-           <font-awesome-icon class="icon" icon="times" />
+      <div class="main-editor-container" v-if="book">
+        <!-- modal details\preview -->
+        <div v-if="(togelModal)" class="first-details-container">
+          <button @click="cancelFirstDetails" class="btn-exit-modal editor-btn editor-regular-btn ">
+            <font-awesome-icon class="icon" icon="times" />
           </button>
-        <transition name="fade">
-          <main id="main">
-	<section id="left" :class="[!book.coverImg ? 'placeHolder' : '']" :style="{ backgroundImage: 'url(' + book.coverImg + ')' || 'url(../../public/img/background/placeholder.png)'}">
-		<div id="head">
-			<h1>Join the wonder</h1>
-			<p>Make your own book!</p>
-		</div>
-    <div class="modal-upload-container flex justify-center">
-            <form method="POST" ref="coverImgInput" class="upload-form flex column">
-              <div class="file-upload input-file-container" >
-                <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input input-file">
-                <label tabindex="0" for="my-file" class="input-file-trigger">
-                  <font-awesome-icon  class="icon" icon="image" />
-                </label>
-              </div>
-            </form>
-            <form action="" ref="audioInput" class="upload-form page-form">
-              <div class="file-upload input-file-container">
-                <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input  input-file">
-                <label tabindex="0" for="my-file" class="input-file-trigger">
-                  <font-awesome-icon  class="icon" icon="file-audio" />
-                </label>
-              </div>
-            </form>
-    </div>
+          <transition name="fade">
+            <main id="main">
+              <section id="left" :style="{ backgroundImage: 'url(' + getCoverImg + ')'}">
+                <div id="head">
+                  <h1>Join the wonder</h1>
+                  <p>Make your own book!</p>
+                </div>
+                <div class="modal-upload-container flex justify-center">
+                  <form method="POST" ref="coverImgInput" class="upload-form flex column">
+                    <div class="file-upload input-file-container">
+                      <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input input-file">
+                      <label tabindex="0" for="my-file" class="input-file-trigger">
+                        <font-awesome-icon class="icon" icon="image" />
+                      </label>
+                    </div>
+                  </form>
+                  <form action="" ref="audioInput" class="upload-form page-form">
+                    <div class="file-upload input-file-container">
+                      <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input  input-file">
+                      <label tabindex="0" for="my-file" class="input-file-trigger">
+                        <font-awesome-icon class="icon" icon="file-audio" />
+                      </label>
+                    </div>
+                  </form>
+                </div>
 
-	</section>
-	<section id="right">
-		<h1>Book details</h1>
-		<form action="#">
-
-       
-
-
-
-			<div id="form-card" class="form-field">
-				<label for="cc-number">Book title:</label>
-				<input id="cc-number" v-model="book.title" placeholder="The beatle" required>
-			</div>
-      <div id="form-card" class="form-field">
-				<label for="cc-number">Author:</label>
-				<input id="cc-number" v-model="book.author" placeholder="Jhon Lennon" required>
-			</div>
-      <div id="form-card" class="form-field">
-				<label for="cc-number">Illustrator:</label>
-				<input id="cc-number" v-model="book.illustrator" placeholder="Paul Mccartney" required>
-			</div>
-      <div id="form-card" class="form-field">
-				<label for="cc-number">Description:</label>
-				<input id="cc-number" v-model="book.description" placeholder="The story about Yoko ruining everything!" required>
-			</div>
-
-
-			<div id="form-date" class="form-field">
-				<label for="expiry-month">Categories:</label>
-        <v-select class="book-categories" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
-			</div>
-
-      
-
-
-      <div class="modal-btns-container flex space-around">
-			  <input type="submit" @click.prevent="saveDetails" value="SAVE" class="edit-btn">
-        <input type="button" @click.prevent="cancelFirstDetails" value="CANCEL" class="edit-btn">
-      </div>
-		</form>
-	</section>
-</main>
-        </transition>
-      </div>
-
-      <!--main area-->
-      <div class="flex">
-        <button @click="editBookDetails" class="btn-margin-bottom editor-btn editor-regular-btn details-btn">
-          Edit book details</button>
-        <button @click="saveBook" class="btn-margin-bottom editor-btn editor-regular-btn save-btn ">
-          <div>
-        <font-awesome-icon class="icon" icon="save" />
-          Save
-          </div>
-          </button>
-            <button @click="showPreview" 
-          class=" editor-btn editor-regular-btn ">
-           <font-awesome-icon class="icon" icon="play" />
-          </button>
-      </div>
-
-      <div class="sub-editor-container flex">
-        <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
-        <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')'}">
-          <loader class="loader" v-if="isLoad"></loader>
-
-          <div class="flex column">
-            <!-- p loop -->
-            <ul class="par-list clean-list">
-              <li class="flex  relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
-                <div class="par-btns-container">
-                  <button class="editor-btn round-btn btn-margin-bottom" title="Delete paragraf" @click="deletePar(idx)">
-                    <font-awesome-icon class="icon" icon="trash-alt" />
-                  </button>
-
-                  <div class="flex">
-                    <button title="Set time btn-margin-bottom" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
-                      <font-awesome-icon class="icon" icon="clock" />
-                    </button>
-                    <input class="input-samll self-center editor-input" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime" step="0.01">
+              </section>
+              <section id="right">
+                <h1>Book details</h1>
+                <form action="#">
+                  <div id="form-card" class="form-field">
+                    <label>Book title:</label>
+                    <input  v-model="book.title" placeholder="The beatle" required>
+                  </div>
+                  <div id="form-card" class="form-field">
+                    <label>Author:</label>
+                    <input v-model="book.author" placeholder="Jhon Lennon" required>
+                  </div>
+                  <div id="form-card" class="form-field">
+                    <label>Illustrator:</label>
+                    <input v-model="book.illustrator" placeholder="Paul Mccartney" required>
+                  </div>
+                   <div id="form-date" class="form-field">
+                    <label for="expiry-month">Categories:</label>
+                    <v-select  
+                    placeHolder="Categories" 
+                    multiple v-model="book.categories" :options="options"></v-select>
                   </div>
 
-                </div>
-                <textarea autofocus class="editor-text-area" rows='3' cols='50' v-model="par.txt" placeHolder="Your paragraph here" />
-              </li>
-            </ul>
-            <button title="Add paragraph" class="editor-btn self-start round-btn" @click="addPar">
-              <font-awesome-icon class="icon" icon="plus-circle" />
-            </button>
-
-          </div>
+                  <div id="form-card" class="form-field">
+                    <label>Description:</label>
+                   <textarea class="editor-input not-resize-txt" rows='4' cols='50' 
+                    v-model="book.description"  
+                   placeholder="The story about Yoko ruining everything!" />
+                  </div>
+                  <div class="modal-btns-container flex space-around">
+                    <input type="submit" @click.prevent="saveDetails" value="SAVE" class="edit-btn">
+                    <input type="button" @click.prevent="cancelFirstDetails" value="CANCEL" class="edit-btn">
+                  </div>
+                </form>
+              </section>
+            </main>
+          </transition>
         </div>
 
-        <div class="flex page-ctr align-center">
-          <div class=" audio-set-area flex-warp align-center">
-            <audio ref="audio" :src="book.audio" controls />
-            <h1>Page {{currPageIdx+1}}</h1>
-          </div>
-          <div class="page-area flex align-center">
-            <div class="set-page-time flex align-center">
-              <button @click="setTimingPage" class=" editor-btn editor-regular-btn ">
-                <font-awesome-icon class="icon" icon="clock" />
+        <!--main area-->
+        <div class="flex">
+          <button @click="editBookDetails" class="btn-margin-bottom editor-btn editor-regular-btn details-btn">
+            Edit book details</button>
+          <button @click="saveBook" class="btn-margin-bottom editor-btn editor-regular-btn save-btn ">
+            <div>
+              <font-awesome-icon class="icon" icon="save" /> Save
+            </div>
+          </button>
+          <button @click="showPreview" class=" editor-btn editor-regular-btn ">
+            <font-awesome-icon class="icon" icon="play" />
+          </button>
+        </div>
+
+        <div class="sub-editor-container flex">
+          <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
+          <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')'}">
+            <loader class="loader" v-if="isLoad"></loader>
+
+            <div class="flex column">
+              <!-- p loop -->
+              <ul class="par-list clean-list">
+                <li class="flex  relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
+                  <div class="par-btns-container">
+                    <button class="editor-btn round-btn btn-margin-bottom" title="Delete paragraf" @click="deletePar(idx)">
+                      <font-awesome-icon class="icon" icon="trash-alt" />
+                    </button>
+
+                    <div class="flex">
+                      <button title="Set time btn-margin-bottom" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
+                        <font-awesome-icon class="icon" icon="clock" />
+                      </button>
+                      <input class="input-samll self-center editor-input" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime"
+                        step="0.01">
+                    </div>
+
+                  </div>
+                  <textarea autofocus class="editor-text-area" rows='3' cols='50' v-model="par.txt" placeHolder="Your paragraph here" />
+                </li>
+              </ul>
+              <button title="Add paragraph" class="editor-btn self-start round-btn" @click="addPar">
+                <font-awesome-icon class="icon" icon="plus-circle" />
               </button>
 
-              <input type="number" class="input-samll editor-input" v-model="book.pages[currPageIdx].time" step="0.01">
             </div>
-            <button class="editor-btn round-btn btn-margin-right" title="Add page" @click="addPage">
-              <font-awesome-icon class="icon" icon="plus-circle" />
-            </button>
-            <button class="editor-btn round-btn btn-margin-right" title="Delete page" @click="deletePage(currPageIdx)">
-              <font-awesome-icon class="icon" icon="trash-alt" />
-            </button>
+          </div>
 
-          </div>
-          <form method="POST" class="img-form page-form " ref="imgInput">
-            <div class="input-file-container">
-            <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input input-file">
-            <label tabindex="0" for="my-file" class="input-file-trigger">
-              <font-awesome-icon  class="icon" icon="upload" />
-            </label>
+          <div class="flex page-ctr align-center">
+            <div class=" audio-set-area flex-warp align-center">
+              <audio ref="audio" :src="book.audio" controls />
+              <h1>Page {{currPageIdx+1}}</h1>
             </div>
-          </form>
-       
-          <div class="show-carusale">
-            <button class="editor-btn round-btn btn-margin-right" @click="showCarusale = !showCarusale">
-              <font-awesome-icon v-if="!showCarusale" class="icon" icon="eye" />
-              <font-awesome-icon v-else class="icon" icon="eye-slash" />
-            </button>
+            <div class="page-area flex align-center">
+              <div class="set-page-time flex align-center">
+                <button @click="setTimingPage" class=" editor-btn editor-regular-btn ">
+                  <font-awesome-icon class="icon" icon="clock" />
+                </button>
+
+                <input type="number" class="input-samll editor-input" v-model="book.pages[currPageIdx].time" step="0.01">
+              </div>
+              <button class="editor-btn round-btn btn-margin-right" title="Add page" @click="addPage">
+                <font-awesome-icon class="icon" icon="plus-circle" />
+              </button>
+              <button class="editor-btn round-btn btn-margin-right" title="Delete page" @click="deletePage(currPageIdx)">
+                <font-awesome-icon class="icon" icon="trash-alt" />
+              </button>
+
+            </div>
+            <form method="POST" class="img-form page-form " ref="imgInput">
+              <div class="input-file-container">
+                <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input input-file">
+                <label tabindex="0" for="my-file" class="input-file-trigger">
+                  <font-awesome-icon class="icon" icon="upload" />
+                </label>
+              </div>
+            </form>
+
+            <div class="show-carusale">
+              <button class="editor-btn round-btn btn-margin-right" @click="showCarusale = !showCarusale">
+                <font-awesome-icon v-if="!showCarusale" class="icon" icon="eye" />
+                <font-awesome-icon v-else class="icon" icon="eye-slash" />
+              </button>
+            </div>
           </div>
+          <!--search in web -->
+          <div class="search-img-container self-start">
+            <form ref="imgFromWeb" class="flex">
+              <input type="search" ref="searchImgEl" class="editor-input" placeholder="Search image in web">
+              <button @click="searchImg" title="Search" class="editor-btn round-btn btn-margin-right">
+                <font-awesome-icon class="icon" icon="search" />
+              </button>
+            </form>
+          </div>
+
+          <imgCarusale ref="carusale-cmp" v-if="showCarusale" :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
+
         </div>
-           <!--search in web -->
-           <div class="search-img-container self-start">
-          <form ref="imgFromWeb" class="flex">
-          <input type="search" ref="searchImgEl" class="editor-input"  placeholder="Search image in web">
-           <button @click="searchImg" title="Search" class="editor-btn round-btn btn-margin-right" >
-              <font-awesome-icon  class="icon" icon="search" />
-            </button>
-          </form>
-           </div>
-       
-        <imgCarusale ref="carusale-cmp" v-if="showCarusale" :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
 
       </div>
+    </section>
 
-    </div>
-</section>
-
-    </template>
+  </template>
 
 
 <script>
@@ -261,10 +253,10 @@ export default {
   },
   computed: {
     getCoverImg(){
-      if (this.book.cover){
-        return this.book.cover;
+      if (this.book.coverImg){
+        return this.book.coverImg;
       }
-      else return '../../public/img/background/placeholder.png'
+      else return './img/background/placeholder.png'
     }
   },
   methods: {
@@ -502,15 +494,11 @@ audio {
 
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,700");
 
-$gradient: linear-gradient(
-  135deg,
-  rgba(91, 36, 122, 0.45) 0%,
-  rgba(27, 206, 223, 0.55) 100%
-);
-$shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-$primary: #9ea2bb;
-$secondary: #373c50;
 
+$shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+$primary: #9095b1;
+$secondary: #393e56;
+$margin-form-label:5px;
 #main {
   position: relative;
   width: 80%;
@@ -526,21 +514,14 @@ $secondary: #373c50;
 
 #left {
   position: relative;
-  // background-image:
-  //   url("../../public/img/background/placeholder.png");
   background-size: cover;
   background-position: center;
-
   height: calc(100% + 50px);
   width: 40%;
   top: -35px;
   left: -50px;
   padding: 10px 25px;
-
   box-shadow: $shadow;
-
-  color: white;
-
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -552,43 +533,48 @@ $secondary: #373c50;
 }
 
 #right {
+  padding: .5rem 0;
   position: absolute;
   width: calc(60% - 40px);
   height: 100%;
   top: 0;
   left: 40%;
-
   display: flex;
   flex-flow: column nowrap;
-
   padding-left: 20px;
 }
 
 #right form {
   display: flex;
   flex-flow: column nowrap;
-
   width: 100%;
 }
 
 #right form input,
 #right form select {
-
   appearance: none;
   border: none;
-  border-bottom: 1.5px solid #ccc;
-
+  border-bottom: 2px solid #ccc;
   padding: 5px;
+   outline: none;
+  transition: all 0.2s;
   margin-top: 2.5px;
   position: relative;
 }
+#right form input:focus {
+     border-bottom: 2px solid #808ab2;
 
+}
+   
 #right form .form-field {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+  margin-bottom: $margin-form-label;
+}
+.form-field label {
+    margin-bottom: $margin-form-label;
 
-  margin-bottom: 12.5px;
 }
 
 #right form #date-val {
@@ -601,7 +587,6 @@ $secondary: #373c50;
 }
 
 .edit-btn{
-  margin: 0.5rem;
   width: 30%;
 }
 
@@ -618,16 +603,13 @@ $secondary: #373c50;
   font-weight: 400;
   font-size: 12pt;
   margin-top: 10px;
+  height: 40px;
   cursor: pointer;
 }
 #right form button[type="submit"]:hover ,.edit-btn:hover {
   background: linear-gradient(135deg, $primary 0%, $primary 100%);
-  // box-shadow: 0 0 0 3px $primary;
   color: $secondary;
 }
-
-
-
 
 
 @media (max-width: 520px) {
