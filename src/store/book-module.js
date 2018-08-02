@@ -10,7 +10,7 @@ export const SET_BOOKS = 'book/mutations/setBooks'
 export const UPDATE_SEARCH_FILTER = 'book/mutations/updateSearchFilter'
 export const UPDATE_BOOK = 'book/mutations/updateBook'
 export const ADD_BOOK = 'book/mutations/addBook'
-export const DELETE_BOOK= 'book/mutations/deleteBook'
+export const DELETE_BOOK = 'book/mutations/deleteBook'
 
 
 
@@ -73,16 +73,16 @@ export default {
         [SAVE_BOOK](context, { book }) {
             const isEdit = !!book._id
             if (isEdit) return bookSerivce.saveBook(book)
-                .then(_ => context.commit({ type: UPDATE_BOOK, book }))
+                .then(Editbook => {
+                    context.commit({ type: UPDATE_BOOK, Editbook })
+                    return Editbook
+                })
             else return bookSerivce.saveBook(book)
-                .then(newBook => 
-                    {
-                    console.log('new book inside store pf frontend',newBook)
+                .then(newBook => {
                     context.commit({ type: ADD_BOOK, book })
                     return newBook
-                
                 })
-        
+
         },
     }
 }

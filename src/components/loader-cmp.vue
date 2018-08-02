@@ -1,11 +1,8 @@
 <template>
     <section>
-    <div class="loader">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-    </div>
+	 <div id="preloader">
+     <div id="loader"></div>
+      </div>
     </section>
 </template>
 
@@ -17,79 +14,78 @@ export default {
 
 <style scoped lang="scss">
 
-@keyframes loader {
-	0%, 10%, 100% {
-		width: 80px;
-		height: 80px;
-	}
-	65% {
-		width: 150px;
-		height: 150px;
-	}
+  #preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
-@keyframes loaderBlock {
-	0%, 30% { 
-		transform: rotate(0);
-	}
-	55% {
-		background-color: #F37272;
-	}
-	100% {
-		transform: rotate(90deg);
-
-	}
+#loader {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border-radius: 50%;
+    border: 8px solid transparent;
+    border-top-color: #f09a93;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
 }
-@keyframes loaderBlockInverse {
-	0%, 20% { 
-		transform: rotate(0);
-	}
-	55% {
-		background-color: #F37272;
-	}
-	100% {
-		transform: rotate(-90deg);
-	}
-}
-.loader {
+#loader:before {
+    content: "";
     position: absolute;
-    z-index: 3;
-	top: 120%;
-	left: 50%;
-	width: 80px;
-	height: 80px;
-	transform: translate(-50%, -50%) rotate(45deg) translate3d(0,0,0);
-	animation: loader 1.2s infinite ease-in-out;
-
-	span {
-		position: absolute;
-		display: block;
-		width: 40px;
-		height: 40px;
-		background-color: #EE4040;
-		animation: loaderBlock 1.2s infinite ease-in-out both;
-
-		&:nth-child(1) {
-			top: 0;
-			left: 0;
-		}
-		&:nth-child(2) {
-			top: 0;
-			right: 0;
-			animation: loaderBlockInverse 1.2s infinite ease-in-out both;
-		}
-		&:nth-child(3) {
-			bottom: 0;
-			left: 0;
-			animation: loaderBlockInverse 1.2s infinite ease-in-out both;
-		}
-		&:nth-child(4) {
-			bottom: 0;
-			right: 0;
-		}
-	}
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 8px solid transparent;
+    border-top-color: #66140d;
+    -webkit-animation: spin 3s linear infinite;
+    animation: spin 3s linear infinite;
+}
+#loader:after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    border: 8px solid transparent;
+    border-top-color: #e86c62;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+}
+@-webkit-keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 
-body {
-  background-color: #584E4A;
-}
+
+
 </style>
