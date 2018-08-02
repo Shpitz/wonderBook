@@ -1,7 +1,7 @@
 @import 'vars';
 
- input {
-    padding: 0 .5rem;
+ input ,textarea{
+    padding: .2rem .5rem;
  }
  .editor-input {
     border-radius: 5px;
@@ -14,7 +14,9 @@
     padding: .2rem;
     margin: 0 0 0 .3rem;
 }
-
+.not-resize-txt {
+    resize: none;
+}
 .editor-text-area {
     width: -webkit-fill-available;
     padding: 0.3rem;
@@ -46,7 +48,7 @@
 .input-file-trigger {
     display: block;
     padding: .5rem;
-    background: #9095b1de;
+    background: #9095b1;
     color: white;
     font-size: 1em;
     transition: all .4s;

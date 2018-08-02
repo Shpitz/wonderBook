@@ -62,8 +62,7 @@ $container-bg:white;
     transition: all 0.3s;
     border:1px solid rgba(0, 0, 0, 0.1);
      margin: 0 1rem 1rem 0;
-     width: 200px;
-    
+     min-width: 100px;
     p {
         margin: 0;
     }
