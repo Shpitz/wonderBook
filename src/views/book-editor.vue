@@ -8,7 +8,7 @@
            <font-awesome-icon class="icon" icon="times" />
           </button>
         <transition name="fade">
-          <form  class="details-modal">
+          <!-- <form  class="details-modal">
             <h1>Share youre wonder:</h1>
             <input type="text" v-model="book.title" placeholder="BOOK TITLE">
             <input type="text" v-model="book.author" placeHolder="AUTHOR NAME">
@@ -31,18 +31,79 @@
                   <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input  input-file">
                 </label>
               </div>
-
-
-           
-
-
             </form>
             <div class="first-details-btn-container flex space-around">
               <input type="submit" @click.prevent="saveDetails" value="SAVE">
               <input type="button" @click.prevent="cancelFirstDetails" value="CANCEL">
             </div>
+          </form> -->
+          <main id="main">
+	<section id="left" :class="[!book.coverImg ? 'placeHolder' : '']" :style="{ backgroundImage: 'url(' + book.coverImg + ')' || 'url(../../public/img/background/placeholder.png)'}">
+		<div id="head">
+			<h1>Join the wonder</h1>
+			<p>Make your own book!</p>
+		</div>
+    <div class="modal-upload-container flex justify-center">
+            <form method="POST" ref="coverImgInput" class="upload-form flex column">
+              <div class="file-upload input-file-container" >
+                <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input input-file">
+                <label tabindex="0" for="my-file" class="input-file-trigger">
+                  <font-awesome-icon  class="icon" icon="image" />
+                </label>
+              </div>
+            </form>
+            <form action="" ref="audioInput" class="upload-form page-form">
+              <div class="file-upload input-file-container">
+                <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input  input-file">
+                <label tabindex="0" for="my-file" class="input-file-trigger">
+                  <font-awesome-icon  class="icon" icon="file-audio" />
+                </label>
+              </div>
+            </form>
+    </div>
 
-          </form>
+	</section>
+	<section id="right">
+		<h1>Book details</h1>
+		<form action="#">
+
+       
+
+
+
+			<div id="form-card" class="form-field">
+				<label for="cc-number">Book title:</label>
+				<input id="cc-number" v-model="book.title" placeholder="The beatle" required>
+			</div>
+      <div id="form-card" class="form-field">
+				<label for="cc-number">Author:</label>
+				<input id="cc-number" v-model="book.author" placeholder="Jhon Lennon" required>
+			</div>
+      <div id="form-card" class="form-field">
+				<label for="cc-number">Illustrator:</label>
+				<input id="cc-number" v-model="book.illustrator" placeholder="Paul Mccartney" required>
+			</div>
+      <div id="form-card" class="form-field">
+				<label for="cc-number">Description:</label>
+				<input id="cc-number" v-model="book.description" placeholder="The story about Yoko ruining everything!" required>
+			</div>
+
+
+			<div id="form-date" class="form-field">
+				<label for="expiry-month">Categories:</label>
+        <v-select class="book-categories" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
+			</div>
+
+      
+
+
+      <div class="modal-btns-container flex space-around">
+			  <input type="submit" @click.prevent="saveDetails" value="SAVE" class="edit-btn">
+        <input type="button" @click.prevent="cancelFirstDetails" value="CANCEL" class="edit-btn">
+      </div>
+		</form>
+	</section>
+</main>
         </transition>
       </div>
 
@@ -114,7 +175,7 @@
             <div class="input-file-container">
             <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input input-file">
             <label tabindex="0" for="my-file" class="input-file-trigger">
-                            <font-awesome-icon  class="icon" icon="upload" />
+              <font-awesome-icon  class="icon" icon="upload" />
             </label>
             </div>
           </form>
@@ -194,7 +255,14 @@ export default {
       this.togelModal = true;
     }
   },
-  computed: {},
+  computed: {
+    getCoverImg(){
+      if (this.book.cover){
+        return this.book.cover;
+      }
+      else return '../../public/img/background/placeholder.png'
+    }
+  },
   methods: {
     addPage() {
       this.pageNum += 1;
@@ -236,7 +304,7 @@ export default {
     },
 
     cancelFirstDetails() {
-      if (!this.book._id ) {
+      if (!this.book._id) {
         this.$router.push("./");
         this.togelModal = false;
       } else {
@@ -291,7 +359,6 @@ export default {
       this.$store
         .dispatch({ type: SAVE_BOOK, book: this.book })
         .then(book => {
-          console.log("2111111111111111111111");
           this.book = JSON.parse(JSON.stringify(book));
           this.$router.push("./");
         })
@@ -353,9 +420,9 @@ audio {
 }
 
 .btn-exit-modal {
-     position: absolute;
-    top: 10px;
-    right: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .first-details-container {
@@ -364,7 +431,7 @@ audio {
   right: 0;
   width: 100%;
   height: 100%;
-  background-color:rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -392,131 +459,131 @@ audio {
   }
 }
 
-input::placeholder,
-textarea::placeholder {
-  color: #aca49c;
-  font-size: 0.875em;
-}
+// input::placeholder,
+// textarea::placeholder {
+//   color: #aca49c;
+//   font-size: 0.875em;
+// }
 
-input:focus::placeholder,
-textarea::focus:placeholder {
-  color: #bbb5af;
-}
+// input:focus::placeholder,
+// textarea::focus:placeholder {
+//   color: #bbb5af;
+// }
 
-/* on hover placeholder */
-input:hover::placeholder,
-textarea:hover::placeholder {
-  color: #e2dedb;
-  font-size: 0.875em;
-}
+// /* on hover placeholder */
+// input:hover::placeholder,
+// textarea:hover::placeholder {
+//   color: #e2dedb;
+//   font-size: 0.875em;
+// }
 
-input:hover:focus::placeholder,
-textarea:hover:focus::placeholder {
-  color: #cbc6c1;
-}
+// input:hover:focus::placeholder,
+// textarea:hover:focus::placeholder {
+//   color: #cbc6c1;
+// }
 
-.details-modal {
-  position: relative;
-  width: 60%;
-  margin: 0 auto;
-  border-radius: 10px;
-  background-color: whitesmoke;
-  padding: 1rem;
+// .details-modal {
+//   position: relative;
+//   width: 60%;
+//   margin: 0 auto;
+//   border-radius: 10px;
+//   background-color: whitesmoke;
+//   padding: 1rem;
 
-  input,
-  .file-upload__label,
-  .file-upload__input {
-    // font-family: "Lato", sans-serif;
-    font-size: 0.875em;
-    width: 100%;
-    height: 40px;
-    padding: 0px 15px 0px 15px;
+//   input,
+//   .file-upload__label,
+//   .file-upload__input {
+//     // font-family: "Lato", sans-serif;
+//     font-size: 0.875em;
+//     width: 100%;
+//     height: 40px;
+//     padding: 0px 15px 0px 15px;
 
-    background: transparent;
-    outline: none;
-    color: inherit;
-    border: solid 1px #b3aca7;
-    border-bottom: none;
+//     background: transparent;
+//     outline: none;
+//     color: inherit;
+//     border: solid 1px #b3aca7;
+//     border-bottom: none;
 
-    transition: all 0.3s ease-in-out;
-  }
+//     transition: all 0.3s ease-in-out;
+//   }
 
-  input:hover {
-    background: #b3aca7;
-    color: #e2dedb;
-  }
-}
-.textarea-modal {
-  width: 100%;
-  max-width: 100%;
-  height: 110px;
-  max-height: 110px;
-  padding: 15px;
-  color: inherit;
-  background: transparent;
-  outline: none;
-  font-size: 1.3rem;
-  border: solid 1px #b3aca7;
-  transition: all 0.3s ease-in-out;
-}
+//   input:hover {
+//     background: #b3aca7;
+//     color: #e2dedb;
+//   }
+// }
+// .textarea-modal {
+//   width: 100%;
+//   max-width: 100%;
+//   height: 110px;
+//   max-height: 110px;
+//   padding: 15px;
+//   color: inherit;
+//   background: transparent;
+//   outline: none;
+//   font-size: 1.3rem;
+//   border: solid 1px #b3aca7;
+//   transition: all 0.3s ease-in-out;
+// }
 
-.textarea-modal:hover {
-  background: #b3aca7;
-  color: #e2dedb;
-}
+// .textarea-modal:hover {
+//   background: #b3aca7;
+//   color: #e2dedb;
+// }
 
-#submit {
-  width: 100%;
-  padding: 0;
-  margin: 5px 0px 0px 0px;
-  // font-family: "Lato", sans-serif;
-  font-size: 0.875em;
-  // color: #b3aca7;
-  outline: none;
-  cursor: pointer;
-  border: solid 1px #b3aca7;
-}
+// #submit {
+//   width: 100%;
+//   padding: 0;
+//   margin: 5px 0px 0px 0px;
+//   // font-family: "Lato", sans-serif;
+//   font-size: 0.875em;
+//   // color: #b3aca7;
+//   outline: none;
+//   cursor: pointer;
+//   border: solid 1px #b3aca7;
+// }
 
-#submit:hover {
-  color: #e2dedb;
-}
+// #submit:hover {
+//   color: #e2dedb;
+// }
 
-.categories label {
-  text-align: left;
-}
+// .categories label {
+//   text-align: left;
+// }
 // .file-upload {
 //   position: relative;
 // }
 
-.file-upload__label1 {
-  display: block;
-  border-bottom: solid 1px #b3aca7;
-  font-size: 0.875em;
-  &:hover {
-    background: #b3aca7;
-    color: #e2dedb;
-  }
-}
+// .file-upload__label1 {
+//   display: block;
+//   border-bottom: solid 1px #b3aca7;
+//   font-size: 0.875em;
+//   &:hover {
+//     background: #b3aca7;
+//     color: #e2dedb;
+//   }
+// }
 
-.file-upload__input1 {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  font-size: 1;
-  width: 0;
-  height: 100%;
-  opacity: 0;
-}
-.first-details-btn-container input {
-  cursor: pointer;
-  border-bottom: solid 1px #b3aca7;
-}
+// .file-upload__input1 {
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   right: 0;
+//   bottom: 0;
+//   font-size: 1;
+//   width: 0;
+//   height: 100%;
+//   opacity: 0;
+// }
+// .first-details-btn-container input {
+//   cursor: pointer;
+//   border-bottom: solid 1px #b3aca7;
+// }
 
 @media (max-width: 520px) {
   .show-carusale {
-    margin: .5rem 0;
+    margin: 0.5rem 0;
     button {
       margin: 0;
     }
@@ -525,4 +592,137 @@ textarea:hover:focus::placeholder {
     width: 80%;
   }
 }
+
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,700");
+
+$gradient: linear-gradient(
+  135deg,
+  rgba(91, 36, 122, 0.45) 0%,
+  rgba(27, 206, 223, 0.55) 100%
+);
+$shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+$primary: #9ea2bb;
+$secondary: #373c50;
+
+#main {
+  position: relative;
+  width: 80%;
+  height: 80%;
+
+  left: 30px;
+
+  border-radius: 10px;
+  box-shadow: $shadow;
+
+  background-color: white;
+}
+
+#left {
+  position: relative;
+  // background-image:
+  //   url("../../public/img/background/placeholder.png");
+  background-size: cover;
+  background-position: center;
+
+  height: calc(100% + 50px);
+  width: 40%;
+  top: -35px;
+  left: -50px;
+  padding: 10px 25px;
+
+  box-shadow: $shadow;
+
+  color: white;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
+
+
+#left #head {
+  opacity: 0.95;
+}
+
+#right {
+  position: absolute;
+  width: calc(60% - 40px);
+  height: 100%;
+  top: 0;
+  left: 40%;
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  padding-left: 20px;
+}
+
+#right form {
+  display: flex;
+  flex-flow: column nowrap;
+
+  width: 100%;
+}
+
+#right form input,
+#right form select {
+
+  appearance: none;
+  border: none;
+  border-bottom: 1.5px solid #ccc;
+
+  padding: 5px;
+  margin-top: 2.5px;
+  position: relative;
+}
+
+#right form .form-field {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+
+  margin-bottom: 12.5px;
+}
+
+#right form #date-val {
+  display: flex;
+  justify-content: space-between;
+}
+
+#right form #date-val select {
+  width: 45%;
+}
+
+.edit-btn{
+  margin: 0.5rem;
+  width: 30%;
+}
+
+.book-categories, .upload-form{
+  margin: 0.5rem;
+}
+
+#right form button[type="submit"], .edit-btn {
+  background: linear-gradient(135deg, $secondary 0%, $secondary 100%);
+  padding: 5px;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-weight: 400;
+  font-size: 12pt;
+  margin-top: 10px;
+  cursor: pointer;
+}
+#right form button[type="submit"]:hover ,.edit-btn:hover {
+  background: linear-gradient(135deg, $primary 0%, $primary 100%);
+  // box-shadow: 0 0 0 3px $primary;
+  color: $secondary;
+}
+
+
+.placeHolder{
+    background-image:
+    url("../../public/img/background/placeholder.png");
+}
+
 </style>
