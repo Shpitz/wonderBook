@@ -1,20 +1,20 @@
-  <template>
-        <section class="book-app">
-            <div class="background-img-container">
-                <div class="bg flex column align-center justify-center">
-                    <h1>Look. Listen. Join the wonder.</h1>
-                   <book-filter @searchStr="updateFilter"></book-filter>
-                </div>
-            </div>
-            <button class="create-button" @click="createBook">Create your book</button>
-            <div class="flex justify-center">
-             <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter"/>
-            </div>
-            <loader v-if="!books"></loader>
-            <book-list :user="user" :books="booksToShow"></book-list>
-            <app-footer></app-footer>
-        </section>
-    </template>
+<template>
+  <section class="book-app">
+    <div class="background-img-container">
+      <div class="bg flex column align-center justify-center">
+        <h1>Look. Listen. Join the wonder.</h1>
+        <book-filter @searchStr="updateFilter"></book-filter>
+      </div>
+    </div>
+    <button class="create-button" @click="createBook">Create your book</button>
+    <div class="flex justify-center">
+      <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter" />
+    </div>
+    <loader v-if="!books"></loader>
+    <book-list :user="user" :books="booksToShow"></book-list>
+    <app-footer></app-footer>
+  </section>
+</template>
 
 <script>
 import {
