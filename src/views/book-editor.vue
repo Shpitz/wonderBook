@@ -8,35 +8,6 @@
            <font-awesome-icon class="icon" icon="times" />
           </button>
         <transition name="fade">
-          <!-- <form  class="details-modal">
-            <h1>Share youre wonder:</h1>
-            <input type="text" v-model="book.title" placeholder="BOOK TITLE">
-            <input type="text" v-model="book.author" placeHolder="AUTHOR NAME">
-            <input type="text" v-model="book.illustrator" placeHolder="ILLUSTRATOR NAME">
-            <textarea class="textarea-modal " type="text" v-model="book.description" placeHolder="DESCRIPTION"></textarea>
-            <label for="categories">
-              Categories:
-              <v-select class="book-categories" placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
-            </label>
-            <form method="POST" ref="coverImgInput" class="page-img-upload-form flex column">
-              <div class="file-upload input-file-container" >
-                <label for="upload" class="file-upload__label1 input-file-trigger">UPLOAD BOOK COVER IMAGE {{this.book.coverImg}}
-                  <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input input-file">
-                </label>
-              </div>
-            </form>
-            <form action="" ref="audioInput" class="page-form">
-              <div class="file-upload input-file-container">
-                <label for="upload" class="file-upload__label1 input-file-trigger">UPLOAD BOOK AUDIO FILE {{this.book.audio}}
-                  <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input  input-file">
-                </label>
-              </div>
-            </form>
-            <div class="first-details-btn-container flex space-around">
-              <input type="submit" @click.prevent="saveDetails" value="SAVE">
-              <input type="button" @click.prevent="cancelFirstDetails" value="CANCEL">
-            </div>
-          </form> -->
           <main id="main">
 	<section id="left" :class="[!book.coverImg ? 'placeHolder' : '']" :style="{ backgroundImage: 'url(' + book.coverImg + ')' || 'url(../../public/img/background/placeholder.png)'}">
 		<div id="head">
@@ -377,10 +348,7 @@ export default {
       this.$store
         .dispatch({ type: SAVE_BOOK, book: this.book })
         .then(book => {
-
-
           this.isLoad = false;
-
           this.book = JSON.parse(JSON.stringify(book));
         })
         .catch(err => {});

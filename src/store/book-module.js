@@ -37,7 +37,7 @@ export default {
             state.booksFilter.byTxt = filterBy.byTxt ? filterBy.byTxt : '';
         },
         [UPDATE_BOOK](state, { book }) {
-            const currIdx = state.books.findIndex(currBook => currBook.id === book._id)
+            var currIdx = state.books.findIndex(currBook => currBook.id === book._id)
             state.books.splice(currIdx, 1, book)
         },
         [ADD_BOOK](state, { book }) {
@@ -74,7 +74,6 @@ export default {
             const isEdit = !!book._id
             if (isEdit) return bookSerivce.saveBook(book)
                 .then(Editbook => {
-                    context.commit({ type: UPDATE_BOOK, Editbook })
                     return Editbook
                 })
             else return bookSerivce.saveBook(book)
