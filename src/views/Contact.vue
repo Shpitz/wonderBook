@@ -7,9 +7,9 @@
                 <div class="sub-contact">
                     <div class="form flex flex-dir-col">
                         <input type="text" v-model="name" placeholder="Name (Required)" class="get-in-touch-input">
-                        <input type="text" v-model="mail" placeholder="Email (Required)" class="get-in-touch-input mail-massage-submition">
-                        <input type="text" v-model="subject" placeholder="Subject" class="get-in-touch-input subject-massage-submition">
-                        <input type="text" v-model="message" placeholder="Write your message here..." class="write-your-message body-massage-submition">
+                        <input type="text" v-model="mail" placeholder="Email (Required)" class="get-in-touch-input">
+                        <input type="text" v-model="subject" placeholder="Subject" class="get-in-touch-input">
+                        <input type="text" v-model="message" placeholder="Write your message here..." class="write-your-message ">
                         <div class="send-btn-container">
                             <button class="send-btn" @click="OnMessageSubmitted()">SEND</button>
                         </div>
@@ -113,10 +113,14 @@ export default {
 .get-in-touch-form .get-in-touch-input {
   padding: 0.5rem;
     height: 2rem;
+    font-size: 1em;
 }
 
 .get-in-touch-form .write-your-message {
     height: 8rem;
+    padding: 0.5rem;
+    font-size: 1em;
+
 }
 
 .get-in-touch-form input::-webkit-input-placeholder {
@@ -132,6 +136,12 @@ export default {
     height: 40px;
     margin: 1rem 0;
     font-family: Maven Pro, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.send-btn:hover {
+    color: white;
+
 }
 
 .send-btn-container {
