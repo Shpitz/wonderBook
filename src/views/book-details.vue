@@ -2,6 +2,7 @@
     <section class="book-details section-container">
       <div v-if="book" class="book-details-cotainer flex">
         <div class="img-details">
+
           <h1>{{book.title}}</h1>
           <div class="relative" @click="playBook()">
             <div class="play-mask absolute flex">
@@ -15,7 +16,13 @@
           </div>
         </div>
         <div class="txt-details">
+
           <div class="txt-details-container flex column">
+            <!-- <div> -->
+              <button @click.stop="editBook" class="editor-btn editor-regular-btn edit-btn">
+                <font-awesome-icon icon="edit" />
+              </button>
+            <!-- </div> -->
             <p>" {{book.description}} "</p>
             <div class="hr"></div>
             <div class="flex column space-around">
@@ -69,6 +76,9 @@ export default {
      updateFilter(filterBy) {
       this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy});
       this.$router.push(`/`);
+    },
+    editBook() {
+      this.$router.push(`/bookEditor/${this.book._id}`)
     }
   },
   components: {
@@ -87,6 +97,16 @@ export default {
   height: 1px;
   background-color: pink;
   margin: 0 0 1rem;
+}
+
+.edit-btn {
+  width: fit-content;
+    align-self: flex-end;
+    background-color: #dedede
+}
+
+.edit-btn:hover{
+  background-color: #546196;
 }
 
 .img-details {
