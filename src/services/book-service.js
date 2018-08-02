@@ -3,7 +3,6 @@ const BASE_URL = (process.env.NODE_ENV !== 'development') ? '/book' : 'http://lo
 const IMG_SEARCH_URL = (process.env.NODE_ENV !== 'development') ? '/getImg' : 'http://localhost:3000/getImg';
 
 
-// const BOOK_URL = 'http://localhost:3000/book'
 
 function query(booksFilter = {}) {
     var queryParams = new URLSearchParams()
