@@ -122,6 +122,7 @@
       <div class="sub-editor-container flex">
         <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
         <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')'}">
+          <loader class="loader" v-if="isLoad"></loader>
 
           <div class="flex column">
             <!-- p loop -->
@@ -136,7 +137,7 @@
                     <button title="Set time btn-margin-bottom" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
                       <font-awesome-icon class="icon" icon="clock" />
                     </button>
-                    <input class="input-samll self-center" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime" step="0.01">
+                    <input class="input-samll self-center editor-input" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime" step="0.01">
                   </div>
 
                 </div>
@@ -161,7 +162,7 @@
                 <font-awesome-icon class="icon" icon="clock" />
               </button>
 
-              <input type="number" class="input-samll" v-model="book.pages[currPageIdx].time" step="0.01">
+              <input type="number" class="input-samll editor-input" v-model="book.pages[currPageIdx].time" step="0.01">
             </div>
             <button class="editor-btn round-btn btn-margin-right" title="Add page" @click="addPage">
               <font-awesome-icon class="icon" icon="plus-circle" />
@@ -179,6 +180,7 @@
             </label>
             </div>
           </form>
+       
           <div class="show-carusale">
             <button class="editor-btn round-btn btn-margin-right" @click="showCarusale = !showCarusale">
               <font-awesome-icon v-if="!showCarusale" class="icon" icon="eye" />
@@ -186,6 +188,16 @@
             </button>
           </div>
         </div>
+           <!--search in web -->
+           <div class="search-img-container self-start">
+          <form ref="imgFromWeb" class="flex">
+          <input type="search" ref="searchImgEl" class="editor-input"  placeholder="Search image in web">
+           <button @click="searchImg" title="Search" class="editor-btn round-btn btn-margin-right" >
+              <font-awesome-icon  class="icon" icon="search" />
+            </button>
+          </form>
+           </div>
+       
         <imgCarusale ref="carusale-cmp" v-if="showCarusale" :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
 
       </div>
@@ -201,6 +213,9 @@ import { SAVE_BOOK, LOAD_BOOK } from "../store/book-module.js";
 import bookPage from "../components/book-page.vue";
 import cloudinaryService from "../services/cloudinary-service.js";
 import imgCarusale from "../components/img-carusale.vue";
+import loader from "../components/loader-cmp.vue";
+import bookSerivce from "../services/book-service.js";
+
 export default {
   name: "bookEditor",
   data() {
@@ -220,8 +235,8 @@ export default {
       pageNum: 0,
       currPageIdx: 0,
       parNum: 1,
-      // book : null,
-      showCarusale: false
+      showCarusale: false,
+      isLoad: true
     };
   },
   created() {
@@ -254,6 +269,7 @@ export default {
       this.addPage();
       this.togelModal = true;
     }
+    this.isLoad = false;
   },
   computed: {
     getCoverImg(){
@@ -301,6 +317,7 @@ export default {
     },
     saveDetails() {
       this.togelModal = false;
+      this.saveBook();
     },
 
     cancelFirstDetails() {
@@ -321,9 +338,10 @@ export default {
     },
 
     setImgFile() {
-      console.log("this.$refs.imgInput", this.$refs.imgInput[0].value);
+      this.isLoad = true;
       cloudinaryService.doUploadImg(this.$refs.imgInput).then(url => {
         this.book.pages[this.currPageIdx].img = url.secure_url;
+        this.isLoad = false;
       });
     },
     setCoverImgFile() {
@@ -355,20 +373,31 @@ export default {
       this.$refs.audio.pause();
     },
     saveBook() {
-      // this.book = JSON.parse(JSON.stringify(this.book));
+      this.isLoad = true;
       this.$store
         .dispatch({ type: SAVE_BOOK, book: this.book })
         .then(book => {
+
+
+          this.isLoad = false;
+
           this.book = JSON.parse(JSON.stringify(book));
-          this.$router.push("./");
         })
         .catch(err => {});
+    },
+    searchImg(ev, searchInput) {
+      searchInput = this.$refs.searchImgEl.value;
+
+      bookSerivce.searchImg(searchInput).then(imgUrl => {
+        this.book.pages[this.currPageIdx].img = imgUrl;
+      });
     }
   },
 
   components: {
     bookPage,
-    imgCarusale
+    imgCarusale,
+    loader
   }
 };
 </script>
@@ -376,6 +405,11 @@ export default {
  <style scoped lang="scss">
 @import "./src/assets/scss/_vars.scss";
 
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
 h1 {
   font-family: $main-font;
 }
@@ -411,12 +445,13 @@ h1 {
 
 .page-ctr {
   justify-content: space-between;
-  // padding: 0 0.5rem;
   flex-wrap: wrap;
 }
 
 audio {
   margin: 0 0.5rem 0 0;
+  box-shadow: 0 0 3px black;
+  border-radius: 30px;
 }
 
 .btn-exit-modal {
@@ -424,6 +459,7 @@ audio {
   top: 10px;
   right: 10px;
 }
+
 
 .first-details-container {
   position: fixed;
@@ -458,128 +494,6 @@ audio {
     margin: 0 0 1rem;
   }
 }
-
-// input::placeholder,
-// textarea::placeholder {
-//   color: #aca49c;
-//   font-size: 0.875em;
-// }
-
-// input:focus::placeholder,
-// textarea::focus:placeholder {
-//   color: #bbb5af;
-// }
-
-// /* on hover placeholder */
-// input:hover::placeholder,
-// textarea:hover::placeholder {
-//   color: #e2dedb;
-//   font-size: 0.875em;
-// }
-
-// input:hover:focus::placeholder,
-// textarea:hover:focus::placeholder {
-//   color: #cbc6c1;
-// }
-
-// .details-modal {
-//   position: relative;
-//   width: 60%;
-//   margin: 0 auto;
-//   border-radius: 10px;
-//   background-color: whitesmoke;
-//   padding: 1rem;
-
-//   input,
-//   .file-upload__label,
-//   .file-upload__input {
-//     // font-family: "Lato", sans-serif;
-//     font-size: 0.875em;
-//     width: 100%;
-//     height: 40px;
-//     padding: 0px 15px 0px 15px;
-
-//     background: transparent;
-//     outline: none;
-//     color: inherit;
-//     border: solid 1px #b3aca7;
-//     border-bottom: none;
-
-//     transition: all 0.3s ease-in-out;
-//   }
-
-//   input:hover {
-//     background: #b3aca7;
-//     color: #e2dedb;
-//   }
-// }
-// .textarea-modal {
-//   width: 100%;
-//   max-width: 100%;
-//   height: 110px;
-//   max-height: 110px;
-//   padding: 15px;
-//   color: inherit;
-//   background: transparent;
-//   outline: none;
-//   font-size: 1.3rem;
-//   border: solid 1px #b3aca7;
-//   transition: all 0.3s ease-in-out;
-// }
-
-// .textarea-modal:hover {
-//   background: #b3aca7;
-//   color: #e2dedb;
-// }
-
-// #submit {
-//   width: 100%;
-//   padding: 0;
-//   margin: 5px 0px 0px 0px;
-//   // font-family: "Lato", sans-serif;
-//   font-size: 0.875em;
-//   // color: #b3aca7;
-//   outline: none;
-//   cursor: pointer;
-//   border: solid 1px #b3aca7;
-// }
-
-// #submit:hover {
-//   color: #e2dedb;
-// }
-
-// .categories label {
-//   text-align: left;
-// }
-// .file-upload {
-//   position: relative;
-// }
-
-// .file-upload__label1 {
-//   display: block;
-//   border-bottom: solid 1px #b3aca7;
-//   font-size: 0.875em;
-//   &:hover {
-//     background: #b3aca7;
-//     color: #e2dedb;
-//   }
-// }
-
-// .file-upload__input1 {
-//   position: absolute;
-//   left: 0;
-//   top: 0;
-//   right: 0;
-//   bottom: 0;
-//   font-size: 1;
-//   width: 0;
-//   height: 100%;
-//   opacity: 0;
-// }
-// .first-details-btn-container input {
-//   cursor: pointer;
-//   border-bottom: solid 1px #b3aca7;
-// }
 
 @media (max-width: 520px) {
   .show-carusale {
@@ -720,9 +634,20 @@ $secondary: #373c50;
 }
 
 
-.placeHolder{
-    background-image:
-    url("../../public/img/background/placeholder.png");
+
+
+
+@media (max-width: 520px) {
+  .show-carusale {
+    margin: 0.5rem 0;
+    button {
+      margin: 0;
+    }
+  }
+  .details-modal {
+    width: 80%;
+  }
+
 }
 
 </style>

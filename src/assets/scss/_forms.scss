@@ -1,10 +1,13 @@
-// ::-webkit-input-placeholder {
-//   color: #626262;
-//   font-size: rem(14px);
-//   font-family: var(--primary-font);
-// }
+@import 'vars';
 
-
+ input {
+    padding: 0 .5rem;
+ }
+ .editor-input {
+    border-radius: 5px;
+    border: 1px solid #c6bdbd;
+    font-family: $main-font;
+ }
 
 .input-samll {
     width: 50px;
