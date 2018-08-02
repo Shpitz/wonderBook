@@ -61,6 +61,7 @@
       <div class="sub-editor-container flex">
         <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
         <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')'}">
+          <loader class="loader" v-if="isLoad"></loader>
 
           <div class="flex column">
             <!-- p loop -->
@@ -75,7 +76,7 @@
                     <button title="Set time btn-margin-bottom" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
                       <font-awesome-icon class="icon" icon="clock" />
                     </button>
-                    <input class="input-samll self-center" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime" step="0.01">
+                    <input class="input-samll self-center editor-input" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime" step="0.01">
                   </div>
 
                 </div>
@@ -100,7 +101,7 @@
                 <font-awesome-icon class="icon" icon="clock" />
               </button>
 
-              <input type="number" class="input-samll" v-model="book.pages[currPageIdx].time" step="0.01">
+              <input type="number" class="input-samll editor-input" v-model="book.pages[currPageIdx].time" step="0.01">
             </div>
             <button class="editor-btn round-btn btn-margin-right" title="Add page" @click="addPage">
               <font-awesome-icon class="icon" icon="plus-circle" />
@@ -114,10 +115,11 @@
             <div class="input-file-container">
             <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input input-file">
             <label tabindex="0" for="my-file" class="input-file-trigger">
-                            <font-awesome-icon  class="icon" icon="upload" />
+              <font-awesome-icon  class="icon" icon="upload" />
             </label>
             </div>
           </form>
+       
           <div class="show-carusale">
             <button class="editor-btn round-btn btn-margin-right" @click="showCarusale = !showCarusale">
               <font-awesome-icon v-if="!showCarusale" class="icon" icon="eye" />
@@ -125,6 +127,16 @@
             </button>
           </div>
         </div>
+           <!--search in web -->
+           <div class="search-img-container self-start">
+          <form ref="imgFromWeb" class="flex">
+          <input type="search" ref="searchImgEl" class="editor-input"  placeholder="Search image in web">
+           <button @click="searchImg" title="Search" class="editor-btn round-btn btn-margin-right" >
+              <font-awesome-icon  class="icon" icon="search" />
+            </button>
+          </form>
+           </div>
+       
         <imgCarusale ref="carusale-cmp" v-if="showCarusale" :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
 
       </div>
@@ -140,6 +152,9 @@ import { SAVE_BOOK, LOAD_BOOK } from "../store/book-module.js";
 import bookPage from "../components/book-page.vue";
 import cloudinaryService from "../services/cloudinary-service.js";
 import imgCarusale from "../components/img-carusale.vue";
+import loader from "../components/loader-cmp.vue";
+import bookSerivce from "../services/book-service.js";
+
 export default {
   name: "bookEditor",
   data() {
@@ -159,8 +174,8 @@ export default {
       pageNum: 0,
       currPageIdx: 0,
       parNum: 1,
-      // book : null,
-      showCarusale: false
+      showCarusale: false,
+      isLoad: true
     };
   },
   created() {
@@ -193,6 +208,7 @@ export default {
       this.addPage();
       this.togelModal = true;
     }
+    this.isLoad = false;
   },
   computed: {},
   methods: {
@@ -233,10 +249,11 @@ export default {
     },
     saveDetails() {
       this.togelModal = false;
+      this.saveBook();
     },
 
     cancelFirstDetails() {
-      if (!this.book._id ) {
+      if (!this.book._id) {
         this.$router.push("./");
         this.togelModal = false;
       } else {
@@ -253,9 +270,10 @@ export default {
     },
 
     setImgFile() {
-      console.log("this.$refs.imgInput", this.$refs.imgInput[0].value);
+      this.isLoad = true;
       cloudinaryService.doUploadImg(this.$refs.imgInput).then(url => {
         this.book.pages[this.currPageIdx].img = url.secure_url;
+        this.isLoad = false;
       });
     },
     setCoverImgFile() {
@@ -287,21 +305,28 @@ export default {
       this.$refs.audio.pause();
     },
     saveBook() {
-      // this.book = JSON.parse(JSON.stringify(this.book));
+      this.isLoad = true;
       this.$store
         .dispatch({ type: SAVE_BOOK, book: this.book })
         .then(book => {
-          console.log("2111111111111111111111");
+          this.isLoad = false;
           this.book = JSON.parse(JSON.stringify(book));
-          this.$router.push("./");
         })
         .catch(err => {});
+    },
+    searchImg(ev, searchInput) {
+      searchInput = this.$refs.searchImgEl.value;
+
+      bookSerivce.searchImg(searchInput).then(imgUrl => {
+        this.book.pages[this.currPageIdx].img = imgUrl;
+      });
     }
   },
 
   components: {
     bookPage,
-    imgCarusale
+    imgCarusale,
+    loader
   }
 };
 </script>
@@ -309,6 +334,11 @@ export default {
  <style scoped lang="scss">
 @import "./src/assets/scss/_vars.scss";
 
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
 h1 {
   font-family: $main-font;
 }
@@ -344,19 +374,21 @@ h1 {
 
 .page-ctr {
   justify-content: space-between;
-  // padding: 0 0.5rem;
   flex-wrap: wrap;
 }
 
 audio {
   margin: 0 0.5rem 0 0;
+  box-shadow: 0 0 3px black;
+  border-radius: 30px;
 }
 
 .btn-exit-modal {
-     position: absolute;
-    top: 10px;
-    right: 10px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
+
 
 .first-details-container {
   position: fixed;
@@ -364,7 +396,7 @@ audio {
   right: 0;
   width: 100%;
   height: 100%;
-  background-color:rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -516,7 +548,7 @@ textarea:hover:focus::placeholder {
 
 @media (max-width: 520px) {
   .show-carusale {
-    margin: .5rem 0;
+    margin: 0.5rem 0;
     button {
       margin: 0;
     }

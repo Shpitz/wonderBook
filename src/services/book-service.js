@@ -1,5 +1,6 @@
 import axios from 'axios'
 const BASE_URL = (process.env.NODE_ENV !== 'development') ? '/book' : 'http://localhost:3000/book';
+const IMG_SEARCH_URL = (process.env.NODE_ENV !== 'development') ? '/getImg' : 'http://localhost:3000/getImg';
 
 
 // const BOOK_URL = 'http://localhost:3000/book'
@@ -53,12 +54,19 @@ function getCategories() {
     return categories
 }
 
+function searchImg(seatchImgInput){
+    return axios.get(`${IMG_SEARCH_URL}/${seatchImgInput}`)
+    .then(res=> res.data)
+   }
+   
+
 export default {
     query,
     getById,
     getCategories,
     saveBook,
-    remove
+    remove,
+    searchImg
 
 }
 
