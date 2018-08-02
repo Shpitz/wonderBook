@@ -3,10 +3,11 @@
     <section class="main-container">
 
       <div v-if="previewModal" class="show-preview">
-        <button @click="showPreview" class="btn-exit-modal editor-btn editor-regular-btn ">
-          <font-awesome-icon class="icon" icon="times" />
-        </button>
-        <book-display :bookIdFromEditor="book._id"></book-display>
+          <button @click="showPreview" 
+          class="btn-exit-modal editor-btn editor-regular-btn ">
+           <font-awesome-icon class="icon" icon="times" />
+          </button>
+        <book-display class="editor-book-display" :bookIdFromEditor="book._id"></book-display>
       </div>
 
       <div class="main-editor-container" v-if="book">
@@ -445,6 +446,9 @@ audio {
   right: 10px;
 }
 
+.editor-book-display {
+  width: 100%;
+}
 
 .first-details-container, .show-preview {
   position: fixed;
