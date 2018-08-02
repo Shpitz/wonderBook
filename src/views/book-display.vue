@@ -1,27 +1,20 @@
-<template>
+  <template>
     <section class="section-container">
-      <div v-if="book" >
-      <audio
-        ref="audio"
-        :src="book.audio"
-        @timeupdate="onTimeUpdate"
-        @seeking="onSeeking"
-        controls
-        autoplay/>
-      <book-page :pageData= "getPage" :previewInEdit="false"  :parIdx= "getParIdx" :class="[pageFlipped ? 'animated lightSpeedIn' : '']">
-      <div>  
-        <button @click="manualMovePage(-1)" class="btn-page-control clean-btn" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" >
-          <font-awesome-icon class="icon" icon="backward" /> 
-        </button>
-        <button class="btn-page-control clean-btn" :class="[disabledNextBtn ? 'btnDisabled' : '']" 
-           @click="manualMovePage(+1)">
-            <font-awesome-icon class="icon" icon="forward" /> 
-        </button>
-       </div>
-   </book-page>
-</div>
+      <div v-if="book">
+        <audio ref="audio" :src="book.audio" @timeupdate="onTimeUpdate" @seeking="onSeeking" controls autoplay/>
+        <book-page :pageData="getPage" :previewInEdit="false" :parIdx="getParIdx" :class="[pageFlipped ? 'animated lightSpeedIn' : '']">
+          <div>
+            <button @click="manualMovePage(-1)" class="btn-page-control clean-btn" :class="[disabledPrevtBtn ? 'btnDisabled' : '']">
+              <font-awesome-icon class="icon" icon="backward" />
+            </button>
+            <button class="btn-page-control clean-btn" :class="[disabledNextBtn ? 'btnDisabled' : '']" @click="manualMovePage(+1)">
+              <font-awesome-icon class="icon" icon="forward" />
+            </button>
+          </div>
+        </book-page>
+      </div>
     </section>
-</template>
+  </template>
 
 <script>
 import { LOAD_BOOK } from "../store/book-module.js";
@@ -29,6 +22,7 @@ import bookPage from "../components/book-page.vue";
 
 export default {
   name: "bookReading",
+  props: ['bookIdFromEditor'],
   data() {
     return {
       book: null,
@@ -37,15 +31,18 @@ export default {
       currentTime: 0,
       currPar: null,
       currParIdx: 0,
-      pageFlipped : false
+      pageFlipped: false
     };
   },
   created() {
     var bookId = this.$route.params.bookId;
+    if (!bookId) bookId = this.bookIdFromEditor
     this.getBook(bookId);
-    if (screen.width < screen.height){
-      screen.orientation.lock('landscape');
+    if (screen.width < screen.height) {
+      screen.orientation.lock("landscape");
     }
+    console.log('id from editor', this.bookIdFromEditor);
+    
   },
   mounted() {},
   computed: {
@@ -54,7 +51,9 @@ export default {
     },
     getPage() {
       this.pageFlipped = true;
-      setTimeout(()=>{this.pageFlipped=false},2000);
+      setTimeout(() => {
+        this.pageFlipped = false;
+      }, 2000);
       return this.currPage;
     },
     disabledNextBtn() {
@@ -137,15 +136,14 @@ export default {
       var currPageTime = this.currPage.time;
       this.currentTime = currPageTime;
       this.$refs.audio.currentTime = currPageTime;
-    },
-  
+    }
   },
   components: {
     bookPage
   },
-  destroyed(){
-    if (screen.width < screen.height){
-      screen.orientation.lock('portrait');
+  destroyed() {
+    if (screen.width < screen.height) {
+      screen.orientation.lock("portrait");
     }
   }
 };

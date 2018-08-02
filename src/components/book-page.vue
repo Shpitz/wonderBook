@@ -1,31 +1,28 @@
- <template>
-        <section  class="book-page " ref="bookPage">
-            <!-- <loader v-if="!pageData"></loader> -->
-            <div v-if="!previewInEdit" :class="{collapsed:!pageData , fullImg:isFullScrean}"  
-              class="animate tada page-container page-display  relative" ref="page-container" 
-              :style="{ backgroundImage: 'url(' + pageImg + ')'}">
-                <div class="p-container" ref="p-container">
-                    <p v-for="(p,idx) in pageData.paragraphs" :key="idx"
-                     :class="[idx === parIdx ? 'active-p animated fadeIn' : '']">
-                        {{p.txt}}
-                    </p>
-                </div>
-                <slot></slot>
-                <button @click="fullScreen" slot="fullScreen" class="full-btn clean-btn">
-                    <font-awesome-icon class="icon" icon="arrows-alt" />
-                </button>
-            </div>
-            <!-- priview in editor -->
-              <div v-if="previewInEdit"  class="page-container relative page-edit-preview" 
-               :style="{ backgroundImage: 'url(' + pageImg + ')'}">
-                <div class="p-container-prev " >
-                    <p v-for="(p,idx) in pageData.paragraphs" :key="idx">
-                        {{p.txt}}
-                    </p>
-                </div>
-            </div>
-        </section>
-</template>
+  <template>
+    <section class="book-page " ref="bookPage">
+      <!-- <loader v-if="!pageData"></loader> -->
+      <div v-if="!previewInEdit" :class="{collapsed:!pageData , fullImg:isFullScrean}" class="animate tada page-container page-display  relative"
+        ref="page-container" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
+        <div class="p-container" ref="p-container">
+          <p v-for="(p,idx) in pageData.paragraphs" :key="idx" :class="[idx === parIdx ? 'active-p animated fadeIn' : '']">
+            {{p.txt}}
+          </p>
+        </div>
+        <slot></slot>
+        <button @click="fullScreen" slot="fullScreen" class="full-btn clean-btn">
+          <font-awesome-icon class="icon" icon="arrows-alt" />
+        </button>
+      </div>
+      <!-- priview in editor -->
+      <div v-if="previewInEdit" class="page-container relative page-edit-preview" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
+        <div class="p-container-prev ">
+          <p v-for="(p,idx) in pageData.paragraphs" :key="idx">
+            {{p.txt}}
+          </p>
+        </div>
+      </div>
+    </section>
+  </template>
 
 <script>
 import StorageService from "../services/book-service.js";
@@ -128,6 +125,7 @@ export default {
   .active-p {
     font-weight: bold;
     font-size: 1.5rem;
+    color: #ff2121;
   }
 }
 .full-btn {

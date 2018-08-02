@@ -1,29 +1,27 @@
-<template>
+  <template>
     <section>
-        <div class="footer">
-    <div class="footer-social-icons">
-    <ul class="social-icons">
-        <li><a  class="social-icon"> <i class="fa fa-facebook"></i></a></li>
-        <li><a  class="social-icon"> <i class="fa fa-twitter"></i></a></li>
-        <li><a  class="social-icon"> <i class="fa fa-rss"></i></a></li>
-        <li><a  class="social-icon"> <i class="fa fa-youtube"></i></a></li>
-        <li><a class="social-icon"> <i class="fa fa-linkedin"></i></a></li>
-        <li><a  class="social-icon"> <i class="fa fa-google-plus"></i></a></li>
-    </ul>
-</div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                 Quam atque aliquid dolorem minus quaerat facere, explicabo accusantium maiores aliquam quasi, rerum eligendi 
-                voluptas similique. Quidem voluptas fugit unde expedita quasi.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                 Esse, illum at totam expedita ullam aperiam eaque ut numquam deserunt cumque praesentium atque, 
-                fugiat sit doloribus maxime eum non nostrum? Dolores?</p>
-                <div class="hr"/>
-                <div class="footer-creator">
-                   ©2018
-                </div>
+      <div class="footer">
+        <div class="footer-social-icons">
+          <ul class="social-icons">
+            <li><a class="social-icon"><i class="fa fa-facebook"></i></a></li>
+            <li><a class="social-icon"><i class="fa fa-twitter"></i></a></li>
+            <li><a class="social-icon"><i class="fa fa-rss"></i></a></li>
+            <li><a class="social-icon"><i class="fa fa-youtube"></i></a></li>
+            <li><a class="social-icon"><i class="fa fa-linkedin"></i></a></li>
+            <li><a class="social-icon"><i class="fa fa-google-plus"></i></a></li>
+          </ul>
         </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam atque aliquid dolorem minus quaerat facere, explicabo
+          accusantium maiores aliquam quasi, rerum eligendi voluptas similique. Quidem voluptas fugit unde expedita quasi.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, illum at totam expedita ullam aperiam eaque ut numquam
+          deserunt cumque praesentium atque, fugiat sit doloribus maxime eum non nostrum? Dolores?</p>
+        <div class="hr" />
+        <div class="footer-creator">
+          ©2018
+        </div>
+      </div>
     </section>
-</template>
+  </template>
 
 <script>
 export default {

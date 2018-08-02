@@ -1,47 +1,39 @@
-<template>
-        <section  class="book-details section-container" >
-          <div v-if="book" class="book-details-cotainer flex">
-            <div class="img-details">
-              <h1>{{book.title}}</h1>
-              <div class="relative" @click="playBook()">
-                <div class="play-mask absolute flex">
-                  <div class="play-ctr flex">
-                    <div class="flex align-center justify-center">
-                      <font-awesome-icon class="icon" icon="play" /> 
-                    </div>
-                  </div>
-              </div>
-
-             <img :src="book.coverImg" alt="">
-              </div>
-            </div>
-
-            <div class="txt-details">
-              <div class="txt-details-container flex column">
-              <p>" {{book.description}} "</p>
-              <div class="hr"></div>
-                <div class="flex column space-around">
-                <h4 class="italic">Wrriten by {{book.author}}</h4>
-                <h4 class="italic last">Illustrated by {{book.illustrator}}</h4>
+  <template>
+    <section class="book-details section-container">
+      <div v-if="book" class="book-details-cotainer flex">
+        <div class="img-details">
+          <h1>{{book.title}}</h1>
+          <div class="relative" @click="playBook()">
+            <div class="play-mask absolute flex">
+              <div class="play-ctr flex">
+                <div class="flex align-center justify-center">
+                  <font-awesome-icon class="icon" icon="play" />
                 </div>
-                
-                <ul class="details flex justify-center space-between align-center no-padding clean-list">
-                <li>
-                    <font-awesome-icon class="star" icon="star" /> {{book.rating}}</li>
-                <li>
-                    <font-awesome-icon class="icon" icon="eye" /> {{book.views}}</li>
-                <li>
-                    <font-awesome-icon class="clock" icon="clock" /> {{book.duration}}</li>
-                <li> <font-awesome-icon class="clock" icon="calendar-alt" /> {{book.createdAt | date-format}}</li>
-               </ul>
               </div>
-             <book-filter-categories class="categories-filter"
-              @searchCategorie="updateFilter" :categories="bookCategories" ></book-filter-categories>
             </div>
+            <img :src="book.coverImg" alt="">
           </div>
+        </div>
+        <div class="txt-details">
+          <div class="txt-details-container flex column">
+            <p>" {{book.description}} "</p>
+            <div class="hr"></div>
+            <div class="flex column space-around">
+              <h4 class="italic">Wrriten by {{book.author}}</h4>
+              <h4 class="italic last">Illustrated by {{book.illustrator}}</h4>
+            </div>
+            <ul class="details flex justify-center space-between align-center no-padding clean-list">
+              <li><font-awesome-icon class="star" icon="star" /> {{book.rating}}</li>
+              <li><font-awesome-icon class="icon" icon="eye" /> {{book.views}}</li>
+              <li><font-awesome-icon class="clock" icon="clock" /> {{book.duration}}</li>
+              <li><font-awesome-icon class="clock" icon="calendar-alt" /> {{book.createdAt | date-format}}</li>
+            </ul>
+          </div>
+          <book-filter-categories class="categories-filter" @searchCategorie="updateFilter" :categories="bookCategories"></book-filter-categories>
+        </div>
+      </div>
     </section>
-
-</template>
+  </template>
 
 <script>
 import { LOAD_BOOK,UPDATE_SEARCH_FILTER } from "../store/book-module.js";

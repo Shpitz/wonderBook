@@ -1,22 +1,20 @@
-    <template>
-        <section class="book-filter-categories">
-            <ul class="clean-list flex-warp justify-center" >
-                <li  class="categorie-container" v-for="(cat,idx) in categories"
-                :class="[cat.img === '' ? 'no-img' : '',filterBy.byCategorie === cat.catTxt ? 'active' : '']"
-                 :key="idx" @click="setCategorie(cat.catTxt)" title='Search by categorie'   >
-                    <div class="justify-center flex align-center">
-                    <div class="cat-img" :class="[cat.img === '' ? 'hidden' : '']"
-                    :style="{ backgroundImage: 'url(' + cat.img + ')' }"/>
-                    <div class="txt">
-                     <p>
-                     {{cat.catTxt}}
-                     </p>
-                    </div>
-                    </div>
-                </li>
-            </ul>
-        </section>
-    </template>
+  <template>
+    <section class="book-filter-categories">
+      <ul class="clean-list flex-warp justify-center">
+        <li class="categorie-container" v-for="(cat,idx) in categories" :class="[cat.img === '' ? 'no-img' : '',filterBy.byCategorie === cat.catTxt ? 'active' : '']"
+          :key="idx" @click="setCategorie(cat.catTxt)" title='Search by categorie'>
+          <div class="justify-center flex align-center">
+            <div class="cat-img" :class="[cat.img === '' ? 'hidden' : '']" :style="{ backgroundImage: 'url(' + cat.img + ')' }" />
+            <div class="txt">
+              <p>
+                {{cat.catTxt}}
+              </p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </template>
 
 <script>
 import { BOOKS_FILTER } from "../store/book-module.js";
