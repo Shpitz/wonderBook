@@ -1,8 +1,6 @@
 
   <template>
     <section class="section-container">
-
-
       <div v-if="book">
         <book-page :pageData="getPage" :previewInEdit="false" :parIdx="getParIdx" :class="[pageFlipped ? 'animated fade' : '']">
           <div class="player">
@@ -20,7 +18,6 @@
               <div class="go"></div>
             </div>
           </div>
-  
         </book-page>
         <audio ref="audio" :src="book.audio" @timeupdate="onTimeUpdate" @seeking="onSeeking" controls autoplay/>
       </div>
@@ -182,10 +179,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// .btn-page-control.btnDisabled {
-//   opacity: 0.5;
-//   cursor: not-allowed;
-// }
+
 audio {
   margin: 0 0 1rem;
   display: none;

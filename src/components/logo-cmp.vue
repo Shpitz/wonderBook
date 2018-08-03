@@ -17,7 +17,7 @@ export default {};
 
     .logo {
     font-family: $logo-font;
-    font-size: 2.5rem;
+    font-size: 1.3rem;
     color:$main-color;
     display: flex;
     align-items: center;
@@ -25,6 +25,9 @@ export default {};
    
     h1 {
         margin:0;
+    font-family: "Cinzel", serif;
+    text-transform: capitalize;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
             }
             span {
                 color:$main-color-hover;
@@ -50,7 +53,7 @@ export default {};
       @media(max-width:350px){
         
          h1 {
-             display: none;
+             font-size: .9rem;
          }
     }
 </style>

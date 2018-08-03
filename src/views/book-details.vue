@@ -117,7 +117,7 @@ export default {
   img {
     box-shadow: 0 3px 7px 3px rgba(0, 0, 0, 0.1);
     object-fit: cover;
-    width: 100%;
+    width: 70%;
   }
   .play-mask {
     height: 100%;

@@ -1,5 +1,5 @@
   <template>
-    <section class="book-page " >
+    <section >
       <!-- <loader v-if="!pageData"></loader> -->
       <!-- <div v-if="!previewInEdit" :class="{collapsed:!pageData , fullImg:isFullScrean}"
        class=" page-container page-display  relative"
@@ -17,7 +17,7 @@
 
 
 <div class="wrapper" ref="page-container" v-if="!previewInEdit" >
-  <div class="wrapper-container"   ref="bookPage"  :class="{fullImg:isFullScrean}"  >
+  <div class="wrapper-container book-page "    ref="bookPage"  :class="{fullImg:isFullScrean}"  >
     <div class="image-media" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
         <div class="p-container" ref="p-container">
           <p v-for="(p,idx) in pageData.paragraphs" 
@@ -37,13 +37,17 @@
 </div>
 
       <!-- priview in editor -->
-      <div v-if="previewInEdit" class="page-container relative page-edit-preview" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
+      <div class="book-page ">
+  <div v-if="previewInEdit" class="page-container relative page-edit-preview" 
+      :style="{ backgroundImage: 'url(' + pageImg + ')'}">
         <div class="p-container-prev ">
           <p v-for="(p,idx) in pageData.paragraphs" :key="idx">
             {{p.txt}}
           </p>
         </div>
       </div>
+      </div>
+    
     </section>
   </template>
 
@@ -106,76 +110,74 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-@import "./src/assets/scss/_vars.scss";
+ <style scoped lang="scss">
+    @import "./src/assets/scss/_vars.scss";
 
-.book-page {
-  background-position: center;
-  // background-image: url("../../public/img/background/book-page.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
+    .book-page {
+      background-position: center;
+      background-image: url("../../public/img/background/img-error.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
 
-.page-display {
-  height: 85vh;
+    .page-display {
+      height: 85vh;
 
-}
+    }
 
-.page-container {
-  background-size: cover;
-  align-items: flex-start;
-  padding: 0.5rem;
-  border-radius: 10px;
-  box-shadow: 0 0 11px black;
-  background-position: center;
-  display: flex;
-  justify-content: space-between;
-  font-family: $story-font;
+    .page-container {
+      background-size: cover;
+      align-items: flex-start;
+      padding: 0.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 11px black;
+      background-position: center;
+      display: flex;
+      justify-content: space-between;
+      font-family: $story-font;
 
-}
+    }
 
- p {
-    word-wrap: break-word;
-    text-align: left;
-    font-size: 1.3rem;
-    font-weight: bold;
-    font-family: $story-font;
-  }
+    p {
+      word-wrap: break-word;
+      text-align: left;
+      font-size: 1.3rem;
+      font-weight: bold;
+      font-family: $story-font;
+    }
 
-.p-container {
-  border-radius: 10px;
-  // background-color: #f0f8ff57;
-  padding: 1rem;
-  max-width: 80%;
- 
-  .active-p {
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: #ff2121;
-  }
-}
-.full-btn {
-  align-self: flex-end;
-  align-self: flex-end;
+    .p-container {
+      border-radius: 10px; // background-color: #f0f8ff57;
+      padding: 1rem;
+      max-width: 80%;
 
-}
+      .active-p {
+        font-weight: bold;
+        font-size: 1.5rem;
+        color: #ff2121;
+      }
+    }
 
-#container.fullImg{
-  height: 95vh;
-  width: 95vw;
-}
+    .full-btn {
+      align-self: flex-end;
+      align-self: flex-end;
 
+    }
 
-  @media(max-width:340px) { 
-     p {
-    font-size: 1rem;
-     }
-     .p-container {
-       .active-p {
-        font-size: 1.3rem;
-          }
-     }
-  }
+    #container.fullImg {
+      height: 95vh;
+      width: 95vw;
+    }
 
 
-</style>
+    @media(max-width:400px) {
+      p {
+        font-size: .9rem;
+      }
+      .p-container {
+        .active-p {
+          font-size: 1rem;
+        }
+      }
+    }
+  </style>

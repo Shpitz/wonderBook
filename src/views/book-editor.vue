@@ -629,4 +629,10 @@ $margin-form-label:5px;
 
 }
 
+@media (max-width: 640px) {
+    #left {
+    width: 50%;
+  }
+}
+
 </style>
