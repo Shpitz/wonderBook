@@ -1,7 +1,8 @@
   <template>
-    <section class="book-page " ref="bookPage">
+    <section class="book-page " >
       <!-- <loader v-if="!pageData"></loader> -->
-      <div v-if="!previewInEdit" :class="{collapsed:!pageData , fullImg:isFullScrean}" class="animate tada page-container page-display  relative"
+      <!-- <div v-if="!previewInEdit" :class="{collapsed:!pageData , fullImg:isFullScrean}"
+       class=" page-container page-display  relative"
         ref="page-container" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
         <div class="p-container" ref="p-container">
           <p v-for="(p,idx) in pageData.paragraphs" :key="idx" :class="[idx === parIdx ? 'active-p animated fadeIn' : '']">
@@ -12,7 +13,29 @@
         <button @click="fullScreen" slot="fullScreen" class="full-btn clean-btn">
           <font-awesome-icon class="icon" icon="arrows-alt" />
         </button>
-      </div>
+      </div> -->
+
+
+<div class="wrapper" ref="page-container" v-if="!previewInEdit" >
+  <div class="wrapper-container"   ref="bookPage"  :class="{fullImg:isFullScrean}"  >
+    <div class="image-media" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
+        <div class="p-container" ref="p-container">
+          <p v-for="(p,idx) in pageData.paragraphs" 
+          :key="idx" :class="[idx === parIdx ? 'active-p animated zoomIn' : '']">
+            {{p.txt}}
+          </p>
+        </div>
+    </div>
+    <div class="media-settings">
+   <button @click="fullScreen"  class="full-btn clean-btn">
+          <font-awesome-icon class="icon" icon="arrows-alt" />
+        </button>
+    </div>
+    <slot>
+    </slot>
+  </div>
+</div>
+
       <!-- priview in editor -->
       <div v-if="previewInEdit" class="page-container relative page-edit-preview" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
         <div class="p-container-prev ">
@@ -43,6 +66,7 @@ export default {
     pageImg() {
       return this.pageData.img;
     }
+
   },
   methods: {
     goto(refName) {
@@ -76,6 +100,7 @@ export default {
         }
       }
       this.isFullScrean = !this.isFullScrean;
+      console.log(this.isFullScrean)
     }
   }
 };
@@ -86,7 +111,7 @@ export default {
 
 .book-page {
   background-position: center;
-  background-image: url("../../public/img/background/book-page.png");
+  // background-image: url("../../public/img/background/book-page.png");
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -113,15 +138,16 @@ export default {
     word-wrap: break-word;
     text-align: left;
     font-size: 1.3rem;
+    font-weight: bold;
+    font-family: $story-font;
   }
 
 .p-container {
   border-radius: 10px;
-  background-color: #f0f8ff57;
+  // background-color: #f0f8ff57;
   padding: 1rem;
   max-width: 80%;
  
-
   .active-p {
     font-weight: bold;
     font-size: 1.5rem;
@@ -131,12 +157,25 @@ export default {
 .full-btn {
   align-self: flex-end;
   align-self: flex-end;
-  position: absolute;
-  left: 95%;
+
 }
 
-.fullImg{
-  height: 100vh;
-  width: 100vw;
+#container.fullImg{
+  height: 95vh;
+  width: 95vw;
 }
+
+
+  @media(max-width:340px) { 
+     p {
+    font-size: 1rem;
+     }
+     .p-container {
+       .active-p {
+        font-size: 1.3rem;
+          }
+     }
+  }
+
+
 </style>
