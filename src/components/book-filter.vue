@@ -1,7 +1,7 @@
 <template>
     <section class="book-filter">
       <div class="search-bar">
-       <input placeholder="Serach a book or author" type="search"
+       <input placeholder="Search a book or author" type="search"
          v-model="filterBy.byTxt" class="filter-input"
          @input="$emit('searchStr',filterBy)">
          <font-awesome-icon :class="{collapsed : !IsInputEmpty }" class="icon" icon="search" /> 

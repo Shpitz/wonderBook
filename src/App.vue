@@ -7,20 +7,20 @@
   </div>
 </template>
 <script>
-import navBar from './components/nav-bar.vue';
+import navBar from "./components/nav-bar.vue";
 export default {
-    components: {
-      navBar
+
+  components: {
+    navBar
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import './src/assets/scss/_vars.scss';
+@import "./src/assets/scss/_vars.scss";
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   text-align: center;
   color: $main-color;
 }
-
 </style>

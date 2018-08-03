@@ -10,6 +10,7 @@
 @import 'base';
 @import 'forms';
 @import 'social';
+@import 'mediaPlayer';
 
 /* Components */
 * {
@@ -28,7 +29,7 @@ html,body {
 
 // section
 .section-container {
-  padding: 1rem 3rem ;
+  padding: 1rem ;
 }
 
 .active {
