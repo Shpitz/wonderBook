@@ -15,13 +15,14 @@
         </button>
       </div> -->
 
-
 <div class="wrapper" ref="page-container" v-if="!previewInEdit" >
   <div class="wrapper-container book-page "    ref="bookPage"  :class="{fullImg:isFullScrean}"  >
     <div class="image-media" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
         <div class="p-container" ref="p-container">
+       
           <p v-for="(p,idx) in pageData.paragraphs" 
-          :key="idx" :class="[idx === parIdx ? 'active-p animated zoomIn' : '']">
+          :key="idx"  :style="{color:p.color}"
+          :class="[idx === parIdx ? 'active-p animated zoomIn' : '']">
             {{p.txt}}
           </p>
         </div>
@@ -153,8 +154,8 @@ export default {
 
       .active-p {
         font-weight: bold;
-        font-size: 1.5rem;
-        color: #ff2121;
+        font-size: 1.7rem;
+        
       }
     }
 

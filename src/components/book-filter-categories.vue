@@ -55,6 +55,7 @@ export default {
       background-color: $container-bg;
       padding: 2rem 2rem 0 2rem;
       margin: 0;
+      max-width: 970px;
     }
 
 
