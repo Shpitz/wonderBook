@@ -85,7 +85,7 @@
 
         <div class="sub-editor-container">
           <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
-          <div class="flex">
+          <div class="flex justify-center">
           <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')', backgroundSize: bgSize, backgroundPosition: bgPos}">
             <loader class="loader" v-if="isLoad"></loader>
 
@@ -153,12 +153,6 @@
               </div>
             </form>
 
-            <!-- <div class="show-carusale">
-              <button class="editor-btn round-btn btn-margin-right" @click="showCarusale = !showCarusale">
-                <font-awesome-icon v-if="!showCarusale" class="icon" icon="eye" />
-                <font-awesome-icon v-else class="icon" icon="eye-slash" />
-              </button>
-            </div> -->
           </div>  
           </div>
           <div class="bottom-ctr flex space-between">
@@ -181,8 +175,6 @@
               </form>
             </div> -->
           </div>
-
-          <imgCarusale ref="carusale-cmp" :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
                 <div>
         <select class="bgImgSize" @change="updateImgSize">
           <option value="auto">auto</option>
@@ -193,6 +185,7 @@
           <option value="100% 100%">100% 100%</option>
         </select>
       </div>
+
       <div>
         <select class="bgImgPos" @change="updateImgPos">
           <option value="left top">left top</option>
@@ -211,6 +204,7 @@
       </div>
 
         </div>
+    <imgCarusale ref="carusale-cmp" :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
 
       </div>
 
@@ -548,7 +542,7 @@ audio {
 .par-btns-container {
   margin: 0 0.5rem 0 0;
   position: absolute;
-  left:  -10rem;
+  left:  -120px;
 }
 
 .par-list {

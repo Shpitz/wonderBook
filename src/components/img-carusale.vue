@@ -2,7 +2,7 @@
     <section>
         <div>
             <!-- <carousel :navigationEnabled="true">' + buildSlideMarkup(10) + '</carousel> -->
-              <carousel :per-page="4" :mouse-drag="true" 
+              <carousel :per-page="3" :mouse-drag="true" 
               :navigationEnabled="true"
                 navigationNextLabel="▶"
                 navigationPrevLabel="◀">
