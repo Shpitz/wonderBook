@@ -1,6 +1,6 @@
  <template>
 
-    <section class="main-container">
+    <section class="main-container flex justify-center">
 
       <div v-if="previewModal" class="show-preview">
           <button @click="showPreview" 
@@ -96,7 +96,7 @@
 
         <div class="sub-editor-container flex">
           <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
-          <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')'}">
+          <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')', backgroundSize: bgSize, backgroundPosition: bgPos}">
             <loader class="loader" v-if="isLoad"></loader>
 
             <div class="flex column">
@@ -183,6 +183,32 @@
         </div>
 
       </div>
+      <div>
+        <select class="bgImgSize" @change="updateImgSize">
+          <option value="auto">auto</option>
+          <option value="cover">cover</option>
+          <option value="contain">contain</option>
+          <option value="initial">initial</option>
+          <option value="100%">100%</option>
+          <option value="100% 100%">100% 100%</option>
+        </select>
+      </div>
+      <div>
+        <select class="bgImgPos" @change="updateImgPos">
+          <option value="left top">left top</option>
+          <option value="left center">left center</option>
+          <option value="left bottom">left bottom</option>
+          <option value="right top">right top</option>
+          <option value="right center">right center</option>
+          <option value="right bottom">right bottom</option>
+          <option value="center top">center top</option>
+          <option value="center center">center center</option>
+          <option value="center bottom">center bottom</option>
+          <option value="50% 50%">50% 50%</option>
+          <option value="25% 75%">25% 75%</option>
+          <option value="initial">initial</option>
+        </select>
+      </div>
     </section>
 
   </template>
@@ -218,7 +244,9 @@ export default {
       currPageIdx: 0,
       parNum: 1,
       showCarusale: false,
-      isLoad: true
+      isLoad: true,
+      bgSize: 'auto',
+      bgPos: 'initial'
     };
   },
   created() {
@@ -261,7 +289,8 @@ export default {
         return this.book.coverImg;
       }
       else return './img/background/placeholder.png'
-    }
+    },
+ 
   },
   methods: {
     addPage() {
@@ -363,6 +392,7 @@ export default {
       this.$refs.audio.pause();
     },
     saveBook() {
+      // this.book[]
       this.isLoad = true;
       this.$store
         .dispatch({ type: SAVE_BOOK, book: this.book })
@@ -378,6 +408,20 @@ export default {
       bookSerivce.searchImg(searchInput).then(imgUrl => {
         this.book.pages[this.currPageIdx].img = imgUrl;
       });
+    },
+    updateImgSize(ev) {
+      console.log(ev.target.value);
+      this.bgSize = ev.target.value;
+      this.book.pages[this.currPageIdx].imgPosition = this.bgSize;
+      console.log(this.book.pages[this.currPageIdx]);
+      
+    },
+    updateImgPos(ev) {
+      console.log(ev.target.value);
+      this.bgPos = ev.target.value;
+      this.book.pages[this.currPageIdx].imgSize = this.bgPos;
+      console.log(this.book.pages[this.currPageIdx]);
+      
     }
   },
 
@@ -429,8 +473,14 @@ h1 {
   padding: 0.5rem;
   margin: 0 0 1rem;
   background-position: 50% 50%; /* Sets reference point to scale from */
-  background-size: cover;
+  // background-size: cover;
+
+  //NEW CHANGES
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: black;
 }
+
 
 .page-ctr {
   justify-content: space-between;

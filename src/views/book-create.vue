@@ -136,7 +136,7 @@ export default {
     .section-txt {
         width: 50%;
         padding: 2em;
-        margin: 1em; 
+        /* margin: 1em;  */
     }
     .section3.section-txt{
         width: 100%;
@@ -154,7 +154,8 @@ export default {
         margin-top: 30px;
     }
     .section {
-        margin: 2em 2em;
+        /* margin: 2em 2em; */
+        margin: 0;
     }
 
     @media(max-width: 800px) {
