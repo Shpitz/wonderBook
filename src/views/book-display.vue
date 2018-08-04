@@ -2,6 +2,13 @@
   <template>
     <section class="section-container">
       <div v-if="book">
+              <last-page v-if="isLastPage" :book="book">
+                <button class="btn-close editor-btn round-btn" 
+                @click="isLastPageInBook = false" >
+                 <font-awesome-icon  icon="times" />
+                </button>
+              </last-page>
+
         <book-page :pageData="getPage" :previewInEdit="false" :parIdx="getParIdx" :class="[pageFlipped ? 'animated fade' : '']">
           <div class="player">
             <i class="fa fa-backward" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" 
@@ -19,13 +26,16 @@
             </div>
           </div>
         </book-page>
-        <audio ref="audio" :src="book.audio" @timeupdate="onTimeUpdate" @seeking="onSeeking" controls autoplay/>
+        <audio ref="audio" @ended="bookEnd"
+        :src="book.audio" @timeupdate="onTimeUpdate" @seeking="onSeeking" 
+        controls autoplay/>
       </div>
     </section>
   </template>
 <script>
 import { LOAD_BOOK } from "../store/book-module.js";
 import bookPage from "../components/book-page.vue";
+import lastPage from "../components/last-page.vue";
 
 export default {
   name: "bookReading",
@@ -38,7 +48,8 @@ export default {
       currentTime: 0,
       currPar: null,
       currParIdx: 0,
-      pageFlipped: false
+      pageFlipped: false,
+      isLastPageInBook: false
     };
   },
   created() {
@@ -59,7 +70,7 @@ export default {
       this.pageFlipped = true;
       setTimeout(() => {
         this.pageFlipped = false;
-      }, 2000);
+      }, 1000);
       return this.currPage;
     },
     disabledNextBtn() {
@@ -70,6 +81,9 @@ export default {
     },
     ispause() {
       return this.$refs.audio.paused;
+    },
+    isLastPage() {
+      return this.isLastPageInBook;
     }
   },
   methods: {
@@ -152,12 +166,11 @@ export default {
       } else {
         this.$refs.audio.pause();
       }
-      this.$refs.playIcon.className = playIconClass === 'fa fa-play' ? 'pause fa fa-pause' : 'fa fa-play';
+      this.$refs.playIcon.className =
+        playIconClass === "fa fa-play" ? "pause fa fa-pause" : "fa fa-play";
     },
- 
-    toggleVolume() {
-      debugger;
 
+    toggleVolume() {
       if (this.$refs.audio.volume > 0) {
         this.$refs.audio.volume = 0;
         this.$refs.vol.className = "fa fa-volume-off";
@@ -165,10 +178,14 @@ export default {
         this.$refs.audio.volume = 1;
         this.$refs.vol.className = "fa fa-volume-up";
       }
+    },
+    bookEnd() {
+      this.isLastPageInBook = true;
     }
   },
   components: {
-    bookPage
+    bookPage,
+    lastPage
   },
   destroyed() {
     if (screen.width < screen.height) {
@@ -179,9 +196,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 audio {
   margin: 0 0 1rem;
   display: none;
+}
+.btn-close {
+    margin: 1rem;
+    right: 0;
+    position: absolute;
 }
 </style>

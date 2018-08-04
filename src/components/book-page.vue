@@ -1,32 +1,17 @@
   <template>
     <section >
-      <!-- <loader v-if="!pageData"></loader> -->
-      <!-- <div v-if="!previewInEdit" :class="{collapsed:!pageData , fullImg:isFullScrean}"
-       class=" page-container page-display  relative"
-        ref="page-container" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
-        <div class="p-container" ref="p-container">
-          <p v-for="(p,idx) in pageData.paragraphs" :key="idx" :class="[idx === parIdx ? 'active-p animated fadeIn' : '']">
-            {{p.txt}}
-          </p>
-        </div>
-        <slot></slot>
-        <button @click="fullScreen" slot="fullScreen" class="full-btn clean-btn">
-          <font-awesome-icon class="icon" icon="arrows-alt" />
-        </button>
-      </div> -->
-
 <div class="wrapper" ref="page-container" v-if="!previewInEdit" >
   <div class="wrapper-container book-page "    ref="bookPage"  :class="{fullImg:isFullScrean}"  >
     <div class="image-media" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
         <div class="p-container" ref="p-container">
-       
           <p v-for="(p,idx) in pageData.paragraphs" 
           :key="idx"  :style="{color:p.color}"
-          :class="[idx === parIdx ? 'active-p animated zoomIn' : '']">
+          :class="[idx === parIdx ? 'active-p animated fadeIn' : '']">
             {{p.txt}}
           </p>
         </div>
     </div>
+      <div class="img-error"></div>
     <div class="media-settings">
    <button @click="fullScreen"  class="full-btn clean-btn">
           <font-awesome-icon class="icon" icon="arrows-alt" />
@@ -69,7 +54,8 @@ export default {
   },
   computed: {
     pageImg() {
-      return this.pageData.img;
+      var img = this.pageData.img;
+      return img
     }
 
   },
@@ -116,11 +102,22 @@ export default {
 
     .book-page {
       background-position: center;
-      background-image: url("../../public/img/background/img-error.png");
       background-size: contain;
       background-repeat: no-repeat;
     }
+    .img-error{
+    background-image: url("../../public/img/background/img-error.png");
+      height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    left: 50%;
+    z-index: -1;
+    width: 50px;
+    top: 50%;
 
+    }
     .page-display {
       height: 85vh;
 
@@ -142,8 +139,8 @@ export default {
     p {
       word-wrap: break-word;
       text-align: left;
-      font-size: 1.3rem;
-      font-weight: bold;
+      font-size: 1.4rem;
+      font-weight: 200;
       font-family: $story-font;
     }
 
@@ -153,8 +150,8 @@ export default {
       max-width: 80%;
 
       .active-p {
-        font-weight: bold;
-        font-size: 1.7rem;
+        font-weight: 700;
+        font-size: 1.8rem;
         
       }
     }
