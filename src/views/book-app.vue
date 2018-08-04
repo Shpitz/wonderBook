@@ -1,5 +1,6 @@
 <template>
   <section class="book-app">
+    <router-link to="/bookCreate">Create Book</router-link> 
     <div class="background-img-container">
       <div class="bg flex column align-center justify-center">
         <h1>Look. Listen. Join the wonder.</h1>
