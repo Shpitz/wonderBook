@@ -3,7 +3,7 @@
     <section class="main-container flex justify-center">
 
       <div v-if="previewModal" class="show-preview">
-          <button @click="showPreview" 
+          <button @click="showPreview" title="watch your book"
           class="btn-exit-modal editor-btn editor-regular-btn ">
            <font-awesome-icon class="icon" icon="times" />
           </button>
@@ -44,7 +44,7 @@
               </section>
               <section id="right">
                 <h1>Book details</h1>
-                <form action="#">
+                <form action="#"  >
                   <div id="form-card" class="form-field">
                     <label>Book title:</label>
                     <input  v-model="book.title" placeholder="Book title" required>
@@ -84,8 +84,14 @@
 
 
         <div class="sub-editor-container">
+             <button @click="saveBook"
+              class="btn-margin-bottom editor-btn editor-regular-btn save-btn ">
+              <div>
+                <font-awesome-icon class="icon" icon="save" /> Save
+              </div>
+            </button>
           <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
-          <div class="flex justify-center">
+          <div class="img-area-container flex justify-center">
           <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')', backgroundSize: bgSize, backgroundPosition: bgPos}">
             <loader class="loader" v-if="isLoad"></loader>
 
@@ -101,7 +107,7 @@
                       <input type="color" v-model="par.color">
                     </div>
                     <div class="flex space-between align-center">      
-                      <button title="Set time btn-margin-bottom" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
+                      <button title="Set Paragraf time" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
                         <font-awesome-icon class="icon" icon="clock" />
                       </button>
                       <input class="input-samll self-center editor-input" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime"
@@ -123,28 +129,30 @@
           </div>
 
           <div class="flex page-ctr column space-around align-center">
-            <div>Page settings</div>
-            <div class="page-title"># {{currPageIdx+1}}</div>
-            <!-- <div class="page-area flex column space-between align-center"> -->
-            <button @click="showPreview" class=" editor-btn editor-regular-btn ">
-              <font-awesome-icon class="icon" icon="play" />
-            </button>
-              <div class="set-page-time flex column align-center">
+            <h3 class="page-ctr-item">Page settings</h3>
+            <div class="page-title page-ctr-item"># {{currPageIdx+1}}</div>
+           
+              <div class=" page-ctr-item set-page-time flex  align-center">
                 <button @click="setTimingPage" class=" editor-btn editor-regular-btn ">
                   <font-awesome-icon class="icon" icon="clock" />
                 </button>
-
                 <input type="number" class="input-samll editor-input page-timing" v-model="book.pages[currPageIdx].time" step="0.01">
               </div>
-              <button class="editor-btn round-btn" title="Add page" @click="addPage">
+              
+             <button class="editor-btn round-btn page-ctr-item" title="Add page" @click="addPage">
                 <font-awesome-icon class="icon" icon="plus-circle" />
               </button>
-              <button class="editor-btn round-btn" title="Delete page" @click="deletePage(currPageIdx)">
+   
+              <button class="editor-btn round-btn page-ctr-item" title="Delete page" @click="deletePage(currPageIdx)">
                 <font-awesome-icon class="icon" icon="trash-alt" />
               </button>
+             <!--prev/upload-->
 
-            <!-- </div> -->
-            <form method="POST" class="img-form page-form " ref="imgInput">
+           
+               <button @click="showPreview" class=" editor-btn editor-regular-btn page-ctr-item">
+              <font-awesome-icon class="icon" icon="play" />
+            </button>
+            <form method="POST" class="img-form page-form page-ctr-item " ref="imgInput">
               <div class="input-file-container">
                 <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input input-file">
                 <label tabindex="0" for="my-file" class="input-file-trigger">
@@ -152,19 +160,41 @@
                 </label>
               </div>
             </form>
-
+                  <button @click="editBookDetails"
+             class="btn-margin-bottom editor-btn editor-regular-btn details-btn">Details</button>
+            <!-- </div> -->
           </div>  
           </div>
-          <div class="bottom-ctr flex space-between">
-            <button @click="saveBook" class="btn-margin-bottom editor-btn editor-regular-btn save-btn ">
-              <div>
-                <font-awesome-icon class="icon" icon="save" /> Save
-              </div>
-            </button>
+          <div class="bottom-ctr flex align-center justify-center">
             <div class=" audio-set-area flex-warp align-center">
               <audio ref="audio" :src="book.audio" controls />
             </div>
-            <button @click="editBookDetails" class="btn-margin-bottom editor-btn editor-regular-btn details-btn">cover</button>
+                <div class="img-setting flex column">
+        <select class="bgImgSize" @change="updateImgSize">
+          <option value="auto">auto</option>
+          <option value="cover">cover</option>
+          <option selected value="contain">contain</option>
+          <option value="initial">initial</option>
+          <option value="100%">100%</option>
+          <option value="100% 100%">100% 100%</option>
+        </select>
+    
+        <select class="bgImgPos" @change="updateImgPos">
+          <option value="left top">left top</option>
+          <option value="left center">left center</option>
+          <option value="left bottom">left bottom</option>
+          <option value="right top">right top</option>
+          <option value="right center">right center</option>
+          <option value="right bottom">right bottom</option>
+          <option  value="center top">center top</option>
+          <option selected value="center center">center center</option>
+          <option value="center bottom">center bottom</option>
+          <option value="50% 50%">50% 50%</option>
+          <option value="25% 75%">25% 75%</option>
+          <option value="initial">initial</option>
+        </select>
+      </div>
+               </div>
             <!--search in web -->
             <!-- <div class="search-img-container self-start">
               <form ref="imgFromWeb" class="flex">
@@ -174,42 +204,11 @@
                 </button>
               </form>
             </div> -->
-          </div>
-                <div>
-        <select class="bgImgSize" @change="updateImgSize">
-          <option value="auto">auto</option>
-          <option value="cover">cover</option>
-          <option value="contain">contain</option>
-          <option value="initial">initial</option>
-          <option value="100%">100%</option>
-          <option value="100% 100%">100% 100%</option>
-        </select>
-      </div>
-
-      <div>
-        <select class="bgImgPos" @change="updateImgPos">
-          <option value="left top">left top</option>
-          <option value="left center">left center</option>
-          <option value="left bottom">left bottom</option>
-          <option value="right top">right top</option>
-          <option value="right center">right center</option>
-          <option value="right bottom">right bottom</option>
-          <option value="center top">center top</option>
-          <option value="center center">center center</option>
-          <option value="center bottom">center bottom</option>
-          <option value="50% 50%">50% 50%</option>
-          <option value="25% 75%">25% 75%</option>
-          <option value="initial">initial</option>
-        </select>
-      </div>
-
         </div>
-    <imgCarusale ref="carusale-cmp" :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
-
+    <imgCarusale ref="carusale-cmp"  class="img-carusela"
+    :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
       </div>
-
     </section>
-
   </template>
 
 
@@ -244,8 +243,8 @@ export default {
       parNum: 1,
       showCarusale: false,
       isLoad: true,
-      bgSize: 'auto',
-      bgPos: 'initial',
+      bgSize: 'contain',
+      bgPos: 'center',
       currPar : 0,
     };
   },
@@ -415,14 +414,13 @@ export default {
     updateImgSize(ev) {
       console.log(ev.target.value);
       this.bgSize = ev.target.value;
-      this.book.pages[this.currPageIdx].imgPosition = this.bgSize;
+      this.book.pages[this.currPageIdx].imgSize = this.bgSize;
       console.log(this.book.pages[this.currPageIdx]);
       
     },
     updateImgPos(ev) {
-      console.log(ev.target.value);
       this.bgPos = ev.target.value;
-      this.book.pages[this.currPageIdx].imgSize = this.bgPos;
+      this.book.pages[this.currPageIdx].imgPosition = this.bgPos;
       console.log(this.book.pages[this.currPageIdx]);
       
     }
@@ -449,7 +447,9 @@ h1 {
   font-family: $main-font;
 }
 .save-btn {
-  // margin: 0 auto;
+  margin: 1rem auto;
+    height: auto;
+    width: 150px
 }
 
 .audio-set-area {
@@ -462,15 +462,14 @@ h1 {
 }
 .main-editor-container {
   height: 100%;
-  padding: 1rem;
-  padding-top: 0.5rem;
+  width: 100%;
 }
 .sub-editor-container {
   min-height: 400px;
   flex-direction: column;
   justify-content: space-between;
   width: 70%;
-  margin: 0 auto;   
+  margin:0 auto 1rem;   
 }
 
 .img-area {
@@ -488,17 +487,22 @@ h1 {
 
 
 .page-ctr {
-  margin: 0.5rem;
+  margin: 0 1rem;
   justify-content: space-between;
+  align-items: flex-start;
   flex-wrap: wrap;
+  h3 {
+    margin: 0;
+    text-align: left;
+      }
 }
 
 .page-title{
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 .page-timing{
-  margin-top: 1em;
+  // margin-top: 1em;
 }
 
 audio {
@@ -527,7 +531,7 @@ audio {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   font-family: "Lato", sans-serif;
   color: #393e56de;
 }
@@ -622,6 +626,8 @@ $margin-form-label:5px;
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
+  height:100%; 
+  justify-content: space-around;
 }
 
 #right form input,
@@ -689,8 +695,19 @@ $margin-form-label:5px;
   color: $secondary;
 }
 
+.img-carusela {
+  max-width: 88vw;
+}
+.img-setting select:not(:last-child) {
+  margin: 0 0 .5rem;
+}
 
-
+.details-btn {
+  z-index: 1;
+}
+.page-ctr-item {
+  margin: 0 .5rem 0 0;
+}
 @media (max-width: 520px) {
   .show-carusale {
     margin: 0.5rem 0;
@@ -701,6 +718,14 @@ $margin-form-label:5px;
   .details-modal {
     width: 80%;
   }
+.bottom-ctr {
+  flex-direction: column;
+   audio {
+    margin: 0 0 1rem;
+  }
+
+}
+
 
 }
 
@@ -708,6 +733,47 @@ $margin-form-label:5px;
     #left {
     width: 50%;
   }
+  .page-ctr {
+        height: 100px;
+    justify-content: flex-end;
+
+  }
+}
+
+@media (max-width: 820px) {
+.page-ctr button &input{
+          margin: 0 .5rem 0 0;
+  }
+.sub-editor-container {
+  width: 95%;
+}
+.par-btns-container {
+  right: 0;
+  left: auto;
+}
+
+}
+
+
+@media (max-width: 900px) { 
+    .img-area-container {
+    flex-direction: column;
+  }
+  .page-ctr {
+     flex-direction: row;
+    align-items: center;
+    margin: 0 0 1rem;
+  }
+  .details-btn {
+    margin: 0;
+  }
+}
+@media (min-width: 900px) and (max-width: 1024px) { 
+  .par-btns-container {
+    left: auto;
+    right: 0;
+  }
+
 }
 
 </style>

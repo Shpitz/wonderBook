@@ -1,8 +1,7 @@
 <template>
     <section>
-        <div>
             <!-- <carousel :navigationEnabled="true">' + buildSlideMarkup(10) + '</carousel> -->
-              <carousel :per-page="3" :mouse-drag="true" 
+              <carousel :per-page="4" :mouse-drag="true" 
               :navigationEnabled="true"
                 navigationNextLabel="▶"
                 navigationPrevLabel="◀">
@@ -10,7 +9,6 @@
                     <bookPage :pageData="page" :previewInEdit="true" ></bookPage>
                 </slide>
             </carousel>
-        </div>
     </section>
 </template>
 
@@ -33,13 +31,6 @@
                 console.log(pageIdx)
                 this.$emit('onPreviewClicked', pageIdx)
             },
-            // buildSlideMarkup(count) {
-            //     let slideMarkup = '';
-            //     for (var i = 1; i <= count; i++) {
-            //         slideMarkup += '<slide><span class="label">' + i + '</span></slide>'
-            //         }
-            //     return slideMarkup;
-            // }
         },
         components: {
             Carousel,
@@ -54,5 +45,6 @@
     margin: 0 1rem 0 0;
     padding: 1rem;
 }
+
 
 </style>
