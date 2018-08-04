@@ -4,6 +4,7 @@
             <logo-cmp  class="animated tada"></logo-cmp>
              <div :class="{show: menuOpen}" class="routes-container animated fadeIn"> 
                 <router-link to="/" class="clean-link nav-route">Home</router-link> 
+                <router-link to="/bookCreate" class="clean-link nav-route">Create Book</router-link>  
                 <router-link to="/about" class="clean-link nav-route">About</router-link>
                 <router-link to="/about/contact" class="clean-link nav-route" @click.native="gotoContact">Contact</router-link>
                 <router-link to="/login" class="clean-link nav-route">Login</router-link>
