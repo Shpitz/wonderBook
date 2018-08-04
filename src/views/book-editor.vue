@@ -21,7 +21,6 @@
               <section id="left" :style="{ backgroundImage: 'url(' + getCoverImg + ')'}">
                 <div id="head">
                   <h1>Join the wonder</h1>
-                  <p>Make your own book!</p>
                 </div>
                 <div class="modal-upload-container flex justify-center">
                   <form method="POST" ref="coverImgInput" class="upload-form flex column">
@@ -118,7 +117,11 @@
                     </div>
 
                   </div>
-                  <textarea autofocus class="editor-text-area" rows='3' cols='50' v-model="par.txt" placeHolder="Your paragraph here" />
+                  <textarea autofocus class="editor-text-area" rows='2' 
+                  :style="{color: par.color}"
+                   cols='50'
+                   v-model="par.txt" placeHolder="Your paragraph here" />
+                   <input type="color" v-model="par.color">
                 </li>
               </ul>
               <button title="Add paragraph" class="editor-btn self-start round-btn" @click="addPar">
@@ -627,6 +630,12 @@ $margin-form-label:5px;
     width: 80%;
   }
 
+}
+
+@media (max-width: 640px) {
+    #left {
+    width: 50%;
+  }
 }
 
 </style>
