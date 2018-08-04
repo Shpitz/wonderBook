@@ -4,8 +4,6 @@ import router from './router';
 import store from './store/store';
 // import './plugins/vuetify.js'
 import VAnimateCss from 'v-animate-css';
-
-
 import './registerServiceWorker';
 import './filters.js'
 import './assets/scss/style.scss';
@@ -15,14 +13,17 @@ Vue.component('v-select', vSelect)
 import VueCarousel from 'vue-carousel';
 Vue.use(VueCarousel);
 
-
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt, faClock, faStar, faForward, faBackward, faSearch, faPlaneDeparture, faPlay, faArrowsAlt, faPlusCircle, faTrash, faTrashAlt, faFileUpload, faParagraph, faEyeSlash, faSave, faTimes, faUpload, faImage, faFileAudio, faPause, faVolumeUp, faVolumeOff } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt, 
+  faClock, faStar, faForward, faBackward, faSearch, faPlaneDeparture,
+   faPlay, faArrowsAlt, faPlusCircle, faTrash, faTrashAlt, faFileUpload, 
+   faParagraph, faEyeSlash, faSave, faTimes, faUpload, faImage, faFileAudio, 
+   faPause, faVolumeUp, faVolumeOff, faComment,faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt,
   faClock, faStar, faForward, faBackward,faSearch,faPlay,faArrowsAlt,faPlusCircle,faTrashAlt,faFileUpload,faParagraph
-,faEyeSlash,faSave,faTimes,faUpload,faImage,faFileAudio,faPause)
+,faEyeSlash,faSave,faTimes,faUpload,faImage,faFileAudio,faPause,faComment,faShoppingCart)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false;

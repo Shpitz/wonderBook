@@ -55,7 +55,7 @@ export default {
       background-color: $container-bg;
       padding: 2rem 2rem 0 2rem;
       margin: 0;
-      max-width: 970px;
+      max-width: 958px;
     }
 
 
@@ -77,7 +77,7 @@ export default {
       }
     }
 
-    .categorie-container:nth-child(4n) {
+    .categorie-container:nth-child(3n) {
       margin: 0 0 2rem 0;
     }
 
@@ -105,7 +105,7 @@ export default {
       .categorie-container {
         width: 80%;
         margin: 0 0 2rem;
-        .categorie-container:nth-child(4n) {
+        .categorie-container:nth-child(3n) {
           margin: 0 0 2rem;
         }
         .cat-img {

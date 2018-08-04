@@ -47,15 +47,15 @@
                 <form action="#">
                   <div id="form-card" class="form-field">
                     <label>Book title:</label>
-                    <input  v-model="book.title" placeholder="The beatle" required>
+                    <input  v-model="book.title" placeholder="Book title" required>
                   </div>
                   <div id="form-card" class="form-field">
                     <label>Author:</label>
-                    <input v-model="book.author" placeholder="Jhon Lennon" required>
+                    <input v-model="book.author" placeholder="Author" required>
                   </div>
                   <div id="form-card" class="form-field">
                     <label>Illustrator:</label>
-                    <input v-model="book.illustrator" placeholder="Paul Mccartney" required>
+                    <input v-model="book.illustrator" placeholder="Illustrators" required>
                   </div>
                    <div id="form-date" class="form-field">
                     <label for="expiry-month">Categories:</label>
@@ -572,6 +572,10 @@ $margin-form-label:5px;
      border-bottom: 2px solid #808ab2;
 
 }
+#right form input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: lightgray;
+} 
+ 
    
 #right form .form-field {
   display: flex;
@@ -617,6 +621,7 @@ $margin-form-label:5px;
   background: linear-gradient(135deg, $primary 0%, $primary 100%);
   color: $secondary;
 }
+
 
 
 @media (max-width: 520px) {

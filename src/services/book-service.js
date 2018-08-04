@@ -46,11 +46,9 @@ function getCategories() {
     var categories = [
         { catTxt: 'Age 2-5 Years', img: './img/categories/3-5.jpeg' },
         { catTxt: 'Age 6-9 years', img: './img/categories/5-8.jpeg' },
-        { catTxt: 'Beginner English', img: './img/categories/begginers-eng.jpeg' },
         { catTxt: 'All', img: './img/categories/All.jpeg' },
         { catTxt: 'Animals', img: './img/categories/Animals.jpeg' },
         { catTxt: 'Family', img: './img/categories/Family.jpeg' },
-        { catTxt: 'Friends', img: './img/categories/Friends.jpeg' },
         { catTxt: 'Learning to Read', img: './img/categories/Learning_to_read.jpeg' }
         
 

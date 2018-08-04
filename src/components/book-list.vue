@@ -51,4 +51,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+ul {
+     max-width: 958px;
+    margin: 0 auto;
+}
 </style>
