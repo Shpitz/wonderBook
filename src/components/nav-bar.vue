@@ -2,12 +2,12 @@
     <section class="nav-bar">
         <div class="nav-bar-container" :class="{navHome:onHome}">
             <logo-cmp  class="animated tada"></logo-cmp>
-             <div :class="{show: menuOpen}" class="routes-container animated fadeIn"> 
-                <router-link to="/" class="clean-link nav-route">Home</router-link> 
-                <router-link to="/bookCreate" class="clean-link nav-route">Create Book</router-link>  
-                <router-link to="/about" class="clean-link nav-route">About</router-link>
+             <div @click="closeMenu" :class="{show: menuOpen}" class="routes-container animated fadeIn" > 
+                <router-link to="/" class="clean-link nav-route" >Home</router-link> 
+                <router-link to="/bookCreate" class="clean-link nav-route">Create-Book</router-link>  
+                <router-link to="/about" class="clean-link nav-route" >About</router-link>
                 <router-link to="/about/contact" class="clean-link nav-route" @click.native="gotoContact">Contact</router-link>
-                <router-link to="/login" class="clean-link nav-route">Login</router-link>
+                <router-link to="/login" class="clean-link nav-route" >Login</router-link>
             </div>
            
          <div class="nav-menu hidden" @click="menuOpen = !menuOpen"
@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     gotoContact() {
+      this.menuOpen = false;
       if (this.$route.name === "about" || this.$route.name === "contact") {
         var elContact = document.getElementById("contact-us");
         if (elContact)
@@ -38,6 +39,9 @@ export default {
             behavior: "smooth"
           });
       }
+    },
+    closeMenu() {
+      this.menuOpen = false;
     }
   },
     components: {
@@ -143,7 +147,7 @@ export default {
     }
 
     .clickMenu {
-      margin: 10px 120px 10px 10px;
+      margin: 10px 135px 10px 10px;
     }
 
     .nav-menu:not(.clickMenu):hover span:nth-child(1) {
@@ -187,12 +191,14 @@ export default {
         background-color: white;
         align-items: normal;
         right: 0;
-        top: 93px;
+        top: 0;
+        height: 100%;
+        justify-content: flex-start;
       }
       .routes-container .clean-link {
         height: 80px;
         line-height: 80px;
-        width: 100px;
+        // width: 100px;
       }
       .routes-container.show {
         transform: translate(0);
@@ -205,12 +211,10 @@ export default {
       .nav-menu {
         display: block;
       }
-    }
-
-    @media (max-width: 570px) {
-      .routes-container {
-        top: 64px;
+      .navHome a {
+      background-color: #a3a3a35c;
       }
-
     }
+    
+
   </style>

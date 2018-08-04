@@ -114,6 +114,10 @@ export default {
   background-size: cover;
 }
 
+.background-img-container {
+  height: 400px;
+}
+
 .about-details {
   align-items: center;
 }
