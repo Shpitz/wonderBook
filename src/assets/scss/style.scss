@@ -10,6 +10,7 @@
 @import 'base';
 @import 'forms';
 @import 'social';
+@import 'mediaPlayer';
 
 /* Components */
 * {
@@ -28,7 +29,7 @@ html,body {
 
 // section
 .section-container {
-  padding: 1rem 3rem ;
+  padding: 1rem ;
 }
 
 .active {
@@ -48,8 +49,8 @@ html,body {
   border-radius: 10px;
   background-color: #f0f8ff57;
   padding: 1rem;
-  overflow: auto;
-  max-height: -webkit-fill-available;
+  overflow: hidden;
+  max-height: 100%;
   p {
     font-size: 1rem;
     overflow-wrap: break-word;
@@ -67,3 +68,12 @@ html,body {
 }
 
 
+// vselect npm style
+.dropdown-toggle {
+  max-height: 80px;
+overflow: auto;
+}
+.open-indicator {
+  margin: 0 1rem;
+}
+ 

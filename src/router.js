@@ -7,6 +7,7 @@ import Contact from './views/Contact.vue';
 import Login from './views/Login.vue';
 import BookDisplay from './views/book-display.vue'
 import BookEditor from './views/book-editor.vue'
+import BookCreate from './views/book-create.vue'
 
 Vue.use(Router);
 
@@ -46,7 +47,12 @@ export default new Router({
       path: '/bookEditor/:bookId?',
       name: 'bookEditor',
       component: BookEditor,
-    }
+    },
+    {
+      path: '/bookCreate',
+      name: 'bookCreate',
+      component: BookCreate,
+    },
     
   ],
 });

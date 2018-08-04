@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
 <div v-if="book" class="paper">
     <img class="poster" :src=backgroundImg />
@@ -42,6 +43,45 @@
   <div class="color-overlay"></div>
 </div> -->
 </template>
+
+
+    <!-- <div v-if="book" class="blog-card spring-fever " :style="{backgroundImage:'url(' +backgroundImg+')'}"> -->
+      <!-- <div class="title-content"> -->
+        <!-- <div class="flex align-center card-header justify-center"> -->
+          <!-- <slot class="btn-edit-slot"></slot> -->
+          <!-- <h3>{{book.title}}</h3> -->
+        <!-- </div> -->
+
+        <!-- <hr /> -->
+        <!-- <div class="intro">By {{book.author}}</div> -->
+      <!-- </div> -->
+      <!-- /.title-content -->
+      <!-- <div class="play-mask absolute flex"> -->
+        <!-- <div class="play-ctr flex"> -->
+          <!-- <div class="flex align-center justify-center"> -->
+            <!-- <font-awesome-icon class="icon" icon="play" /> -->
+          <!-- </div> -->
+        <!-- </div> -->
+      <!-- </div> -->
+      <!-- <div class="card-info"> -->
+        <!-- {{pageDesc}} -->
+      <!-- </div> -->
+      <!-- /.card-info -->
+      <!-- <div class="utility-info"> -->
+        <!-- <ul class="utility-list"> -->
+          <!-- <li> -->
+            <!-- <font-awesome-icon class="icon" icon="eye" /> {{book.views}}</li> -->
+          <!-- <li class="date">{{datePublish | date-format}}</li> -->
+        <!-- </ul> -->
+      <!-- </div> -->
+      <!-- /.utility-info -->
+      <!-- overlays -->
+      <!-- <div class="gradient-overlay"></div> -->
+      <!-- <div class="color-overlay"></div> -->
+    <!-- </div> -->
+    <!-- /.blog-card -->
+
+
 
 <script scoped>
 export default {

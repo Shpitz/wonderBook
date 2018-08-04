@@ -1,20 +1,22 @@
-  <template>
-        <section class="book-app">
-            <div class="background-img-container">
-                <div class="bg flex column align-center justify-center">
-                    <h1>Look. Listen. Join the wonder.</h1>
-                   <book-filter @searchStr="updateFilter"></book-filter>
-                </div>
-            </div>
-            <button class="create-button" @click="createBook">Create your book</button>
-            <div class="flex justify-center">
-             <book-filter-categories :categories="filterCategories" @searchCategorie="updateFilter"/>
-            </div>
-            <loader v-if="!books"></loader>
-            <book-list :user="user" :books="booksToShow"></book-list>
-            <app-footer></app-footer>
-        </section>
-    </template>
+<template>
+  <section class="book-app">
+  
+    <div class="background-img-container">
+      <div class="bg flex column align-center justify-center">
+        <book-filter @searchStr="updateFilter"></book-filter>
+      </div>
+    </div>
+    <!-- <button class="create-button" @click="createBook">Create your book</button> -->
+    <div class="flex justify-center">
+      <book-filter-categories :categories="filterCategories"
+       @searchCategorie="updateFilter" />
+    </div>
+    <loader v-if="!books"></loader>
+     <h1 ref="bookList">Look. Listen. Join the wonder.</h1>
+    <book-list  :user="user" :books="booksToShow"></book-list>
+    <app-footer></app-footer>
+  </section>
+</template>
 
 <script>
 import {
@@ -23,49 +25,53 @@ import {
   BOOKS_FOR_DISPLAY,
   UPDATE_SEARCH_FILTER
 } from "../store/book-module.js";
-import bookSerivce from '../services/book-service.js'
+import bookSerivce from "../services/book-service.js";
 
 import bookList from "../components/book-list.vue";
 import bookFilter from "../components/book-filter.vue";
-import bookFilterCategories from "../components/book-filter-categories.vue"
-import appFooter from "../components/footer-cmp.vue"
-import loader from "../components/loader-cmp.vue"
-
-
-
+import bookFilterCategories from "../components/book-filter-categories.vue";
+import appFooter from "../components/footer-cmp.vue";
+import loader from "../components/loader-cmp.vue";
 
 export default {
-  data(){
-   return{
-      filterCategories:bookSerivce.getCategories(),
-      books:null,
-      user:null,
-   }
+  data() {
+    return {
+      filterCategories: bookSerivce.getCategories(),
+      books: null,
+      user: null
+    };
   },
   created() {
     this.loadBooks();
   },
   computed: {
     booksToShow() {
-      this.books  = this.$store.getters[BOOKS_FOR_DISPLAY];
-      console.log('this.books is:', this.books)
+      this.books = this.$store.getters[BOOKS_FOR_DISPLAY];
       return this.books;
-    },
+    }
   },
   methods: {
     loadBooks() {
-      this.$store.dispatch({ type: LOAD_BOOKS })
-      .catch(err => {
+      this.$store.dispatch({ type: LOAD_BOOKS }).catch(err => {
         console.log("error in book app loadBooks component", err);
       });
     },
     updateFilter(filterBy) {
-      this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy});
-      this.loadBooks()
+      this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy });
+      this.loadBooks();
+      var list = this.$refs.bookList;
+      this.goToList(list);
     },
-    createBook(){
-      this.$router.push('/bookEditor')
-    }
+    createBook() {
+      this.$router.push("/bookEditor");
+    },
+    goToList(elToScroll) {
+       if (elToScroll) {
+          elToScroll.scrollIntoView()
+       }
+          
+      }
+  
   },
   components: {
     bookList,
@@ -77,12 +83,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Cinzel');
+<style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css?family=Cinzel");
 .background-img-container {
-  height: 400px;
+  height: 300px;
   margin: 0;
-  
 }
 .bg {
   /* The image used */
@@ -95,14 +100,14 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  padding: .5rem;
-  h1 {
-  font-family: 'Cinzel', serif;
-  text-transform: capitalize;
-  color: white;
-  font-size: 3rem;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  
-  }
+  padding: 0.5rem;
+ 
 }
+ h1 {
+    margin: 0 0 2rem;
+    font-family: "Cinzel", serif;
+    text-transform: capitalize;
+    font-size: 3rem;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
 </style>

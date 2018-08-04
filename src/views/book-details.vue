@@ -1,47 +1,46 @@
-<template>
-        <section  class="book-details section-container" >
-          <div v-if="book" class="book-details-cotainer flex">
-            <div class="img-details">
-              <h1>{{book.title}}</h1>
-              <div class="relative" @click="playBook()">
-                <div class="play-mask absolute flex">
-                  <div class="play-ctr flex">
-                    <div class="flex align-center justify-center">
-                      <font-awesome-icon class="icon" icon="play" /> 
-                    </div>
-                  </div>
-              </div>
+  <template>
+    <section class="book-details section-container">
+      <div v-if="book" class="book-details-cotainer flex">
+        <div class="img-details">
 
-             <img :src="book.coverImg" alt="">
-              </div>
-            </div>
-
-            <div class="txt-details">
-              <div class="txt-details-container flex column">
-              <p>" {{book.description}} "</p>
-              <div class="hr"></div>
-                <div class="flex column space-around">
-                <h4 class="italic">Wrriten by {{book.author}}</h4>
-                <h4 class="italic last">Illustrated by {{book.illustrator}}</h4>
+          <h1>{{book.title}}</h1>
+          <div class="relative" @click="playBook()">
+            <div class="play-mask absolute flex">
+              <div class="play-ctr flex">
+                <div class="flex align-center justify-center">
+                  <font-awesome-icon class="icon" icon="play" />
                 </div>
-                
-                <ul class="details flex justify-center space-between align-center no-padding clean-list">
-                <li>
-                    <font-awesome-icon class="star" icon="star" /> {{book.rating}}</li>
-                <li>
-                    <font-awesome-icon class="icon" icon="eye" /> {{book.views}}</li>
-                <li>
-                    <font-awesome-icon class="clock" icon="clock" /> {{book.duration}}</li>
-                <li> <font-awesome-icon class="clock" icon="calendar-alt" /> {{book.createdAt | date-format}}</li>
-               </ul>
               </div>
-             <book-filter-categories class="categories-filter"
-              @searchCategorie="updateFilter" :categories="bookCategories" ></book-filter-categories>
             </div>
+            <img :src="book.coverImg" alt="">
           </div>
-    </section>
+        </div>
+        <div class="txt-details">
 
-</template>
+          <div class="txt-details-container flex column">
+            <!-- <div> -->
+              <button @click.stop="editBook" class="editor-btn editor-regular-btn edit-btn">
+                <font-awesome-icon icon="edit" />
+              </button>
+            <!-- </div> -->
+            <p>" {{book.description}} "</p>
+            <div class="hr"></div>
+            <div class="flex column space-around">
+              <h4 class="italic">Wrriten by {{book.author}}</h4>
+              <h4 class="italic last">Illustrated by {{book.illustrator}}</h4>
+            </div>
+            <ul class="details flex justify-center space-between align-center no-padding clean-list">
+              <li><font-awesome-icon class="star" icon="star" /> {{book.rating}}</li>
+              <li><font-awesome-icon class="icon" icon="eye" /> {{book.views}}</li>
+              <li><font-awesome-icon class="clock" icon="clock" /> {{book.duration}}</li>
+              <li><font-awesome-icon class="clock" icon="calendar-alt" /> {{book.createdAt | date-format}}</li>
+            </ul>
+          </div>
+          <book-filter-categories class="categories-filter" @searchCategorie="updateFilter" :categories="bookCategories"></book-filter-categories>
+        </div>
+      </div>
+    </section>
+  </template>
 
 <script>
 import { LOAD_BOOK,UPDATE_SEARCH_FILTER } from "../store/book-module.js";
@@ -77,6 +76,9 @@ export default {
      updateFilter(filterBy) {
       this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy});
       this.$router.push(`/`);
+    },
+    editBook() {
+      this.$router.push(`/bookEditor/${this.book._id}`)
     }
   },
   components: {
@@ -97,6 +99,16 @@ export default {
   margin: 0 0 1rem;
 }
 
+.edit-btn {
+  width: fit-content;
+    align-self: flex-end;
+    background-color: #dedede
+}
+
+.edit-btn:hover{
+  background-color: #546196;
+}
+
 .img-details {
   cursor: pointer;
   width: 60%;
@@ -105,7 +117,7 @@ export default {
   img {
     box-shadow: 0 3px 7px 3px rgba(0, 0, 0, 0.1);
     object-fit: cover;
-    width: 100%;
+    width: 70%;
   }
   .play-mask {
     height: 100%;

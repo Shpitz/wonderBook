@@ -11,8 +11,6 @@
                          <font-awesome-icon icon="trash-alt" />
                         </button>
                         </div>
-
-                      
                     </book-preview>
                 </li>
             </ul>
