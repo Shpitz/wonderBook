@@ -16,6 +16,7 @@
                     </book-preview>
                 </li>
             </ul>
+
         </section>
     </template>
 
@@ -52,6 +53,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-
 </style>
