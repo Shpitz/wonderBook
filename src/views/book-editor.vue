@@ -81,47 +81,38 @@
         </div>
 
         <!--main area-->
-        <div class="flex">
-          <button @click="editBookDetails" class="btn-margin-bottom editor-btn editor-regular-btn details-btn">
-            Edit book details</button>
-          <button @click="saveBook" class="btn-margin-bottom editor-btn editor-regular-btn save-btn ">
-            <div>
-              <font-awesome-icon class="icon" icon="save" /> Save
-            </div>
-          </button>
-          <button @click="showPreview" class=" editor-btn editor-regular-btn ">
-            <font-awesome-icon class="icon" icon="play" />
-          </button>
-        </div>
 
-        <div class="sub-editor-container flex">
+
+        <div class="sub-editor-container">
           <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
+          <div class="flex">
           <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')', backgroundSize: bgSize, backgroundPosition: bgPos}">
             <loader class="loader" v-if="isLoad"></loader>
 
             <div class="flex column">
               <!-- p loop -->
               <ul class="par-list clean-list">
-                <li class="flex  relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
-                  <div class="par-btns-container">
-                    <button class="editor-btn round-btn btn-margin-bottom" title="Delete paragraf" @click="deletePar(idx)">
-                      <font-awesome-icon class="icon" icon="trash-alt" />
-                    </button>
-
-                    <div class="flex">
+                <li class="flex relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
+                  <div v-if="currPar === idx" class="par-btns-container">
+                    <div class="flex space-between align-center">
+                      <button class="editor-btn round-btn btn-margin-bottom" title="Delete paragraf" @click="deletePar(idx)">
+                        <font-awesome-icon class="icon" icon="trash-alt" />
+                      </button>
+                      <input type="color" v-model="par.color">
+                    </div>
+                    <div class="flex space-between align-center">      
                       <button title="Set time btn-margin-bottom" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
                         <font-awesome-icon class="icon" icon="clock" />
                       </button>
                       <input class="input-samll self-center editor-input" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime"
                         step="0.01">
                     </div>
-
                   </div>
                   <textarea autofocus class="editor-text-area" rows='2' 
                   :style="{color: par.color}"
-                   cols='50'
-                   v-model="par.txt" placeHolder="Your paragraph here" />
-                   <input type="color" v-model="par.color">
+                   cols='60'
+                   v-model="par.txt" placeHolder="Your paragraph here" 
+                   @focus="focusPar(idx)"/>
                 </li>
               </ul>
               <button title="Add paragraph" class="editor-btn self-start round-btn" @click="addPar">
@@ -131,27 +122,28 @@
             </div>
           </div>
 
-          <div class="flex page-ctr align-center">
-            <div class=" audio-set-area flex-warp align-center">
-              <audio ref="audio" :src="book.audio" controls />
-              <h1>Page {{currPageIdx+1}}</h1>
-            </div>
-            <div class="page-area flex align-center">
-              <div class="set-page-time flex align-center">
+          <div class="flex page-ctr column space-around align-center">
+            <div>Page settings</div>
+            <div class="page-title"># {{currPageIdx+1}}</div>
+            <!-- <div class="page-area flex column space-between align-center"> -->
+            <button @click="showPreview" class=" editor-btn editor-regular-btn ">
+              <font-awesome-icon class="icon" icon="play" />
+            </button>
+              <div class="set-page-time flex column align-center">
                 <button @click="setTimingPage" class=" editor-btn editor-regular-btn ">
                   <font-awesome-icon class="icon" icon="clock" />
                 </button>
 
-                <input type="number" class="input-samll editor-input" v-model="book.pages[currPageIdx].time" step="0.01">
+                <input type="number" class="input-samll editor-input page-timing" v-model="book.pages[currPageIdx].time" step="0.01">
               </div>
-              <button class="editor-btn round-btn btn-margin-right" title="Add page" @click="addPage">
+              <button class="editor-btn round-btn" title="Add page" @click="addPage">
                 <font-awesome-icon class="icon" icon="plus-circle" />
               </button>
-              <button class="editor-btn round-btn btn-margin-right" title="Delete page" @click="deletePage(currPageIdx)">
+              <button class="editor-btn round-btn" title="Delete page" @click="deletePage(currPageIdx)">
                 <font-awesome-icon class="icon" icon="trash-alt" />
               </button>
 
-            </div>
+            <!-- </div> -->
             <form method="POST" class="img-form page-form " ref="imgInput">
               <div class="input-file-container">
                 <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input input-file">
@@ -161,29 +153,37 @@
               </div>
             </form>
 
-            <div class="show-carusale">
+            <!-- <div class="show-carusale">
               <button class="editor-btn round-btn btn-margin-right" @click="showCarusale = !showCarusale">
                 <font-awesome-icon v-if="!showCarusale" class="icon" icon="eye" />
                 <font-awesome-icon v-else class="icon" icon="eye-slash" />
               </button>
+            </div> -->
+          </div>  
+          </div>
+          <div class="bottom-ctr flex space-between">
+            <button @click="saveBook" class="btn-margin-bottom editor-btn editor-regular-btn save-btn ">
+              <div>
+                <font-awesome-icon class="icon" icon="save" /> Save
+              </div>
+            </button>
+            <div class=" audio-set-area flex-warp align-center">
+              <audio ref="audio" :src="book.audio" controls />
             </div>
+            <button @click="editBookDetails" class="btn-margin-bottom editor-btn editor-regular-btn details-btn">cover</button>
+            <!--search in web -->
+            <!-- <div class="search-img-container self-start">
+              <form ref="imgFromWeb" class="flex">
+                <input type="search" ref="searchImgEl" class="editor-input" placeholder="Search image in web">
+                <button @click="searchImg" title="Search" class="editor-btn round-btn btn-margin-right">
+                  <font-awesome-icon class="icon" icon="search" />
+                </button>
+              </form>
+            </div> -->
           </div>
-          <!--search in web -->
-          <div class="search-img-container self-start">
-            <form ref="imgFromWeb" class="flex">
-              <input type="search" ref="searchImgEl" class="editor-input" placeholder="Search image in web">
-              <button @click="searchImg" title="Search" class="editor-btn round-btn btn-margin-right">
-                <font-awesome-icon class="icon" icon="search" />
-              </button>
-            </form>
-          </div>
 
-          <imgCarusale ref="carusale-cmp" v-if="showCarusale" :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
-
-        </div>
-
-      </div>
-      <div>
+          <imgCarusale ref="carusale-cmp" :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
+                <div>
         <select class="bgImgSize" @change="updateImgSize">
           <option value="auto">auto</option>
           <option value="cover">cover</option>
@@ -209,6 +209,11 @@
           <option value="initial">initial</option>
         </select>
       </div>
+
+        </div>
+
+      </div>
+
     </section>
 
   </template>
@@ -246,7 +251,8 @@ export default {
       showCarusale: false,
       isLoad: true,
       bgSize: 'auto',
-      bgPos: 'initial'
+      bgPos: 'initial',
+      currPar : 0,
     };
   },
   created() {
@@ -385,6 +391,9 @@ export default {
       //     console.log('prev page time: ', prevPage.time, 'curr page start time: ', currPage.time);
       // }
     },
+    focusPar(idx){
+      this.currPar = idx;
+    },
     setTimingPar(idx) {
       this.book.pages[this.currPageIdx].paragraphs[
         idx
@@ -446,7 +455,7 @@ h1 {
   font-family: $main-font;
 }
 .save-btn {
-  margin: 0 auto;
+  // margin: 0 auto;
 }
 
 .audio-set-area {
@@ -466,10 +475,12 @@ h1 {
   min-height: 400px;
   flex-direction: column;
   justify-content: space-between;
+  width: 70%;
+  margin: 0 auto;   
 }
 
 .img-area {
-  min-height: inherit;
+  min-height: 60vh;
   padding: 0.5rem;
   margin: 0 0 1rem;
   background-position: 50% 50%; /* Sets reference point to scale from */
@@ -483,8 +494,17 @@ h1 {
 
 
 .page-ctr {
+  margin: 0.5rem;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.page-title{
+  font-size: 2em;
+}
+
+.page-timing{
+  margin-top: 1em;
 }
 
 audio {
@@ -527,9 +547,12 @@ audio {
 
 .par-btns-container {
   margin: 0 0.5rem 0 0;
+  position: absolute;
+  left:  -10rem;
 }
 
 .par-list {
+  position: relative;
   margin: 0;
   padding: 0;
   li {
