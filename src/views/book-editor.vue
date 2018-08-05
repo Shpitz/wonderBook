@@ -101,7 +101,8 @@
                 <li class="flex relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
                   <div v-if="currPar === idx" class="par-btns-container">
                     <div class="flex space-between align-center">
-                      <button class="editor-btn round-btn btn-margin-bottom" title="Delete paragraf" @click="deletePar(idx)">
+                      <button class="editor-btn round-btn btn-margin-bottom" 
+                      title="Delete paragraph" @click="deletePar(idx)">
                         <font-awesome-icon class="icon" icon="trash-alt" />
                       </button>
                       <input type="color" v-model="par.color">
@@ -142,8 +143,9 @@
              <button class="editor-btn round-btn page-ctr-item" title="Add page" @click="addPage">
                 <font-awesome-icon class="icon" icon="plus-circle" />
               </button>
-   
-              <button class="editor-btn round-btn page-ctr-item" title="Delete page" @click="deletePage(currPageIdx)">
+              <button class="editor-btn round-btn page-ctr-item" 
+              v-if="!isSinglePage"
+               title="Delete page" @click="deletePage(currPageIdx)">
                 <font-awesome-icon class="icon" icon="trash-alt" />
               </button>
              <!--prev/upload-->
@@ -290,6 +292,9 @@ export default {
       }
       else return './img/background/placeholder.png'
     },
+    isSinglePage(){
+      return this.book.pages.length === 1
+    }
  
   },
   methods: {

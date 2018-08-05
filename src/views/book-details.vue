@@ -1,9 +1,8 @@
   <template>
     <section class="book-details section-container">
       <loader class="loader" v-if="isLoad"></loader>
-      <div v-if="book" class="book-details-cotainer flex">
+      <div v-if="book"   class="book-details-cotainer flex">
         <div class="img-details">
-
           <h1>{{book.title}}</h1>
           <div class="relative" @click="playBook()">
             <div class="play-mask absolute flex">
@@ -23,8 +22,9 @@
               <button @click.stop="editBook" class="editor-btn editor-regular-btn edit-btn">
                 <font-awesome-icon icon="edit" />
               </button>
-              <button @click.stop="deleteBook" class="editor-btn editor-regular-btn edit-btn">
-                <font-awesome-icon icon="times" />
+              <button @click.stop="deleteBook"  
+              class="editor-btn editor-regular-btn edit-btn">
+                <font-awesome-icon icon="trash-alt" />
               </button>
             </div>
             <p>" {{book.description}} "</p>
@@ -95,7 +95,8 @@ export default {
           this.$router.push(`/`)
         })
         .catch(err => {});
-    }
+    },
+  
   },
   components: {
     bookFilterCategories,
@@ -119,7 +120,8 @@ export default {
 .edit-btn {
   width: fit-content;
     align-self: flex-end;
-    background-color: #dedede
+    background-color: #dedede;
+   margin: 0 .5rem 0 0;
 }
 
 .edit-btn:hover{

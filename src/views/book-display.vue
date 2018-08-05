@@ -61,7 +61,6 @@ export default {
     }
     console.log("id from editor", this.bookIdFromEditor);
   },
-  mounted() {},
   computed: {
     getParIdx() {
       return this.currParIdx;
