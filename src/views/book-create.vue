@@ -108,15 +108,15 @@ export default {
 <style scoped>
 
     .create-button {
-        /* margin: 1em; */
+        padding: 0 1em;
     }
     .bee{
         margin: 0;
         padding: 0;
         vertical-align: baseline;
         /* padding-bottom: 10px; */
-            margin-bottom: -40px;
-    margin-top: -40px;
+        margin-bottom: -40px;
+        margin-top: -40px;
     }
     .bee img {
         width: 20%;
@@ -135,7 +135,7 @@ export default {
     }
     .section-img img {
         width: 90%;
-        padding: 2em;
+        padding: 3em;
     }
 
     .section-txt {
