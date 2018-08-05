@@ -1,5 +1,6 @@
   <template>
     <section class="book-details section-container">
+      <loader class="loader" v-if="isLoad"></loader>
       <div v-if="book" class="book-details-cotainer flex">
         <div class="img-details">
 
@@ -18,11 +19,14 @@
         <div class="txt-details">
 
           <div class="txt-details-container flex column">
-            <!-- <div> -->
+            <div class="flex row-reverse">
               <button @click.stop="editBook" class="editor-btn editor-regular-btn edit-btn">
                 <font-awesome-icon icon="edit" />
               </button>
-            <!-- </div> -->
+              <button @click.stop="deleteBook" class="editor-btn editor-regular-btn edit-btn">
+                <font-awesome-icon icon="times" />
+              </button>
+            </div>
             <p>" {{book.description}} "</p>
             <div class="hr"></div>
             <div class="flex column space-around">
@@ -43,14 +47,16 @@
   </template>
 
 <script>
-import { LOAD_BOOK,UPDATE_SEARCH_FILTER } from "../store/book-module.js";
+import { LOAD_BOOK,UPDATE_SEARCH_FILTER,DELETE_BOOK } from "../store/book-module.js";
 import bookFilterCategories from "../components/book-filter-categories.vue";
+import loader from "../components/loader-cmp.vue";
 
 export default {
   name: "bookDetails",
   data() {
     return {
-      book: null
+      book: null,
+      isLoad: false
     };
   },
 
@@ -79,10 +85,21 @@ export default {
     },
     editBook() {
       this.$router.push(`/bookEditor/${this.book._id}`)
+    },
+    deleteBook(){
+      this.isLoad = true;
+      this.$store
+        .dispatch({ type: DELETE_BOOK, bookId: this.book._id })
+        .then(() => {
+          this.isLoad = false;
+          this.$router.push(`/`)
+        })
+        .catch(err => {});
     }
   },
   components: {
-    bookFilterCategories
+    bookFilterCategories,
+    loader
   }
 };
 </script>

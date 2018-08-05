@@ -24,6 +24,11 @@
 .flex {
   display: flex;
 }
+
+.row-reverse{
+  flex-direction: row-reverse
+}
+
 .flex-warp {
   display: flex;
   flex-wrap: wrap;
