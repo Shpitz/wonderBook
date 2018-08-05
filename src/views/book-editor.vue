@@ -92,7 +92,7 @@
             </button>
           <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
           <div class="img-area-container flex justify-center">
-          <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')', backgroundSize: bgSize, backgroundPosition: bgPos}">
+          <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')', backgroundSize: book.pages[currPageIdx].imgSize, backgroundPosition: book.pages[currPageIdx].imgPosition}">
             <loader class="loader" v-if="isLoad"></loader>
 
             <div class="flex column">
@@ -182,10 +182,10 @@
         </select>
   
         <select class="bgImgPos" @change="updateImgPos" v-model="book.pages[currPageIdx].imgPosition">
-          <option value="left top">left top</option>
-          <option value="left center">left center</option>
-          <option value="left bottom">left bottom</option>
-          <option value="right top">right top</option>
+          <!-- <option value="left top">left top</option> -->
+          <!-- <option value="left center">left center</option> -->
+          <!-- <option value="left bottom">left bottom</option> -->
+          <!-- <option value="right top">right top</option> -->
           <option value="right center">right center</option>
           <option value="right bottom">right bottom</option>
           <option  value="center top">center top</option>

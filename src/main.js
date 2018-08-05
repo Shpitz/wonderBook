@@ -2,7 +2,6 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store/store';
-// import './plugins/vuetify.js'
 import VAnimateCss from 'v-animate-css';
 import './registerServiceWorker';
 import './filters.js'
