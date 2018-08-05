@@ -14,7 +14,6 @@
     <loader v-if="!books"></loader>
      <h1 ref="bookList">Look. Listen. Join the wonder.</h1>
     <div class="flex column justify-center section section3 section-txt">
-      <h1>Read & hear books</h1>
       <div class="flex column subtext">
         <p>Enjoy books shared by worldwide members.</p>
         <p>Connect with authors to show appreciation.</p>

@@ -2,7 +2,9 @@
     <section >
 <div class="wrapper" ref="page-container" v-if="!previewInEdit" >
   <div class="wrapper-container book-page "    ref="bookPage"  :class="{fullImg:isFullScrean}"  >
-    <div class="image-media" :style="{ backgroundImage: 'url(' + pageImg + ')'}">
+    <div class="image-media" 
+    :style="{ backgroundImage: 'url(' + pageImg + ')',backgroundSize:pageData.imgSize,
+    backgroundPosition:pageData.imgPosition}">
         <div class="p-container" ref="p-container">
           <p v-for="(p,idx) in pageData.paragraphs" 
           :key="idx"  :style="{color:p.color}"
@@ -21,7 +23,6 @@
     </slot>
   </div>
 </div>
-
       <!-- priview in editor -->
       <div class="book-page ">
   <div v-if="previewInEdit" class="page-container relative page-edit-preview" 
@@ -157,6 +158,7 @@ export default {
     }
 
     .full-btn {
+      color:white;
       align-self: flex-end;
       align-self: flex-end;
 
