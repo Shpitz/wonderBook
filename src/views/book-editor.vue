@@ -186,9 +186,9 @@
           <!-- <option value="left center">left center</option> -->
           <!-- <option value="left bottom">left bottom</option> -->
           <!-- <option value="right top">right top</option> -->
-          <option value="right center">right center</option>
-          <option value="right bottom">right bottom</option>
-          <option  value="center top">center top</option>
+          <!-- <option value="right center">right center</option>
+          <option value="right bottom">right bottom</option> -->
+          <!-- <option  value="center top">center top</option> -->
           <option  value="center center">center center</option>
           <option value="center bottom">center bottom</option>
           <option value="50% 50%">50% 50%</option>
