@@ -108,13 +108,15 @@ export default {
 <style scoped>
 
     .create-button {
-        margin: 1em;
+        padding: 0 1em;
     }
     .bee{
         margin: 0;
         padding: 0;
         vertical-align: baseline;
-        padding-bottom: 10px;
+        /* padding-bottom: 10px; */
+        margin-bottom: -40px;
+        margin-top: -40px;
     }
     .bee img {
         width: 20%;
@@ -123,6 +125,8 @@ export default {
         display: block;
     }
 
+
+
     .section-img {
         width: 50%;
         margin: 0;
@@ -130,13 +134,19 @@ export default {
         object-fit: contain;
     }
     .section-img img {
-        width: 95%;
+        width: 90%;
+        padding: 3em;
     }
 
     .section-txt {
         width: 50%;
         padding: 2em;
+        order: 1;
         /* margin: 1em;  */
+    }
+
+    .section1 .section-txt, .section4 .section-txt {
+        order: 0
     }
     .section3.section-txt{
         width: 100%;
@@ -156,7 +166,9 @@ export default {
     .section {
         /* margin: 2em 2em; */
         margin: 0;
+        margin-bottom: 20px;
     }
+
 
     @media(max-width: 800px) {
         .section {
@@ -164,18 +176,19 @@ export default {
         }
         .bee img{
             width: 40%;
+            margin: 0;
         }
         .section-img {
             width: 100%;
-            order: 0;
+            order: -1;
         }
         .section-img img {
             width: 80%;
         }
-
-        
+        .section-txt {
+            font-size: 1em;
+            width: 100%;
+        }
     }
-
-
 
 </style>
