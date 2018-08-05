@@ -44,6 +44,7 @@
 .slide-page-container {
     margin: 0 1rem 0 0;
     padding: 1rem;
+     max-width: 250px;
 }
 
 

@@ -11,7 +11,7 @@
       <book-filter-categories :categories="filterCategories"
        @searchCategorie="updateFilter" />
     </div>
-    <loader v-if="!books"></loader>
+    
      <h1 ref="bookList">Look. Listen. Join the wonder.</h1>
     <div class="flex column justify-center section section3 section-txt">
       <div class="flex column subtext">
@@ -19,6 +19,7 @@
         <p>Connect with authors to show appreciation.</p>
       </div>
     </div>
+    <loader v-if="!books"></loader>
     <book-list  :user="user" :books="booksToShow"></book-list>
     <app-footer></app-footer>
   </section>
@@ -98,7 +99,6 @@ export default {
 .bg {
   /* The image used */
   background-image: url("../../public/img/background/childBlachWhite.jpeg");
-
   /* Full height */
   height: 100%;
 
@@ -111,7 +111,6 @@ export default {
 }
  h1 {
     margin: 0 0 2rem;
-    font-family: "Cinzel", serif;
     text-transform: capitalize;
     font-size: 3rem;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;

@@ -42,6 +42,8 @@ function saveBook(book) {
     }
 }
 
+
+
 function getCategories() {
     var categories = [
         { catTxt: 'Age 2-5 Years', img: './img/categories/3-5.jpeg' },
@@ -50,17 +52,17 @@ function getCategories() {
         { catTxt: 'Animals', img: './img/categories/Animals.jpeg' },
         { catTxt: 'Family', img: './img/categories/Family.jpeg' },
         { catTxt: 'Learning to Read', img: './img/categories/Learning_to_read.jpeg' }
-        
+
 
     ]
     return categories
 }
 
-function searchImg(seatchImgInput){
+function searchImg(seatchImgInput) {
     return axios.get(`${IMG_SEARCH_URL}/${seatchImgInput}`)
-    .then(res=> res.data)
-   }
-   
+        .then(res => res.data)
+}
+
 
 export default {
     query,

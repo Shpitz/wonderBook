@@ -53,7 +53,7 @@ export default {
     $container-bg:white;
     ul {
       background-color: $container-bg;
-      padding: 2rem 2rem 0 2rem;
+      padding: 3rem 3rem 1rem 3rem;
       margin: 0;
       max-width: 958px;
     }
@@ -91,8 +91,9 @@ export default {
       padding: .5rem;
     }
 
-    .no-img {
+    .categorie-container.no-img {
       width: auto;
+      margin: .5rem;
       padding: .3rem;
     }
 

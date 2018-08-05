@@ -22,10 +22,11 @@ export default {};
     display: flex;
     align-items: center;
     padding: .5rem;
+    font-size: 1.7rem;
+    letter-spacing: 2px;
    
     h1 {
         margin:0;
-    font-family: "Cinzel", serif;
     text-transform: capitalize;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
             }

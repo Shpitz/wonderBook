@@ -170,16 +170,16 @@
               <audio ref="audio" :src="book.audio" controls />
             </div>
                 <div class="img-setting flex column">
-        <select class="bgImgSize" @change="updateImgSize">
+        <select class="bgImgSize" @change="updateImgSize" v-model="book.pages[currPageIdx].imgSize">
           <option value="auto">auto</option>
           <option value="cover">cover</option>
-          <option selected value="contain">contain</option>
+          <option  value="contain">contain</option>
           <option value="initial">initial</option>
           <option value="100%">100%</option>
           <option value="100% 100%">100% 100%</option>
         </select>
-    
-        <select class="bgImgPos" @change="updateImgPos">
+  
+        <select class="bgImgPos" @change="updateImgPos" v-model="book.pages[currPageIdx].imgPosition">
           <option value="left top">left top</option>
           <option value="left center">left center</option>
           <option value="left bottom">left bottom</option>
@@ -187,7 +187,7 @@
           <option value="right center">right center</option>
           <option value="right bottom">right bottom</option>
           <option  value="center top">center top</option>
-          <option selected value="center center">center center</option>
+          <option  value="center center">center center</option>
           <option value="center bottom">center bottom</option>
           <option value="50% 50%">50% 50%</option>
           <option value="25% 75%">25% 75%</option>
@@ -249,8 +249,6 @@ export default {
     };
   },
   created() {
-    console.log(this.previewModal);
-    
     if (this.$route.params.bookId) {
       this.$store
         .dispatch({ type: LOAD_BOOK, bookId: this.$route.params.bookId })
@@ -280,7 +278,10 @@ export default {
       this.addPage();
       this.togelModal = true;
     }
+  },
+  mounted(){
     this.isLoad = false;
+
   },
   computed: {
     getCoverImg(){
@@ -394,7 +395,6 @@ export default {
       this.$refs.audio.pause();
     },
     saveBook() {
-      // this.book[]
       this.isLoad = true;
       this.$store
         .dispatch({ type: SAVE_BOOK, book: this.book })
@@ -416,7 +416,6 @@ export default {
       this.bgSize = ev.target.value;
       this.book.pages[this.currPageIdx].imgSize = this.bgSize;
       console.log(this.book.pages[this.currPageIdx]);
-      
     },
     updateImgPos(ev) {
       this.bgPos = ev.target.value;
@@ -697,6 +696,7 @@ $margin-form-label:5px;
 
 .img-carusela {
   max-width: 88vw;
+  margin: 0 auto;
 }
 .img-setting select:not(:last-child) {
   margin: 0 0 .5rem;

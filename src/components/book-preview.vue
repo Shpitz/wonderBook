@@ -7,8 +7,7 @@
       <h3>{{book.author}}</h3>
 	  <!-- <div>{{datePublish | date-format}}</div> -->
       <div><font-awesome-icon class="icon" icon="eye" /> {{book.views}}</div>
-    <!-- <a class="btn">Read </a> -->
-    <!-- <div class="space"></div> -->
+
 </div>
 
 </template>

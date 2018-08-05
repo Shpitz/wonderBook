@@ -125,7 +125,7 @@ export default {
     }
 
     .page-container {
-      background-size: cover;
+      background-size: contain;
       align-items: flex-start;
       padding: 0.5rem;
       border-radius: 10px;
@@ -140,7 +140,7 @@ export default {
     p {
       word-wrap: break-word;
       text-align: left;
-      font-size: 1.4rem;
+      font-size: 2.5rem;
       font-weight: 200;
       font-family: $story-font;
     }
@@ -152,13 +152,13 @@ export default {
 
       .active-p {
         font-weight: 700;
-        font-size: 1.8rem;
+        font-size: 2.7rem;
         
       }
     }
 
     .full-btn {
-      color:white;
+      color:#6d6d6d;
       align-self: flex-end;
       align-self: flex-end;
 
