@@ -74,4 +74,12 @@ export default {
     margin: 0 .5rem 0 0;
 }
 
+@media (max-width:500px) {
+  .control-btn {
+    button {
+      font-size: 1.5rem;
+
+    }
+  }
+}
 </style>

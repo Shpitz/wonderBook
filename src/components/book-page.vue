@@ -2,9 +2,9 @@
     <section >
 <div class="wrapper" ref="page-container" v-if="!previewInEdit" >
   <div class="wrapper-container book-page "    ref="bookPage"  :class="{fullImg:isFullScrean}"  >
-    <div class="image-media" 
-    :style="{ backgroundImage: 'url(' + pageImg + ')',backgroundSize:pageData.imgSize,
-    backgroundPosition:pageData.imgPosition}">
+    <div class="image-media" :class="[pageData.imgSize]"
+
+    :style="imgStyle">
         <div class="p-container" ref="p-container">
           <p v-for="(p,idx) in pageData.paragraphs" 
           :key="idx"  :style="{color:p.color}"
@@ -57,6 +57,11 @@ export default {
     pageImg() {
       var img = this.pageData.img;
       return img
+    },
+    imgStyle(){
+      return  { backgroundImage: 'url(' + this.pageData.img + ')',
+       backgroundPosition:this.pageData.imgPosition
+       }
     }
 
   },
@@ -101,6 +106,14 @@ export default {
  <style scoped lang="scss">
     @import "./src/assets/scss/_vars.scss";
 
+    // class for div with img background
+    .cover {
+      background-size: cover;
+    }
+    .contain {
+      background-size: contain;
+    }
+// end
     .book-page {
       background-position: center;
       background-size: contain;
@@ -170,9 +183,9 @@ export default {
     }
 
 
-    @media(max-width:400px) {
+    @media(max-width:736px) {
       p {
-        font-size: .9rem;
+        font-size: 1rem;
       }
       .p-container {
         .active-p {
@@ -180,4 +193,11 @@ export default {
         }
       }
     }
+//whenthe window less then 550pxthe imag will be in auto contain
+    @media(max-width:1023px) {
+      .cover {
+        background-size: contain;
+       }
+    }
+     
   </style>

@@ -17,12 +17,12 @@ import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAl
   faClock, faStar, faForward, faBackward, faSearch, faPlaneDeparture,
    faPlay, faArrowsAlt, faPlusCircle, faTrash, faTrashAlt, faFileUpload, 
    faParagraph, faEyeSlash, faSave, faTimes, faUpload, faImage, faFileAudio, 
-   faPause, faVolumeUp, faVolumeOff, faComment,faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+   faPause, faVolumeUp, faVolumeOff, faComment,faShoppingCart, faPalette } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt,
   faClock, faStar, faForward, faBackward,faSearch,faPlay,faArrowsAlt,faPlusCircle,faTrashAlt,faFileUpload,faParagraph
-,faEyeSlash,faSave,faTimes,faUpload,faImage,faFileAudio,faPause,faComment,faShoppingCart)
+,faEyeSlash,faSave,faTimes,faUpload,faImage,faFileAudio,faPause,faComment,faShoppingCart,faPalette)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false;

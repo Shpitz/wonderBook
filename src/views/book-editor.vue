@@ -105,14 +105,27 @@
                       title="Delete paragraph" @click="deletePar(idx)">
                         <font-awesome-icon class="icon" icon="trash-alt" />
                       </button>
-                      <input type="color" v-model="par.color">
+                       <div class="modal-upload-container flex justify-center">
+                  <form method="POST"  class="upload-form flex column">
+                    <div class="file-upload input-file-container">
+                        <input type="color" v-model="par.color" 
+                       class="file-upload__input input-file">
+                      <label tabindex="0"  class="input-file-trigger" :style="{color:par.color}">
+                        <font-awesome-icon class="icon" icon="palette" />
+                      </label>
+                    </div>
+                  </form>
+                       </div>
+                    
                     </div>
                     <div class="flex space-between align-center">      
                       <button title="Set Paragraf time" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
                         <font-awesome-icon class="icon" icon="clock" />
                       </button>
-                      <input class="input-samll self-center editor-input" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime"
-                        step="0.01">
+                      <input class="input-samll self-center editor-input"
+                       type="number"  
+                        v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime"
+                        step="1" >
                     </div>
                   </div>
                   <textarea autofocus class="editor-text-area" rows='2' 
@@ -173,12 +186,8 @@
             </div>
                 <div class="img-setting flex column">
         <select class="bgImgSize" @change="updateImgSize" v-model="book.pages[currPageIdx].imgSize">
-          <option value="auto">auto</option>
           <option value="cover">cover</option>
           <option  value="contain">contain</option>
-          <option value="initial">initial</option>
-          <option value="100%">100%</option>
-          <option value="100% 100%">100% 100%</option>
         </select>
   
         <select class="bgImgPos" @change="updateImgPos" v-model="book.pages[currPageIdx].imgPosition">
@@ -294,7 +303,10 @@ export default {
     },
     isSinglePage(){
       return this.book.pages.length === 1
-    }
+    },
+    // parseIntTimeSet(){
+    //  return this.book.pages[currPageIdx].paragraphs[idx].parStartTime
+    // }
  
   },
   methods: {
@@ -700,7 +712,7 @@ $margin-form-label:5px;
 }
 
 .img-carusela {
-  max-width: 88vw;
+  max-width: 81vw;
   margin: 0 auto;
 }
 .img-setting select:not(:last-child) {
@@ -742,6 +754,9 @@ $margin-form-label:5px;
         height: 100px;
     justify-content: flex-end;
 
+  }
+  .editor-text-area {
+    max-width: 60%;
   }
 }
 
