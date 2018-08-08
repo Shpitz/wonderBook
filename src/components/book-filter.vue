@@ -1,10 +1,11 @@
 <template>
     <section class="book-filter">
-      <div class="search-bar">
+      <div class="search-bar relative">
        <input placeholder="Search a book or author" type="search"
          v-model="filterBy.byTxt" class="filter-input"
          @input="$emit('searchStr',filterBy)">
-         <font-awesome-icon :class="{collapsed : !IsInputEmpty }" class="icon" icon="search" /> 
+         <font-awesome-icon :class="{collapsed : !IsInputEmpty }" 
+         class="icon" icon="search" /> 
       </div>
          <p v-show="false"> {{filter}}</p>
     </section>
@@ -41,7 +42,10 @@ export default {
 <style lang="scss" scoped>
     $size: 20px;
     .icon {
-      margin: 0 0 0 -2rem;
+    margin: 0;
+    position: absolute;
+    top: 34%;
+    right: 10px;
     }
 
     .search-bar {
@@ -100,22 +104,5 @@ export default {
       }
     }
 
-    @media (max-width: 380px) {
-      .search-bar {
-        input {
-          width: 60px;
-
-        }
-
-      }
-      .search-bar {
-        input:focus,
-        input:hover {
-          width: 200px;
-        }
-
-      }
-
-
-    }
+   
   </style>

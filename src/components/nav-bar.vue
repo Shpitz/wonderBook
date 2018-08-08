@@ -1,9 +1,8 @@
 <template>
     <section class="nav-bar">
         <div class="nav-bar-container" :class="{navHome:onHome}">
-            <logo-cmp  class="animated tada"></logo-cmp>
+            <logo-cmp  class="animated tada" @onLogo="routeToHome"></logo-cmp>
              <div @click="closeMenu" :class="{show: menuOpen}" class="routes-container animated fadeIn" > 
-                <router-link to="/" class="clean-link nav-route" >Home</router-link> 
                 <router-link to="/bookCreate" class="clean-link nav-route">Create-Book</router-link>  
                 <router-link to="/about" class="clean-link nav-route" >About</router-link>
                 <router-link to="/about/contact" class="clean-link nav-route" @click.native="gotoContact">Contact</router-link>
@@ -42,6 +41,9 @@ export default {
     },
     closeMenu() {
       this.menuOpen = false;
+    },
+    routeToHome(){
+      this.$router.push('/');
     }
   },
     components: {
@@ -66,10 +68,7 @@ export default {
     .nav-bar {
       box-shadow: 0 0 5px black;
       margin: 0 0 0.4rem;
-
-
     }
-
 
     .nav-bar-container {
       padding: .5rem;
@@ -81,7 +80,6 @@ export default {
     a {
       font-weight: bold;
       color: $main-color;
-      background-color: #a3a3a35c;
       &.router-link-exact-active {
         color: $main-color-hover;
       }
@@ -95,7 +93,7 @@ export default {
     }
 
     .nav-route {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-family: Gaegu;
       padding: 5px;
       margin: 3px;
@@ -216,5 +214,4 @@ export default {
       }
     }
     
-
   </style>

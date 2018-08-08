@@ -110,7 +110,8 @@
                     <div class="file-upload input-file-container">
                         <input type="color" v-model="par.color" 
                        class="file-upload__input input-file">
-                      <label tabindex="0"  class="input-file-trigger" :style="{color:par.color}">
+                      <label tabindex="0"  class="input-file-trigger" 
+                      :style="{color:par.color}">
                         <font-awesome-icon class="icon" icon="palette" />
                       </label>
                     </div>
@@ -303,11 +304,8 @@ export default {
     },
     isSinglePage(){
       return this.book.pages.length === 1
-    },
-    // parseIntTimeSet(){
-    //  return this.book.pages[currPageIdx].paragraphs[idx].parStartTime
-    // }
- 
+    }
+  
   },
   methods: {
     addPage() {
@@ -492,9 +490,7 @@ h1 {
   min-height: 60vh;
   padding: 0.5rem;
   margin: 0 0 1rem;
-  background-position: 50% 50%; /* Sets reference point to scale from */
-  // background-size: cover;
-
+  background-position: center; /* Sets reference point to scale from */
   //NEW CHANGES
   background-size: contain;
   background-repeat: no-repeat;
@@ -515,10 +511,6 @@ h1 {
 
 .page-title{
   font-size: 1.5em;
-}
-
-.page-timing{
-  // margin-top: 1em;
 }
 
 audio {
@@ -725,6 +717,7 @@ $margin-form-label:5px;
 .page-ctr-item {
   margin: 0 .5rem 0 0;
 }
+
 @media (max-width: 520px) {
   .show-carusale {
     margin: 0.5rem 0;
@@ -739,11 +732,8 @@ $margin-form-label:5px;
   flex-direction: column;
    audio {
     margin: 0 0 1rem;
-  }
-
-}
-
-
+        }
+   }
 }
 
 @media (max-width: 640px) {

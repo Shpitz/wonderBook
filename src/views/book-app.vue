@@ -115,4 +115,11 @@ export default {
     font-size: 3rem;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   }
+
+  @media (max-width:520px) {
+    .bg {
+        justify-content: flex-end;
+    }
+    
+  }
 </style>
