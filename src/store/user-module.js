@@ -22,14 +22,13 @@ export default {
     },
     mutations: {
         [SET_USER](state, { user }) {
-            console.log('set user in store: ',user)
             state.user = user
         },
     },
     getters: {
         [GET_USER](state) {
-            console.log('state.user',state.user)
-            return state.user
+            var user =  state.user
+            return user
         }
     },
     actions: {
@@ -41,8 +40,8 @@ export default {
         },
         [LOAD_USER](store, { userId }) {
             return userSerivce.getLoggedinUser()
-                .then((user) => {
-                    store.commit({ type: SET_USER, user })
+                .then(user => {
+                    store.commit({ type: SET_USER, user })                
                     return user;
                 })
         },

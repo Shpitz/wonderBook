@@ -2,7 +2,7 @@
     <section >
 <div class="wrapper" ref="page-container" v-if="!previewInEdit" >
   <div class="wrapper-container book-page "    ref="bookPage"  :class="{fullImg:isFullScrean}"  >
-    <div :class="[pageData.imgSize]"  class="image-media"
+    <div :class="[pageData.imgSize]" @click="$emit('onImage')"  class="image-media"
         :style="imgStyle">
         <div class="p-container" ref="p-container">
           <p v-for="(p,idx) in pageData.paragraphs" 
@@ -172,7 +172,7 @@ export default {
       word-wrap: break-word;
       text-align: left;
       font-size: 2.5rem;
-      font-weight: 200;
+      font-weight: 600;
       -webkit-text-stroke: 0.033rem rgb(236, 228, 228);
       font-family: $story-font;
     }
@@ -184,7 +184,7 @@ export default {
 
       .active-p {
         font-weight: 700;
-        font-size: 2.7rem;
+        font-size: 3.3rem;
         
       }
     }

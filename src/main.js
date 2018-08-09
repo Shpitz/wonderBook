@@ -18,7 +18,7 @@ import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAl
   faClock, faStar, faForward, faBackward, faSearch, faPlaneDeparture,
    faPlay, faArrowsAlt, faPlusCircle, faTrash, faTrashAlt, faFileUpload, 
    faParagraph, faEyeSlash, faSave, faTimes, faUpload, faImage, faFileAudio, 
-   faPause, faVolumeUp, faVolumeOff, faComment,faShoppingCart, faPalette } from '@fortawesome/free-solid-svg-icons'
+   faPause, faVolumeUp, faVolumeOff, faComment,faShoppingCart, faPalette, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Axios from 'axios';
 
@@ -26,7 +26,8 @@ Axios.defaults.withCredentials = true;
 
 library.add(faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt,
   faClock, faStar, faForward, faBackward,faSearch,faPlay,faArrowsAlt,faPlusCircle,faTrashAlt,faFileUpload,faParagraph
-,faEyeSlash,faSave,faTimes,faUpload,faImage,faFileAudio,faPause,faComment,faShoppingCart,faPalette)
+,faEyeSlash,faSave,faTimes,faUpload,faImage,faFileAudio,faPause,faComment,faShoppingCart,
+faPalette,faUserCircle)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false;
