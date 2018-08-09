@@ -28,6 +28,7 @@ export default {
     },
     getters: {
         [GET_USER](state) {
+            console.log('state.user',state.user)
             return state.user
         }
     },
