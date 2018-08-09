@@ -20,11 +20,7 @@
           </button>
         </div>
       </div>
-
     </div>
-<!-- <a href="https://www.facebook.com/sharer/sharer.php?u=bookReading/5b6303aa5751a43fcdd9bc8a" target="_blank">
-  Share on Facebook
-</a> -->
     </section>
 </template>
 

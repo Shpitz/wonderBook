@@ -111,6 +111,12 @@ export default {
 .book-details {
   font-family: "Merriweather", sans-serif;
 }
+.book-details-cotainer {
+  margin: 0 auto;
+  justify-content: space-around;
+
+}
+    
 .hr {
   height: 1px;
   background-color: pink;
@@ -130,13 +136,13 @@ export default {
 
 .img-details {
   cursor: pointer;
-  width: 60%;
+  width: 45%;
   margin: 0 1rem 0 0;
 
   img {
     box-shadow: 0 3px 7px 3px rgba(0, 0, 0, 0.1);
     object-fit: cover;
-    width: 70%;
+    width: 85%;
   }
   .play-mask {
     height: 100%;

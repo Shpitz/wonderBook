@@ -31,20 +31,19 @@ export default {};
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
         }
         span {
-                color:$main-color-hover;
-            }
+             color:$main-color-hover;
+              }
     }
 .logo:hover {
     color:$main-color;
    span {
-           color:$main-color;
-
+       color:$main-color;
    }
 }
   
-      @media(max-width:350px){
-         h1 {
+ @media(max-width:350px){
+  h1 {
              font-size: .9rem;
-         }
-    }
+      }
+}
 </style>

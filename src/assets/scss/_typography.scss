@@ -25,10 +25,16 @@
   src: url('../fonts/Merriweather_Sans/MerriweatherSans-Regular.ttf');
 }
 
+// story
 @font-face {
   font-family: 'Crayon';
   src: url('../fonts/crayon_crumble/DK Crayon Crumble.ttf');
 }
+@font-face {
+  font-family: 'Jua';
+  src: url('../fonts/Jua/Jua-Regular.ttf');
+}
+
 
 // logo 
 
@@ -49,3 +55,4 @@
 .italic {
   font-style: italic;
 }
+

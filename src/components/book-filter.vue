@@ -40,6 +40,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "./src/assets/scss/_vars.scss";
+
     $size: 20px;
     .icon {
     margin: 0;
@@ -57,9 +59,11 @@ export default {
       input {
         height: 44px;
         width: 300px;
+        border-radius: 5px;
         padding: 10px 20px;
         box-sizing: border-box;
         font-size: 18px;
+        font-family: $main-font;
         border: $size/10 solid transparent;
         cursor: pointer;
         background-color: transparent;
@@ -76,12 +80,12 @@ export default {
 
         &:hover {
           border: $size/10 solid #FFF;
-          box-shadow: 0 0 $size/10 $size/10 #EEE;
+          box-shadow: 0 0 1px 1px $main-color;
         }
 
         &:focus,
         &:valid {
-          border: $size/10 solid #CCC;
+          border: $size/10 solid $main-color;
           outline: none;
           cursor: auto;
           background-color: #FFF;
@@ -93,11 +97,11 @@ export default {
 
           +.search-icon {
             z-index: 0;
-            border-color: #CCC;
+            border-color: $main-color;
             right: 20px;
 
             &:after {
-              background-color: #CCC;
+              background-color: $main-color;
             }
           }
         }
