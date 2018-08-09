@@ -1,9 +1,8 @@
   <template>
     <section class="book-details section-container">
       <loader class="loader" v-if="isLoad"></loader>
-      <div v-if="book" class="book-details-cotainer flex">
+      <div v-if="book"   class="book-details-cotainer flex">
         <div class="img-details">
-
           <h1>{{book.title}}</h1>
           <div class="relative" @click="playBook()">
             <div class="play-mask absolute flex">
@@ -23,8 +22,9 @@
               <button @click.stop="editBook" class="editor-btn editor-regular-btn edit-btn">
                 <font-awesome-icon icon="edit" />
               </button>
-              <button @click.stop="deleteBook" class="editor-btn editor-regular-btn edit-btn">
-                <font-awesome-icon icon="times" />
+              <button @click.stop="deleteBook"  
+              class="editor-btn editor-regular-btn edit-btn">
+                <font-awesome-icon icon="trash-alt" />
               </button>
             </div>
             <p>" {{book.description}} "</p>
@@ -95,7 +95,8 @@ export default {
           this.$router.push(`/`)
         })
         .catch(err => {});
-    }
+    },
+  
   },
   components: {
     bookFilterCategories,
@@ -110,6 +111,12 @@ export default {
 .book-details {
   font-family: "Merriweather", sans-serif;
 }
+.book-details-cotainer {
+  margin: 0 auto;
+  justify-content: space-around;
+
+}
+    
 .hr {
   height: 1px;
   background-color: pink;
@@ -119,7 +126,8 @@ export default {
 .edit-btn {
   width: fit-content;
     align-self: flex-end;
-    background-color: #dedede
+    background-color: #dedede;
+   margin: 0 .5rem 0 0;
 }
 
 .edit-btn:hover{
@@ -128,13 +136,13 @@ export default {
 
 .img-details {
   cursor: pointer;
-  width: 60%;
+  width: 45%;
   margin: 0 1rem 0 0;
 
   img {
     box-shadow: 0 3px 7px 3px rgba(0, 0, 0, 0.1);
     object-fit: cover;
-    width: 70%;
+    width: 85%;
   }
   .play-mask {
     height: 100%;

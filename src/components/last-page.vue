@@ -20,11 +20,7 @@
           </button>
         </div>
       </div>
-
     </div>
-<!-- <a href="https://www.facebook.com/sharer/sharer.php?u=bookReading/5b6303aa5751a43fcdd9bc8a" target="_blank">
-  Share on Facebook
-</a> -->
     </section>
 </template>
 
@@ -74,4 +70,12 @@ export default {
     margin: 0 .5rem 0 0;
 }
 
+@media (max-width:500px) {
+  .control-btn {
+    button {
+      font-size: 1.5rem;
+
+    }
+  }
+}
 </style>

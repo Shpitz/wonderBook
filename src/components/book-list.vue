@@ -3,14 +3,6 @@
             <ul class="clean-list flex-warp justify-center">
                 <li v-for="(book,idx) in books" :key="idx" @click="watchBook(book._id)">
                     <book-preview  :book="book" title="show book">
-                        <div class="ctr-btn flex">
-                        <button @click.stop="editBook(book._id)" class="btn-icon ">
-                         <font-awesome-icon icon="edit" />
-                        </button>
-                         <button @click.stop="deleteBook(book._id)" class="btn-icon ">
-                         <font-awesome-icon icon="trash-alt" />
-                        </button>
-                        </div>
                     </book-preview>
                 </li>
             </ul>
@@ -27,7 +19,6 @@ export default {
   name: "boookList",
   props: {
     books: Array,
-    user:Object
   },
   methods:{
       watchBook(bookId){
@@ -52,7 +43,7 @@ export default {
 
 <style scoped lang="scss">
 ul {
-     max-width: 958px;
-    margin: 0 auto;
+    //  max-width: 958px;
+    margin: 0 auto 2rem auto;
 }
 </style>

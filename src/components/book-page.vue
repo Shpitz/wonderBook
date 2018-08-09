@@ -2,9 +2,8 @@
     <section >
 <div class="wrapper" ref="page-container" v-if="!previewInEdit" >
   <div class="wrapper-container book-page "    ref="bookPage"  :class="{fullImg:isFullScrean}"  >
-    <div class="image-media" 
-    :style="{ backgroundImage: 'url(' + pageImg + ')',backgroundSize:pageData.imgSize,
-    backgroundPosition:pageData.imgPosition}">
+    <div :class="[pageData.imgSize]"  class="image-media"
+        :style="imgStyle">
         <div class="p-container" ref="p-container">
           <p v-for="(p,idx) in pageData.paragraphs" 
           :key="idx"  :style="{color:p.color}"
@@ -57,6 +56,12 @@ export default {
     pageImg() {
       var img = this.pageData.img;
       return img
+    },
+    imgStyle(){
+      return  { 
+        backgroundImage: 'url(' + this.pageData.img + ')',
+       backgroundPosition:this.pageData.imgPosition
+       }
     }
 
   },
@@ -101,11 +106,37 @@ export default {
  <style scoped lang="scss">
     @import "./src/assets/scss/_vars.scss";
 
+
     .book-page {
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat;
     }
+    .image-media{
+      width: 100%;
+      height: 100%;
+      background-position: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      position: relative;
+      &::before{
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+  // class for div with img background
+    .cover {
+      background-size: cover;
+    }
+    .contain {
+      background-size: contain;
+    }
+// end
+
     .img-error{
     background-image: url("../../public/img/background/img-error.png");
       height: 50px;
@@ -142,6 +173,7 @@ export default {
       text-align: left;
       font-size: 2.5rem;
       font-weight: 200;
+      -webkit-text-stroke: 0.033rem rgb(236, 228, 228);
       font-family: $story-font;
     }
 
@@ -170,9 +202,9 @@ export default {
     }
 
 
-    @media(max-width:400px) {
+    @media(max-width:736px) {
       p {
-        font-size: .9rem;
+        font-size: 1rem;
       }
       .p-container {
         .active-p {
@@ -180,4 +212,11 @@ export default {
         }
       }
     }
+//whenthe window less then 550pxthe imag will be in auto contain
+    @media(max-width:1023px) {
+      .cover {
+        background-size: contain;
+       }
+    }
+     
   </style>

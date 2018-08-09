@@ -13,13 +13,7 @@
     </div>
     
      <h1 ref="bookList">Look. Listen. Join the wonder.</h1>
-    <div class="flex column justify-center section section3 section-txt">
-      <div class="flex column subtext">
-        <p>Enjoy books shared by worldwide members.</p>
-        <p>Connect with authors to show appreciation.</p>
-      </div>
-    </div>
-    <loader v-if="!books"></loader>
+    <loader v-if="isLoad"></loader>
     <book-list  :user="user" :books="booksToShow"></book-list>
     <app-footer></app-footer>
   </section>
@@ -48,7 +42,8 @@ export default {
     return {
       filterCategories: bookSerivce.getCategories(),
       books: null,
-      user: null
+      user: null,
+      isLoad:true
     };
   },
   created() {
@@ -57,12 +52,15 @@ export default {
   computed: {
     booksToShow() {
       this.books = this.$store.getters[BOOKS_FOR_DISPLAY];
+
       return this.books;
     }
   },
   methods: {
     loadBooks() {
-      this.$store.dispatch({ type: LOAD_BOOKS }).catch(err => {
+      this.$store.dispatch({ type: LOAD_BOOKS })
+      .then(_ => this.isLoad = false)
+      .catch(err => {
         console.log("error in book app loadBooks component", err);
       });
     },
@@ -118,5 +116,12 @@ export default {
     text-transform: capitalize;
     font-size: 3rem;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+
+  @media (max-width:520px) {
+    .bg {
+        justify-content: flex-end;
+    }
+    
   }
 </style>

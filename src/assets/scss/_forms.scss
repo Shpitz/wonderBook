@@ -47,7 +47,6 @@
  
 
 .input-file-trigger {
-    display: block;
     padding: .5rem;
     background: #9095b1;
     color: white;
@@ -57,12 +56,16 @@
     border-radius: 50%;
     width: inherit;
     height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
   }
    .input-file {
     position: absolute;
     top: 0; left: 0;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     opacity: 0;
     padding:.5rem 0;
     cursor: pointer;

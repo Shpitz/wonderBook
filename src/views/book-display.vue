@@ -57,11 +57,12 @@ export default {
     if (!bookId) bookId = this.bookIdFromEditor;
     this.getBook(bookId);
     if (screen.width < screen.height) {
-      screen.orientation.lock("landscape");
+      screen.orientation.lock("landscape")
+      .then(_ =>console.log('orientation'))
+      .catch(err =>  console.error(err))
     }
     console.log("id from editor", this.bookIdFromEditor);
   },
-  mounted() {},
   computed: {
     getParIdx() {
       return this.currParIdx;
@@ -189,7 +190,9 @@ export default {
   },
   destroyed() {
     if (screen.width < screen.height) {
-      screen.orientation.lock("portrait");
+      screen.orientation.lock("portrait")
+       .then(_ => console.log('orientation'))
+      .catch(err => console.error(err))
     }
   }
 };

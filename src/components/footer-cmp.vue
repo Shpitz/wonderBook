@@ -11,9 +11,8 @@
             <li><a class="social-icon"><i class="fa fa-google-plus"></i></a></li>
           </ul>
         </div>
+        <router-link to="/about/contact" class="clean-link nav-route" @click.native="gotoContact">Contact</router-link>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam atque aliquid dolorem minus quaerat facere, explicabo
-          accusantium maiores aliquam quasi, rerum eligendi voluptas similique. Quidem voluptas fugit unde expedita quasi.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, illum at totam expedita ullam aperiam eaque ut numquam
           deserunt cumque praesentium atque, fugiat sit doloribus maxime eum non nostrum? Dolores?</p>
         <div class="hr" />
         <div class="footer-creator">
@@ -25,7 +24,16 @@
 
 <script>
 export default {
-
+methods:{
+   gotoContact() {
+      if (this.$route.name === "about" || this.$route.name === "contact") {
+        var elContact = document.getElementById("contact-us");
+        if (elContact)
+          elContact.scrollIntoView({
+          });
+      }
+    }
+}
 }
 </script>
 
@@ -46,6 +54,21 @@ $container-bg:#ecececb3;
     height: 1px;
     background-color: #40404061;
 }
+.clean-link {
+      text-decoration: none;
+    }
+.nav-route {
+      font-size: 1.4rem;
+      font-weight: bold;
+      padding: 5px;
+      margin: 3px;
+      color: $main-color;
+      transition: all 0.2s;
+    }
+
+.nav-route:hover {
+      color: $main-color-hover;
+    }
 /* ***** SOCIAL****** */
 @mixin iconTransition {
   transition: all 100ms cubic-bezier(0.42, 0, 0.58, 1); /* ease-in-out */

@@ -92,7 +92,7 @@
             </button>
           <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
           <div class="img-area-container flex justify-center">
-          <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')', backgroundSize: bgSize, backgroundPosition: bgPos}">
+          <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')', backgroundSize: book.pages[currPageIdx].imgSize, backgroundPosition: book.pages[currPageIdx].imgPosition}">
             <loader class="loader" v-if="isLoad"></loader>
 
             <div class="flex column">
@@ -101,17 +101,32 @@
                 <li class="flex relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
                   <div v-if="currPar === idx" class="par-btns-container">
                     <div class="flex space-between align-center">
-                      <button class="editor-btn round-btn btn-margin-bottom" title="Delete paragraf" @click="deletePar(idx)">
+                      <button class="editor-btn round-btn btn-margin-bottom" 
+                      title="Delete paragraph" @click="deletePar(idx)">
                         <font-awesome-icon class="icon" icon="trash-alt" />
                       </button>
-                      <input type="color" v-model="par.color">
+                       <div class="modal-upload-container flex justify-center">
+                  <form method="POST"  class="upload-form flex column">
+                    <div class="file-upload input-file-container">
+                        <input type="color" v-model="par.color" 
+                       class="file-upload__input input-file">
+                      <label tabindex="0"  class="input-file-trigger" 
+                      :style="{color:par.color}">
+                        <font-awesome-icon class="icon" icon="palette" />
+                      </label>
+                    </div>
+                  </form>
+                       </div>
+                    
                     </div>
                     <div class="flex space-between align-center">      
                       <button title="Set Paragraf time" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
                         <font-awesome-icon class="icon" icon="clock" />
                       </button>
-                      <input class="input-samll self-center editor-input" type="number" v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime"
-                        step="0.01">
+                      <input class="input-samll self-center editor-input"
+                       type="number"  
+                        v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime"
+                        step="1" >
                     </div>
                   </div>
                   <textarea autofocus class="editor-text-area" rows='2' 
@@ -142,8 +157,9 @@
              <button class="editor-btn round-btn page-ctr-item" title="Add page" @click="addPage">
                 <font-awesome-icon class="icon" icon="plus-circle" />
               </button>
-   
-              <button class="editor-btn round-btn page-ctr-item" title="Delete page" @click="deletePage(currPageIdx)">
+              <button class="editor-btn round-btn page-ctr-item" 
+              v-if="!isSinglePage"
+               title="Delete page" @click="deletePage(currPageIdx)">
                 <font-awesome-icon class="icon" icon="trash-alt" />
               </button>
              <!--prev/upload-->
@@ -171,22 +187,18 @@
             </div>
                 <div class="img-setting flex column">
         <select class="bgImgSize" @change="updateImgSize" v-model="book.pages[currPageIdx].imgSize">
-          <option value="auto">auto</option>
           <option value="cover">cover</option>
           <option  value="contain">contain</option>
-          <option value="initial">initial</option>
-          <option value="100%">100%</option>
-          <option value="100% 100%">100% 100%</option>
         </select>
   
         <select class="bgImgPos" @change="updateImgPos" v-model="book.pages[currPageIdx].imgPosition">
-          <option value="left top">left top</option>
-          <option value="left center">left center</option>
-          <option value="left bottom">left bottom</option>
-          <option value="right top">right top</option>
-          <option value="right center">right center</option>
-          <option value="right bottom">right bottom</option>
-          <option  value="center top">center top</option>
+          <!-- <option value="left top">left top</option> -->
+          <!-- <option value="left center">left center</option> -->
+          <!-- <option value="left bottom">left bottom</option> -->
+          <!-- <option value="right top">right top</option> -->
+          <!-- <option value="right center">right center</option>
+          <option value="right bottom">right bottom</option> -->
+          <!-- <option  value="center top">center top</option> -->
           <option  value="center center">center center</option>
           <option value="center bottom">center bottom</option>
           <option value="50% 50%">50% 50%</option>
@@ -290,7 +302,10 @@ export default {
       }
       else return './img/background/placeholder.png'
     },
- 
+    isSinglePage(){
+      return this.book.pages.length === 1
+    }
+  
   },
   methods: {
     addPage() {
@@ -475,9 +490,7 @@ h1 {
   min-height: 60vh;
   padding: 0.5rem;
   margin: 0 0 1rem;
-  background-position: 50% 50%; /* Sets reference point to scale from */
-  // background-size: cover;
-
+  background-position: center; /* Sets reference point to scale from */
   //NEW CHANGES
   background-size: contain;
   background-repeat: no-repeat;
@@ -498,10 +511,6 @@ h1 {
 
 .page-title{
   font-size: 1.5em;
-}
-
-.page-timing{
-  // margin-top: 1em;
 }
 
 audio {
@@ -695,7 +704,7 @@ $margin-form-label:5px;
 }
 
 .img-carusela {
-  max-width: 88vw;
+  max-width: 81vw;
   margin: 0 auto;
 }
 .img-setting select:not(:last-child) {
@@ -708,6 +717,7 @@ $margin-form-label:5px;
 .page-ctr-item {
   margin: 0 .5rem 0 0;
 }
+
 @media (max-width: 520px) {
   .show-carusale {
     margin: 0.5rem 0;
@@ -722,11 +732,8 @@ $margin-form-label:5px;
   flex-direction: column;
    audio {
     margin: 0 0 1rem;
-  }
-
-}
-
-
+        }
+   }
 }
 
 @media (max-width: 640px) {
@@ -737,6 +744,9 @@ $margin-form-label:5px;
         height: 100px;
     justify-content: flex-end;
 
+  }
+  .editor-text-area {
+    max-width: 60%;
   }
 }
 
