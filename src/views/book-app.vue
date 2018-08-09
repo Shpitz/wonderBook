@@ -32,6 +32,9 @@ import {
   BOOKS_FOR_DISPLAY,
   UPDATE_SEARCH_FILTER
 } from "../store/book-module.js";
+
+
+
 import bookSerivce from "../services/book-service.js";
 
 import bookList from "../components/book-list.vue";
@@ -63,6 +66,7 @@ export default {
         console.log("error in book app loadBooks component", err);
       });
     },
+    
     updateFilter(filterBy) {
       this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy });
       this.loadBooks();

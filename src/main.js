@@ -8,6 +8,7 @@ import './registerServiceWorker';
 import './filters.js'
 import './assets/scss/style.scss';
 import vSelect from 'vue-select'
+
 Vue.component('v-select', vSelect)
   
 import VueCarousel from 'vue-carousel';
@@ -20,6 +21,9 @@ import { faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAl
    faParagraph, faEyeSlash, faSave, faTimes, faUpload, faImage, faFileAudio, 
    faPause, faVolumeUp, faVolumeOff, faComment,faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Axios from 'axios';
+
+Axios.defaults.withCredentials = true;
 
 library.add(faEdit, faEnvelope, faBell, faBook, faCalendarAlt, faEye, faMapMarkerAlt,
   faClock, faStar, faForward, faBackward,faSearch,faPlay,faArrowsAlt,faPlusCircle,faTrashAlt,faFileUpload,faParagraph

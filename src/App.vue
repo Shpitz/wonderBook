@@ -7,17 +7,22 @@
   </div>
 </template>
 <script>
+import eventBus, { USER_CONNECTED } from './services/event-bus.service.js'
 import navBar from "./components/nav-bar.vue";
+import {
+  LOAD_USER,
+} from "./store/user-module.js";
+
 export default {
   data() {
     return {
-      onHomePage: true
+      onHomePage: true,
     };
   },
   created() {
-    console.log("route", this.$route);
       if (this.$route.fullPath !== "/") this.onHomePage = false;
       else this.onHomePage = true;
+      this.loadUser();
   },
   watch: {
     $route(to, from) {
@@ -27,6 +32,19 @@ export default {
   },
   components: {
     navBar
+  },
+  methods: {
+    loadUser() {
+      this.$store.dispatch({ type: LOAD_USER })
+        .then((user)=>{
+          console.log('user in app vue front',user)
+          eventBus.$emit(USER_CONNECTED,
+          {  user: user });
+        })
+        .catch(err => {
+          console.log("error in book app loadUser component", err);
+        });
+    },
   }
 };
 </script>

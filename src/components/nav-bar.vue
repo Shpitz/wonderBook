@@ -7,7 +7,7 @@
                 <router-link to="/bookCreate" class="clean-link nav-route">Create-Book</router-link>  
                 <router-link to="/about" class="clean-link nav-route" >About</router-link>
                 <router-link to="/about/contact" class="clean-link nav-route" @click.native="gotoContact">Contact</router-link>
-                <router-link to="/login" class="clean-link nav-route" >Login</router-link>
+                <router-link to="/login" class="clean-link nav-route" >{{logInOut}}</router-link>
             </div>
            
          <div class="nav-menu hidden" @click="menuOpen = !menuOpen"
@@ -21,11 +21,21 @@
 </template>
 
 <script>
+import {
+  GET_USER,
+} from "../store/user-module.js";
+import eventBus, {USER_CONNECTED} from '../services/event-bus.service.js'
 import logoCmp from "./logo-cmp.vue";
 export default {
+  created(){
+        eventBus.$on(USER_CONNECTED, user => {
+          this.loggedUser = user;
+    })
+  },
   props:['onHome'],
   data(){
       return {
+          loggedUser : {},
           menuOpen:false
       }
   },
@@ -47,7 +57,12 @@ export default {
     components: {
     logoCmp
   },
-  
+  computed: {
+    logInOut(){
+      if (this.loggedUser.user && this.loggedUser.user.name) return `${this.loggedUser.user.name} 👨`;
+      else return 'Login'
+    }
+  }
 };
 </script>
 

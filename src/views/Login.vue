@@ -1,6 +1,7 @@
 <template>
           <section>
-              <div class="container">
+            <!-- currUser: {{currUser}} -->
+              <div v-if="!user" class="container">
                     <div class="message signup">
                         <div class="btn-wrapper">
                         <button class="button" id="signup" @click="vsignup">SignUp</button>
@@ -24,6 +25,7 @@
                       </form>
                     </div>
                 </div>
+              <div v-if="user"><button @click="logout">Logout</button></div>
 
             <!-- <div class="login">
                 <form @submit.prevent="login">
@@ -43,10 +45,18 @@
 </template>
 
 <script>
+import eventBus, { USER_CONNECTED } from '../services/event-bus.service.js'
 import userService from '../services/user-service.js'
+import {
+  LOG_IN,
+  GET_USER,
+  SIGN_UP,
+  LOG_OUT
+} from "../store/user-module.js";
 export default {
       data() {
         return {
+            user : null,
             loginDetails: {
                 name: '',
                 password: ''
@@ -59,21 +69,46 @@ export default {
             }
         }
     },
-
+    created(){
+      this.user = this.$store.getters[GET_USER];
+    },
     methods: {
 
         signup() {
-            userService.signup(this.signupDetails)
-                .then(_ => {
-                    this.$router.push('/')                    
-                })
-                .catch(err => console.log(err));
+          this.$store.dispatch({ type: SIGN_UP, signupDetails: this.signupDetails })
+              .then(()=>{
+                this.user = this.$store.getters[GET_USER];
+                eventBus.$emit(USER_CONNECTED,
+                        { user: this.user });
+              })
+            // userService.signup(this.signupDetails)
+            //     .then(_ => {
+            //         this.$router.push('/')                    
+            //     })
+            //     .catch(err => console.log(err));
         },
         login() {
-            userService.login(this.loginDetails)
-                .then(_ => {
-                    this.$router.push('/')
-                })
+            this.$store.dispatch({ type: LOG_IN, loginDetails: this.loginDetails })
+              .then(()=>{
+                this.user = this.$store.getters[GET_USER];
+                eventBus.$emit(USER_CONNECTED,
+                        {  user: this.user });
+              })
+              // .then((user)=>{
+              //   console.log('user in login page:',user);
+              // })
+            // userService.login(this.loginDetails)
+            //     .then(_ => {
+            //         this.$router.push('/')
+            //     })
+        },
+        logout(){
+          this.$store.dispatch({ type: LOG_OUT })
+            .then(()=>{
+              this.user = this.$store.getters[GET_USER];
+              eventBus.$emit(USER_CONNECTED,
+                      {  user: this.user });
+            })
         },
         vlogin() {
             [].forEach.call( document.querySelectorAll('.message'), function(el) {
@@ -94,6 +129,12 @@ export default {
             });
 
         }
+    },
+    computed: {
+      currUser(){
+        this.user = this.$store.getters[GET_USER];
+        return this.user;
+      }
     }
 };
 </script>
