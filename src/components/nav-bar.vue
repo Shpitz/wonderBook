@@ -38,6 +38,14 @@ export default {
           menuOpen:false
       }
   },
+   computed: {
+    logInOut(){
+      if (this.loggedUser.user && this.loggedUser.user.name) {
+        return `${this.loggedUser.user.name} 👨`;
+      }  else return 'Login'
+     
+    }
+  },
   methods: {
     gotoContact() {
       this.menuOpen = false;
@@ -59,12 +67,7 @@ export default {
     components: {
     logoCmp
   },
-  computed: {
-    logInOut(){
-      if (this.loggedUser.user && this.loggedUser.user.name) return `${this.loggedUser.user.name} 👨`;
-      else return 'Login'
-    }
-  }
+ 
 };
 </script>
 
