@@ -144,9 +144,7 @@
           </div>
 
           <div class="flex page-ctr column space-around align-center">
-            <h3 class="page-ctr-item">Page settings</h3>
-            <div class="page-title page-ctr-item"># {{currPageIdx+1}}</div>
-           
+            <h3 class="page-ctr-item">Page # {{currPageIdx+1}}</h3>
               <div class=" page-ctr-item set-page-time flex  align-center">
                 <button @click="setTimingPage" class=" editor-btn editor-regular-btn ">
                   <font-awesome-icon class="icon" icon="clock" />
@@ -192,13 +190,7 @@
         </select>
   
         <select class="bgImgPos" @change="updateImgPos" v-model="book.pages[currPageIdx].imgPosition">
-          <!-- <option value="left top">left top</option> -->
-          <!-- <option value="left center">left center</option> -->
-          <!-- <option value="left bottom">left bottom</option> -->
-          <!-- <option value="right top">right top</option> -->
-          <!-- <option value="right center">right center</option>
-          <option value="right bottom">right bottom</option> -->
-          <!-- <option  value="center top">center top</option> -->
+      
           <option  value="center center">center center</option>
           <option value="center bottom">center bottom</option>
           <option value="50% 50%">50% 50%</option>
@@ -255,9 +247,9 @@ export default {
       parNum: 1,
       showCarusale: false,
       isLoad: true,
-      bgSize: 'contain',
-      bgPos: 'center',
-      currPar : 0,
+      bgSize: "contain",
+      bgPos: "center",
+      currPar: 0
     };
   },
   created() {
@@ -291,21 +283,18 @@ export default {
       this.togelModal = true;
     }
   },
-  mounted(){
+  mounted() {
     this.isLoad = false;
-
   },
   computed: {
-    getCoverImg(){
-      if (this.book.coverImg){
+    getCoverImg() {
+      if (this.book.coverImg) {
         return this.book.coverImg;
-      }
-      else return './img/background/placeholder.png'
+      } else return "./img/background/placeholder.png";
     },
-    isSinglePage(){
-      return this.book.pages.length === 1
+    isSinglePage() {
+      return this.book.pages.length === 1;
     }
-  
   },
   methods: {
     addPage() {
@@ -358,12 +347,9 @@ export default {
     },
     editBookDetails() {
       this.togelModal = true;
-      console.log(this.previewModal);
-      
     },
     showPreview() {
       this.previewModal = !this.previewModal;
-      
     },
     setAudioFile() {
       cloudinaryService.doUploadAudio(this.$refs.audioInput).then(url => {
@@ -400,7 +386,7 @@ export default {
       //     console.log('prev page time: ', prevPage.time, 'curr page start time: ', currPage.time);
       // }
     },
-    focusPar(idx){
+    focusPar(idx) {
       this.currPar = idx;
     },
     setTimingPar(idx) {
@@ -427,16 +413,12 @@ export default {
       });
     },
     updateImgSize(ev) {
-      console.log(ev.target.value);
       this.bgSize = ev.target.value;
       this.book.pages[this.currPageIdx].imgSize = this.bgSize;
-      console.log(this.book.pages[this.currPageIdx]);
     },
     updateImgPos(ev) {
       this.bgPos = ev.target.value;
       this.book.pages[this.currPageIdx].imgPosition = this.bgPos;
-      console.log(this.book.pages[this.currPageIdx]);
-      
     }
   },
 
@@ -462,8 +444,8 @@ h1 {
 }
 .save-btn {
   margin: 1rem auto;
-    height: auto;
-    width: 150px
+  height: auto;
+  width: 150px;
 }
 
 .audio-set-area {
@@ -483,7 +465,7 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   width: 70%;
-  margin:0 auto 1rem;   
+  margin: 0 auto 1rem;
 }
 
 .img-area {
@@ -492,11 +474,10 @@ h1 {
   margin: 0 0 1rem;
   background-position: center; /* Sets reference point to scale from */
   //NEW CHANGES
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-color: black;
 }
-
 
 .page-ctr {
   margin: 0 1rem;
@@ -506,11 +487,7 @@ h1 {
   h3 {
     margin: 0;
     text-align: left;
-      }
-}
-
-.page-title{
-  font-size: 1.5em;
+  }
 }
 
 audio {
@@ -529,7 +506,8 @@ audio {
   width: 100%;
 }
 
-.first-details-container, .show-preview {
+.first-details-container,
+.show-preview {
   position: fixed;
   top: 0;
   right: 0;
@@ -554,7 +532,7 @@ audio {
 .par-btns-container {
   margin: 0 0.5rem 0 0;
   position: absolute;
-  left:  -120px;
+  left: -120px;
 }
 
 .par-list {
@@ -580,11 +558,10 @@ audio {
 
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,700");
 
-
 $shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 $primary: #9095b1;
 $secondary: #393e56;
-$margin-form-label:5px;
+$margin-form-label: 5px;
 #main {
   position: relative;
   width: 80%;
@@ -613,13 +590,12 @@ $margin-form-label:5px;
   justify-content: space-between;
 }
 
-
 #left #head {
   opacity: 0.95;
 }
 
 #right {
-  padding: .5rem 0;
+  padding: 0.5rem 0;
   position: absolute;
   width: calc(60% - 40px);
   height: 100%;
@@ -634,7 +610,7 @@ $margin-form-label:5px;
   display: flex;
   flex-flow: column nowrap;
   width: 100%;
-  height:100%; 
+  height: 100%;
   justify-content: space-around;
 }
 
@@ -644,20 +620,19 @@ $margin-form-label:5px;
   border: none;
   border-bottom: 2px solid #ccc;
   padding: 5px;
-   outline: none;
+  outline: none;
   transition: all 0.2s;
   margin-top: 2.5px;
   position: relative;
 }
 #right form input:focus {
-     border-bottom: 2px solid #808ab2;
-
+  border-bottom: 2px solid #808ab2;
 }
-#right form input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+#right form input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
   color: lightgray;
-} 
- 
-   
+}
+
 #right form .form-field {
   display: flex;
   flex-flow: column nowrap;
@@ -665,8 +640,7 @@ $margin-form-label:5px;
   margin-bottom: $margin-form-label;
 }
 .form-field label {
-    margin-bottom: $margin-form-label;
-
+  margin-bottom: $margin-form-label;
 }
 
 #right form #date-val {
@@ -678,15 +652,17 @@ $margin-form-label:5px;
   width: 45%;
 }
 
-.edit-btn{
+.edit-btn {
   width: 30%;
 }
 
-.book-categories, .upload-form{
+.book-categories,
+.upload-form {
   margin: 0.5rem;
 }
 
-#right form button[type="submit"], .edit-btn {
+#right form button[type="submit"],
+.edit-btn {
   background: linear-gradient(135deg, $secondary 0%, $secondary 100%);
   padding: 5px;
   border: none;
@@ -698,7 +674,8 @@ $margin-form-label:5px;
   height: 40px;
   cursor: pointer;
 }
-#right form button[type="submit"]:hover ,.edit-btn:hover {
+#right form button[type="submit"]:hover,
+.edit-btn:hover {
   background: linear-gradient(135deg, $primary 0%, $primary 100%);
   color: $secondary;
 }
@@ -708,14 +685,14 @@ $margin-form-label:5px;
   margin: 0 auto;
 }
 .img-setting select:not(:last-child) {
-  margin: 0 0 .5rem;
+  margin: 0 0 0.5rem;
 }
 
 .details-btn {
   z-index: 1;
 }
 .page-ctr-item {
-  margin: 0 .5rem 0 0;
+  margin: 0 0.5rem 0 0;
 }
 
 @media (max-width: 520px) {
@@ -728,22 +705,21 @@ $margin-form-label:5px;
   .details-modal {
     width: 80%;
   }
-.bottom-ctr {
-  flex-direction: column;
-   audio {
-    margin: 0 0 1rem;
-        }
-   }
+  .bottom-ctr {
+    flex-direction: column;
+    audio {
+      margin: 0 0 1rem;
+    }
+  }
 }
 
 @media (max-width: 640px) {
-    #left {
+  #left {
     width: 50%;
   }
   .page-ctr {
-        height: 100px;
+    height: 100px;
     justify-content: flex-end;
-
   }
   .editor-text-area {
     max-width: 60%;
@@ -751,26 +727,24 @@ $margin-form-label:5px;
 }
 
 @media (max-width: 820px) {
-.page-ctr button &input{
-          margin: 0 .5rem 0 0;
+  .page-ctr button &input {
+    margin: 0 0.5rem 0 0;
   }
-.sub-editor-container {
-  width: 95%;
-}
-.par-btns-container {
-  right: 0;
-  left: auto;
+  .sub-editor-container {
+    width: 95%;
+  }
+  .par-btns-container {
+    right: 0;
+    left: auto;
+  }
 }
 
-}
-
-
-@media (max-width: 900px) { 
-    .img-area-container {
+@media (max-width: 900px) {
+  .img-area-container {
     flex-direction: column;
   }
   .page-ctr {
-     flex-direction: row;
+    flex-direction: row;
     align-items: center;
     margin: 0 0 1rem;
   }
@@ -778,12 +752,10 @@ $margin-form-label:5px;
     margin: 0;
   }
 }
-@media (min-width: 900px) and (max-width: 1024px) { 
+@media (min-width: 900px) and (max-width: 1024px) {
   .par-btns-container {
     left: auto;
     right: 0;
   }
-
 }
-
 </style>

@@ -97,7 +97,6 @@ export default {
         }
       }
       this.isFullScrean = !this.isFullScrean;
-      console.log(this.isFullScrean)
     }
   }
 };
@@ -115,7 +114,7 @@ export default {
     .image-media{
       width: 100%;
       height: 100%;
-      background-position: 0;
+      background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
       position: relative;
@@ -200,23 +199,38 @@ export default {
       height: 95vh;
       width: 95vw;
     }
-
-
-    @media(max-width:736px) {
-      p {
+     @media(max-width:550px) {
+        p {
         font-size: 1rem;
       }
       .p-container {
         .active-p {
-          font-size: 1rem;
+          font-size: 1.2rem;
         }
       }
-    }
-//whenthe window less then 550pxthe imag will be in auto contain
-    @media(max-width:1023px) {
-      .cover {
-        background-size: contain;
-       }
-    }
+     }
+
+     @media(min-width:550px) and (max-width:736px) {
+          p {
+        font-size: 2rem;
+      }
+      .p-container {
+        .active-p {
+          font-size: 2.2rem;
+        }
+      }
+     }
+
+
+    @media(max-width:736px) {
      
+    .image-media {
+    background-size: contain;
+    background-position: top;
+
+         }
+    }
+      
+//whenthe window less then 550pxthe imag will be in auto contain
+   
   </style>

@@ -13,39 +13,34 @@
 </template>
 
 <script>
-    // import carousel from 'VueCarousel.Carousel'
-    // import slide from 'VueCarousel.Slide'
-    import bookPage from "../components/book-page.vue";
+// import carousel from 'VueCarousel.Carousel'
+// import slide from 'VueCarousel.Slide'
+import bookPage from "../components/book-page.vue";
 
-    import { Carousel, Slide } from 'vue-carousel';
-    export default {
-        name: "imgCarusale",
-        props: ['pages'],
-        data() {
-            return {
-
-            }
-        },
-        methods: {
-            handleSlideClick (pageIdx) {
-                console.log(pageIdx)
-                this.$emit('onPreviewClicked', pageIdx)
-            },
-        },
-        components: {
-            Carousel,
-            Slide,
-            bookPage
-        }
+import { Carousel, Slide } from "vue-carousel";
+export default {
+  name: "imgCarusale",
+  props: ["pages"],
+  data() {
+    return {};
+  },
+  methods: {
+    handleSlideClick(pageIdx) {
+      this.$emit("onPreviewClicked", pageIdx);
     }
+  },
+  components: {
+    Carousel,
+    Slide,
+    bookPage
+  }
+};
 </script>
 
 <style scoped>
 .slide-page-container {
-    margin: 0 1rem 0 0;
-    padding: 1rem;
-     max-width: 250px;
+  margin: 0 1rem 0 0;
+  padding: 1rem;
+  max-width: 250px;
 }
-
-
 </style>

@@ -64,31 +64,19 @@ export default {
         .dispatch({ type: SIGN_UP, signupDetails: this.signupDetails })
         .then(() => {
           this.user = this.$store.getters[GET_USER];
-          eventBus.$emit(USER_CONNECTED, this.user );
+          eventBus.$emit(USER_CONNECTED, this.user);
         });
-      // userService.signup(this.signupDetails)
-      //     .then(_ => {
-      //         this.$router.push('/')
-      //     })
-      //     .catch(err => console.log(err));
     },
     login() {
       this.$store
         .dispatch({ type: LOG_IN, loginDetails: this.loginDetails })
         .then(() => {
           this.user = this.$store.getters[GET_USER];
-          eventBus.$emit(USER_CONNECTED, this.user );
-          this.$router.push('/')
+          eventBus.$emit(USER_CONNECTED, this.user);
+          this.$router.push("/");
         });
-      // .then((user)=>{
-      //   console.log('user in login page:',user);
-      // })
-      // userService.login(this.loginDetails)
-      //     .then(_ => {
-      //         this.$router.push('/')
-      //     })
     },
-   
+
     toggleSign() {
       this.isSignUp = !this.isSignUp;
     }
@@ -125,11 +113,11 @@ $form-width: 300px;
     width: 100%;
   }
 }
- h1 {
-   color: $accent;
-   font-weight: 900;
-   margin: 0 auto 30px;
- }
+h1 {
+  color: $accent;
+  font-weight: 900;
+  margin: 0 auto 30px;
+}
 
 input {
   outline: 0;
