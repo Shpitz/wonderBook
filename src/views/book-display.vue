@@ -9,17 +9,18 @@
                 </button>
               </last-page>
 
-        <book-page :pageData="getPage" :previewInEdit="false" :parIdx="getParIdx" :class="[pageFlipped ? 'animated fade' : '']">
+        <book-page :pageData="getPage" @onImage="playPause" :previewInEdit="false" :parIdx="getParIdx" :class="[pageFlipped ? 'animated fade' : '']">
           <div class="player">
             <i class="fa fa-backward" :class="[disabledPrevtBtn ? 'btnDisabled' : '']" 
-            @click="manualMovePage(-1)" aria-hidden="true"></i>
-            <div class="play-pause btn-page-control" @click="playPause" >
+            @click.stop="manualMovePage(-1)" aria-hidden="true"></i>
+            <div class="play-pause btn-page-control" @click.stop="playPause" >
               <i ref="playIcon" class="pause fa fa-pause" aria-hidden="true" id="play"></i>
             </div>
-            <i class="fa fa-forward" :class="[disabledNextBtn ? 'btnDisabled' : '']" @click="manualMovePage(+1)" aria-hidden="true"></i>
+            <i class="fa fa-forward" :class="[disabledNextBtn ? 'btnDisabled' : '']"
+             @click.stop="manualMovePage(+1)" aria-hidden="true"></i>
           </div>
 
-          <div class="volume" @click="toggleVolume">
+          <div class="volume" @click.stop="toggleVolume">
             <i ref="vol" class="fa fa-volume-up" aria-hidden="true"></i>
             <div class="vol">
               <div class="go"></div>
