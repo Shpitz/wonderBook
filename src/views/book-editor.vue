@@ -12,7 +12,13 @@
 
       <div class="main-editor-container" v-if="book">
         <!-- modal details\preview -->
-        <div v-if="(togelModal)" class="first-details-container">
+        <book-first-details v-if="(toggelModal)"
+                            :bookFromEditor="book"
+                            @cancelFirstDetails="cancelFirstDetails" 
+                            @saveDetails="saveDetails">
+        </book-first-details>
+
+        <!-- <div v-if="(toggelModal)" class="first-details-container">
           <button @click="cancelFirstDetails" class="btn-exit-modal editor-btn editor-regular-btn ">
             <font-awesome-icon class="icon" icon="times" />
           </button>
@@ -78,7 +84,7 @@
               </section>
             </main>
           </transition>
-        </div>
+        </div> -->
 
         <!--main area-->
 
@@ -123,7 +129,7 @@
                         <font-awesome-icon class="icon" icon="clock" />
                       </button>
                       <input class="input-samll self-center editor-input"
-                       type="number"  
+                       type="text"  
                         v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime"
                         step="1" >
                     </div>
@@ -143,19 +149,16 @@
           </div>
 
           <div class="flex page-ctr column space-around align-center">
-            <h3 class="page-ctr-item">Page settings</h3>
-            <div class="page-title page-ctr-item"># {{currPageIdx+1}}</div>
+            <h3 class="page-ctr-item">Page: {{currPageIdx+1}}</h3>
+            <!-- <div class="page-title page-ctr-item"># {{currPageIdx+1}}</div> -->
            
               <div class=" page-ctr-item set-page-time flex  align-center">
                 <button @click="setTimingPage" class=" editor-btn editor-regular-btn ">
                   <font-awesome-icon class="icon" icon="clock" />
                 </button>
-                <input type="number" class="input-samll editor-input page-timing" v-model="book.pages[currPageIdx].time" step="0.01">
+                <input type="text" class="input-samll editor-input page-timing" v-model="book.pages[currPageIdx].time" step="0.01">
               </div>
               
-             <button class="editor-btn round-btn page-ctr-item" title="Add page" @click="addPage">
-                <font-awesome-icon class="icon" icon="plus-circle" />
-              </button>
               <button class="editor-btn round-btn page-ctr-item" 
               v-if="!isSinglePage"
                title="Delete page" @click="deletePage(currPageIdx)">
@@ -173,18 +176,7 @@
                 <label tabindex="0" for="my-file" class="input-file-trigger">
                   <font-awesome-icon class="icon" icon="upload" />
                 </label>
-              </div>
-            </form>
-                  <button @click="editBookDetails"
-             class="btn-margin-bottom editor-btn editor-regular-btn details-btn">Details</button>
-            <!-- </div> -->
-          </div>  
-          </div>
-          <div class="bottom-ctr flex align-center justify-center">
-            <div class=" audio-set-area flex-warp align-center">
-              <audio ref="audio" :src="book.audio" controls />
-            </div>
-                <div class="img-setting flex column">
+                                <div class="img-setting flex column">
         <select class="bgImgSize" @change="updateImgSize" v-model="book.pages[currPageIdx].imgSize">
           <option value="cover">cover</option>
           <option  value="contain">contain</option>
@@ -205,6 +197,21 @@
           <option value="initial">initial</option>
         </select>
       </div>
+              </div>
+             <button class="editor-btn round-btn page-ctr-item" title="Add page" @click="addPage">
+                <font-awesome-icon class="icon" icon="plus-circle" />
+              </button>
+            </form>
+                  <button @click="editBookDetails"
+             class="btn-margin-bottom editor-btn editor-regular-btn details-btn">Details</button>
+            <!-- </div> -->
+          </div>  
+          </div>
+          <div class="bottom-ctr flex align-center justify-center">
+            <div class=" audio-set-area flex-warp align-center">
+              <audio ref="audio" :src="book.audio" controls />
+            </div>
+
                </div>
             <!--search in web -->
             <!-- <div class="search-img-container self-start">
@@ -231,6 +238,7 @@ import imgCarusale from "../components/img-carusale.vue";
 import loader from "../components/loader-cmp.vue";
 import bookSerivce from "../services/book-service.js";
 import bookDisplay from "./book-display.vue";
+import bookFirstDetails from "../components/book-first-details.vue";
 
 export default {
   name: "bookEditor",
@@ -238,16 +246,16 @@ export default {
     return {
       audioPath: "",
       imgPath: "",
-      togelModal: false,
+      toggelModal: false,
       previewModal: false,
-      options: [
-        "Toddlers",
-        "Early Reader",
-        "Beginner English",
-        "Animals",
-        "Dogs",
-        "Family"
-      ],
+      // options: [
+      //   "Toddlers",
+      //   "Early Reader",
+      //   "Beginner English",
+      //   "Animals",
+      //   "Dogs",
+      //   "Family"
+      // ],
       book: null,
       pageNum: 0,
       currPageIdx: 0,
@@ -287,7 +295,7 @@ export default {
       };
       this.book = JSON.parse(JSON.stringify(this.book));
       this.addPage();
-      this.togelModal = true;
+      this.toggelModal = true;
     }
   },
   mounted(){
@@ -295,12 +303,12 @@ export default {
 
   },
   computed: {
-    getCoverImg(){
-      if (this.book.coverImg){
-        return this.book.coverImg;
-      }
-      else return './img/background/placeholder.png'
-    },
+    // getCoverImg(){
+    //   if (this.book.coverImg){
+    //     return this.book.coverImg;
+    //   }
+    //   else return './img/background/placeholder.png'
+    // },
     isSinglePage(){
       return this.book.pages.length === 1
     },
@@ -315,6 +323,8 @@ export default {
       var newPage = {
         time: 0,
         img: "",
+        imgSize: 'contain',
+        imgPosition: '',
         paragraphs: [
           {
             txt: "",
@@ -345,33 +355,34 @@ export default {
       this.book.pages.splice(idx, 1);
       this.pageNum -= 1;
     },
-    saveDetails() {
-      this.togelModal = false;
+    saveDetails(book) {
+      this.toggelModal = false;
+      this.book = book
       this.saveBook();
     },
 
     cancelFirstDetails() {
       if (!this.book._id) {
-        this.$router.push("./");
-        this.togelModal = false;
+        this.$router.push("/");
+        this.toggelModal = false;
       } else {
-        this.togelModal = false;
+        this.toggelModal = false;
       }
     },
     editBookDetails() {
-      this.togelModal = true;
-      console.log(this.previewModal);
+      this.toggelModal = true;
+      console.log(this.toggelModal);
       
     },
     showPreview() {
       this.previewModal = !this.previewModal;
       
     },
-    setAudioFile() {
-      cloudinaryService.doUploadAudio(this.$refs.audioInput).then(url => {
-        this.book.audio = url.secure_url;
-      });
-    },
+    // setAudioFile() {
+    //   cloudinaryService.doUploadAudio(this.$refs.audioInput).then(url => {
+    //     this.book.audio = url.secure_url;
+    //   });
+    // },
 
     setImgFile() {
       this.isLoad = true;
@@ -380,11 +391,11 @@ export default {
         this.isLoad = false;
       });
     },
-    setCoverImgFile() {
-      cloudinaryService.doUploadImg(this.$refs.coverImgInput).then(url => {
-        this.book.coverImg = url.secure_url;
-      });
-    },
+    // setCoverImgFile() {
+    //   cloudinaryService.doUploadImg(this.$refs.coverImgInput).then(url => {
+    //     this.book.coverImg = url.secure_url;
+    //   });
+    // },
     setTimingPage() {
       this.book.pages[this.currPageIdx].time = this.$refs.audio.currentTime;
       this.$refs.audio.pause();
@@ -446,7 +457,8 @@ export default {
     bookPage,
     imgCarusale,
     loader,
-    bookDisplay
+    bookDisplay,
+    bookFirstDetails
   }
 };
 </script>
@@ -459,7 +471,7 @@ export default {
   left: 50%;
   top: 50%;
 }
-h1 {
+h1, h3 {
   font-family: $main-font;
 }
 .save-btn {
@@ -589,127 +601,127 @@ audio {
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,700");
 
 
-$shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-$primary: #9095b1;
-$secondary: #393e56;
-$margin-form-label:5px;
-#main {
-  position: relative;
-  width: 80%;
-  height: 80%;
+// $shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+// $primary: #9095b1;
+// $secondary: #393e56;
+// $margin-form-label:5px;
+// #main {
+//   position: relative;
+//   width: 80%;
+//   height: 80%;
 
-  left: 30px;
+//   left: 30px;
 
-  border-radius: 10px;
-  box-shadow: $shadow;
+//   border-radius: 10px;
+//   box-shadow: $shadow;
 
-  background-color: white;
-}
+//   background-color: white;
+// }
 
-#left {
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  height: calc(100% + 50px);
-  width: 40%;
-  top: -35px;
-  left: -50px;
-  padding: 10px 25px;
-  box-shadow: $shadow;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-between;
-}
+// #left {
+//   position: relative;
+//   background-size: cover;
+//   background-position: center;
+//   height: calc(100% + 50px);
+//   width: 40%;
+//   top: -35px;
+//   left: -50px;
+//   padding: 10px 25px;
+//   box-shadow: $shadow;
+//   display: flex;
+//   flex-flow: column nowrap;
+//   justify-content: space-between;
+// }
 
 
-#left #head {
-  opacity: 0.95;
-}
+// #left #head {
+//   opacity: 0.95;
+// }
 
-#right {
-  padding: .5rem 0;
-  position: absolute;
-  width: calc(60% - 40px);
-  height: 100%;
-  top: 0;
-  left: 40%;
-  display: flex;
-  flex-flow: column nowrap;
-  padding-left: 20px;
-}
+// #right {
+//   padding: .5rem 0;
+//   position: absolute;
+//   width: calc(60% - 40px);
+//   height: 100%;
+//   top: 0;
+//   left: 40%;
+//   display: flex;
+//   flex-flow: column nowrap;
+//   padding-left: 20px;
+// }
 
-#right form {
-  display: flex;
-  flex-flow: column nowrap;
-  width: 100%;
-  height:100%; 
-  justify-content: space-around;
-}
+// #right form {
+//   display: flex;
+//   flex-flow: column nowrap;
+//   width: 100%;
+//   height:100%; 
+//   justify-content: space-around;
+// }
 
-#right form input,
-#right form select {
-  appearance: none;
-  border: none;
-  border-bottom: 2px solid #ccc;
-  padding: 5px;
-   outline: none;
-  transition: all 0.2s;
-  margin-top: 2.5px;
-  position: relative;
-}
-#right form input:focus {
-     border-bottom: 2px solid #808ab2;
+// #right form input,
+// #right form select {
+//   appearance: none;
+//   border: none;
+//   border-bottom: 2px solid #ccc;
+//   padding: 5px;
+//    outline: none;
+//   transition: all 0.2s;
+//   margin-top: 2.5px;
+//   position: relative;
+// }
+// #right form input:focus {
+//      border-bottom: 2px solid #808ab2;
 
-}
-#right form input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: lightgray;
-} 
+// }
+// #right form input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+//   color: lightgray;
+// } 
  
    
-#right form .form-field {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  margin-bottom: $margin-form-label;
-}
-.form-field label {
-    margin-bottom: $margin-form-label;
+// #right form .form-field {
+//   display: flex;
+//   flex-flow: column nowrap;
+//   justify-content: center;
+//   margin-bottom: $margin-form-label;
+// }
+// .form-field label {
+//     margin-bottom: $margin-form-label;
 
-}
+// }
 
-#right form #date-val {
-  display: flex;
-  justify-content: space-between;
-}
+// #right form #date-val {
+//   display: flex;
+//   justify-content: space-between;
+// }
 
-#right form #date-val select {
-  width: 45%;
-}
+// #right form #date-val select {
+//   width: 45%;
+// }
 
-.edit-btn{
-  width: 30%;
-}
+// .edit-btn{
+//   width: 30%;
+// }
 
-.book-categories, .upload-form{
-  margin: 0.5rem;
-}
+// .book-categories, .upload-form{
+//   margin: 0.5rem;
+// }
 
-#right form button[type="submit"], .edit-btn {
-  background: linear-gradient(135deg, $secondary 0%, $secondary 100%);
-  padding: 5px;
-  border: none;
-  border-radius: 50px;
-  color: white;
-  font-weight: 400;
-  font-size: 12pt;
-  margin-top: 10px;
-  height: 40px;
-  cursor: pointer;
-}
-#right form button[type="submit"]:hover ,.edit-btn:hover {
-  background: linear-gradient(135deg, $primary 0%, $primary 100%);
-  color: $secondary;
-}
+// #right form button[type="submit"], .edit-btn {
+//   background: linear-gradient(135deg, $secondary 0%, $secondary 100%);
+//   padding: 5px;
+//   border: none;
+//   border-radius: 50px;
+//   color: white;
+//   font-weight: 400;
+//   font-size: 12pt;
+//   margin-top: 10px;
+//   height: 40px;
+//   cursor: pointer;
+// }
+// #right form button[type="submit"]:hover ,.edit-btn:hover {
+//   background: linear-gradient(135deg, $primary 0%, $primary 100%);
+//   color: $secondary;
+// }
 
 .img-carusela {
   max-width: 81vw;
