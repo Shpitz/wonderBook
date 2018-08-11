@@ -1,5 +1,5 @@
   <template>
-    <section class="book-details section-container">
+    <section class="book-details section-container flex">
       <loader class="loader" v-if="isLoad"></loader>
       <div v-if="book"   class="book-details-cotainer flex">
         <div class="img-details">
@@ -112,6 +112,7 @@ export default {
   font-family: "Merriweather", sans-serif;
 }
 .book-details-cotainer {
+  // width: 80%;
   margin: 0 auto;
   justify-content: space-around;
 
@@ -190,6 +191,8 @@ export default {
 @media(max-width: 600px) {
   .book-details-cotainer {
     flex-direction: column;
+    width: 80%
+    
   }
   .img-details {
   width: 100%;
