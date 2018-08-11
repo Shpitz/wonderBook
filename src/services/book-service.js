@@ -10,7 +10,6 @@ function query(booksFilter = {}) {
     if (booksFilter.byCategorie) queryParams.set('categorie', booksFilter.byCategorie)
     return axios.get(`${BASE_URL}?${queryParams}`)
         .then(res => {
-            console.log(res.data)
             return res.data
         })
         .catch((err) => {
@@ -52,7 +51,6 @@ function getCategories() {
         { catTxt: 'Animals', img: './img/categories/Animals.jpeg' },
         { catTxt: 'Family', img: './img/categories/Family.jpeg' },
         { catTxt: 'Learning to Read', img: './img/categories/Learning_to_read.jpeg' }
-
 
     ]
     return categories

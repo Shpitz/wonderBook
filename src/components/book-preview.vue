@@ -1,12 +1,17 @@
 <template>
-<div v-if="book" class="paper">
+<div v-if="book" class="paper flex column">
     <img class="poster" :src=backgroundImg />
-    <!-- <h2>{{datePublish | date-format}}</h2> -->
-    <h1>{{book.title}}</h1>
+    <div class="txt-container flex column">
+      <div>
+      <h1>{{book.title}}</h1>
     <!-- <hr/> -->
       <h3>{{book.author}}</h3>
-	  <!-- <div>{{datePublish | date-format}}</div> -->
-      <div><font-awesome-icon class="icon" icon="eye" /> {{book.views}}</div>
+      </div>
+      <ul class="flex justify-center">
+         <li><font-awesome-icon class="icon star" icon="star" /> {{book.rating}}</li>
+        <li><font-awesome-icon class="icon" icon="eye" /> {{book.views}}</li> 
+        </ul>
+   </div>
 
 </div>
 
@@ -40,19 +45,26 @@ export default {
 $color-shadow:transparentize(#303336, .9);
 
 .paper {
-  margin: 5vh 5vh;
-      width: 40vh;
-    height: 69vh;
+  margin: 2rem;
+   width: 40vh;
+  height: 56vh;
   border-radius: 4px;
-  box-shadow: 0 15px 35px rgba(50, 50, 90, .1), 0 5px 15px rgba(0, 0, 0, .07);
+   border: 1px solid rgba(0, 0, 0, 0.1);
   transition: .6s ease;
   background: white;
   text-align: center;
   cursor:pointer;
+  ul li:first-child{
+    margin: 0 1rem 0 0;
+  }
+  ul li {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .paper:hover {
-  box-shadow: 0 18px 35px rgba(50, 50, 90, .1), 0 8px 15px rgba(0, 0, 0, .07);
+  box-shadow: 0 2px 10px rgba(50, 50, 90, 0.1), 0 2px 3px rgba(0, 0, 0, 0.07);
   transform: translateY(-5px);
 }
 
@@ -63,16 +75,14 @@ img {
 
 .poster {
   border-radius: 4px 4px 0 0;
-  margin-bottom: 2vh;
 }
 
 h1 {
   font-size: 1.3rem;
   color: #303336;
   letter-spacing: 1px;
-  margin:0 0 .5rem;
+  margin:0 0 1rem;
   font-family: $serif;
-  min-height: 56px;
 }
 
 h3{
@@ -99,45 +109,17 @@ p {
   line-height: 1.25rem;
 }
 
-.btn,
-a.btn {
-  display: inline-block;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-decoration: none;
-  line-height: 20px;
-  border-radius: 4px;
-  padding: 1vh 2vh;
-  letter-spacing: .02rem;
-background: #664EF7;
-  color:white;
-  font-family:$san-serif;
-  font-size:.8rem;
-  box-shadow:0 0px 0px $color-shadow,
-0 0px 0px rgba(0, 0, 0, 0);
+.txt-container {
+
+    height: 40%;
+    justify-content: space-around;
+    padding: 0 .5rem;
 }
-
-.btn,
-a.btn:hover {
-  background: #7C66FF;
-  box-shadow:0 7px 14px $color-shadow,
-0 3px 6px rgba(0, 0, 0, .08);
-  transform: translateY(-1px);
+.icon {
+  margin: 0 .5rem 0 0;
 }
-
-.btn,
-a.btn:active {
-  box-shadow:0 4px 6px $color-shadow,
-0 1px 3px rgba(0, 0, 0, .12);
-  transform: translateY(1px);
+.star {
+  color:gold;
 }
-
-.space{
-  height:4vh;
-}
-
-
-
-  
 
 </style>

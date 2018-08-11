@@ -75,8 +75,7 @@ export default {
   },
 
   data() {
-    return {
-    };
+    return {};
   },
   mounted() {
     if (this.$route.name === "contact") {
@@ -85,7 +84,6 @@ export default {
   },
   methods: {
     goto(refName) {
-      console.log(this.$refs);
       var element = this.$refs[refName];
       element.scrollIntoView({
         behavior: "smooth"
@@ -171,5 +169,4 @@ export default {
 .member-details img {
   max-width: 40%;
 }
-
 </style>

@@ -43,7 +43,7 @@ export default {
 
 <style scoped lang="scss">
 ul {
-     max-width: 958px;
-    margin: 0 auto;
+    //  max-width: 958px;
+    margin: 0 auto 2rem auto;
 }
 </style>

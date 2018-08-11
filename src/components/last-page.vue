@@ -20,11 +20,7 @@
           </button>
         </div>
       </div>
-
     </div>
-<!-- <a href="https://www.facebook.com/sharer/sharer.php?u=bookReading/5b6303aa5751a43fcdd9bc8a" target="_blank">
-  Share on Facebook
-</a> -->
     </section>
 </template>
 
@@ -32,53 +28,48 @@
 export default {
   props: {
     book: Object
-  },
-   created() {
-      console.log(this.book)
-  },
+  }
 };
 </script>
 
 <style scoped lang="scss">
 .last-page {
-    position: absolute;
-    z-index: 3;
-    height: calc(100vh - 110px);
-    width: 98vw;
-    background-color: #000000cc;
-     color:white;
-    justify-content: center;
-
+  position: absolute;
+  z-index: 3;
+  height: calc(100vh - 110px);
+  width: 98vw;
+  background-color: #000000cc;
+  color: white;
+  justify-content: center;
 }
-.last-page>div {
-    height: 100%;
+.last-page > div {
+  height: 100%;
 }
 .control-btn {
- button {
- display: flex;
- flex-direction: column;
- align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-   color:white;
-   padding: 1rem;
-   }
-   .fa-facebook  {
-       padding: 0;
-   }
-    .fa-facebook:hover  {
-       background-color: transparent;
-   }
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: white;
+    padding: 1rem;
+  }
+  .fa-facebook {
+    padding: 0;
+  }
+  .fa-facebook:hover {
+    background-color: transparent;
+  }
 }
 .icon {
-    margin: 0 .5rem 0 0;
+  margin: 0 0.5rem 0 0;
 }
 
-@media (max-width:500px) {
+@media (max-width: 500px) {
   .control-btn {
     button {
       font-size: 1.5rem;
-
     }
   }
 }

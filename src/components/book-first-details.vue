@@ -22,7 +22,7 @@
               <div class="file-upload input-file-container">
                 <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input  input-file">
                 <label tabindex="0" for="my-file" class="input-file-trigger">
-                  <font-awesome-icon class="icon" icon="file-audio" />
+                  <font-awesome-icon class="icon" icon="music" />
                 </label>
               </div>
             </form>
@@ -126,7 +126,7 @@ export default {
   justify-content: center;
   align-items: center;
   z-index: 2;
-  font-family: "Lato", sans-serif;
+  // font-family: "Lato", sans-serif;
   color: #393e56de;
 }
 
@@ -134,6 +134,11 @@ export default {
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+h1 {
+  font-family: $main-font;
+  font-size: 1.17rem;
 }
 
 
@@ -202,7 +207,7 @@ $margin-form-label:5px;
   appearance: none;
   border: none;
   border-bottom: 2px solid #ccc;
-  padding: 5px;
+  // padding: 5px;
    outline: none;
   transition: all 0.2s;
   margin-top: 2.5px;
@@ -260,6 +265,12 @@ $margin-form-label:5px;
 #right form button[type="submit"]:hover ,.edit-btn:hover {
   background: linear-gradient(135deg, $primary 0%, $primary 100%);
   color: $secondary;
+}
+
+@media (max-width: 700px) {
+  #left {
+    width: 50%;
+  }
 }
 </style>
 

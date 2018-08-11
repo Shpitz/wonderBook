@@ -2,9 +2,8 @@
     <section >
 <div class="wrapper" ref="page-container" v-if="!previewInEdit" >
   <div class="wrapper-container book-page "    ref="bookPage"  :class="{fullImg:isFullScrean}"  >
-    <div class="image-media" :class="[pageData.imgSize]"
-
-    :style="imgStyle">
+    <div :class="[pageData.imgSize]" @click="$emit('onImage')"  class="image-media"
+        :style="imgStyle">
         <div class="p-container" ref="p-container">
           <p v-for="(p,idx) in pageData.paragraphs" 
           :key="idx"  :style="{color:p.color}"
@@ -59,7 +58,8 @@ export default {
       return img
     },
     imgStyle(){
-      return  { backgroundImage: 'url(' + this.pageData.img + ')',
+      return  { 
+        backgroundImage: 'url(' + this.pageData.img + ')',
        backgroundPosition:this.pageData.imgPosition
        }
     }
@@ -97,7 +97,6 @@ export default {
         }
       }
       this.isFullScrean = !this.isFullScrean;
-      console.log(this.isFullScrean)
     }
   }
 };
@@ -106,7 +105,29 @@ export default {
  <style scoped lang="scss">
     @import "./src/assets/scss/_vars.scss";
 
-    // class for div with img background
+
+    .book-page {
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .image-media{
+      width: 100%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      position: relative;
+      &::before{
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+  // class for div with img background
     .cover {
       background-size: cover;
     }
@@ -114,11 +135,7 @@ export default {
       background-size: contain;
     }
 // end
-    .book-page {
-      background-position: center;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
+
     .img-error{
     background-image: url("../../public/img/background/img-error.png");
       height: 50px;
@@ -154,7 +171,8 @@ export default {
       word-wrap: break-word;
       text-align: left;
       font-size: 2.5rem;
-      font-weight: 200;
+      font-weight: 600;
+      -webkit-text-stroke: 0.033rem rgb(236, 228, 228);
       font-family: $story-font;
     }
 
@@ -165,7 +183,7 @@ export default {
 
       .active-p {
         font-weight: 700;
-        font-size: 2.7rem;
+        font-size: 3.3rem;
         
       }
     }
@@ -181,23 +199,38 @@ export default {
       height: 95vh;
       width: 95vw;
     }
-
-
-    @media(max-width:736px) {
-      p {
+     @media(max-width:550px) {
+        p {
         font-size: 1rem;
       }
       .p-container {
         .active-p {
-          font-size: 1rem;
+          font-size: 1.2rem;
         }
       }
-    }
-//whenthe window less then 550pxthe imag will be in auto contain
-    @media(max-width:1023px) {
-      .cover {
-        background-size: contain;
-       }
-    }
+     }
+
+     @media(min-width:550px) and (max-width:736px) {
+          p {
+        font-size: 2rem;
+      }
+      .p-container {
+        .active-p {
+          font-size: 2.2rem;
+        }
+      }
+     }
+
+
+    @media(max-width:736px) {
      
+    .image-media {
+    background-size: contain;
+    background-position: top;
+
+         }
+    }
+      
+//whenthe window less then 550pxthe imag will be in auto contain
+   
   </style>

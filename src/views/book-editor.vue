@@ -10,98 +10,21 @@
         <book-display class="editor-book-display" :bookIdFromEditor="book._id"></book-display>
       </div>
 
-      <div class="main-editor-container" v-if="book">
-        <!-- modal details\preview -->
-        <book-first-details v-if="(toggelModal)"
+        <book-first-details v-show="(toggelModal)"
+                            v-if="book"
                             :bookFromEditor="book"
                             @cancelFirstDetails="cancelFirstDetails" 
                             @saveDetails="saveDetails">
         </book-first-details>
+      <div class="main-editor-container" v-if="book">
+         <div class="sub-editor-container flex align-center">
 
-        <!-- <div v-if="(toggelModal)" class="first-details-container">
-          <button @click="cancelFirstDetails" class="btn-exit-modal editor-btn editor-regular-btn ">
-            <font-awesome-icon class="icon" icon="times" />
-          </button>
-          <transition name="fade">
-            <main id="main">
-              <section id="left" :style="{ backgroundImage: 'url(' + getCoverImg + ')'}">
-                <div id="head">
-                  <h1>Join the wonder</h1>
-                </div>
-                <div class="modal-upload-container flex justify-center">
-                  <form method="POST" ref="coverImgInput" class="upload-form flex column">
-                    <div class="file-upload input-file-container">
-                      <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input input-file">
-                      <label tabindex="0" for="my-file" class="input-file-trigger">
-                        <font-awesome-icon class="icon" icon="image" />
-                      </label>
-                    </div>
-                  </form>
-                  <form action="" ref="audioInput" class="upload-form page-form">
-                    <div class="file-upload input-file-container">
-                      <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input  input-file">
-                      <label tabindex="0" for="my-file" class="input-file-trigger">
-                        <font-awesome-icon class="icon" icon="file-audio" />
-                      </label>
-                    </div>
-                  </form>
-                </div>
-
-              </section>
-              <section id="right">
-                <h1>Book details</h1>
-                <form action="#"  >
-                  <div id="form-card" class="form-field">
-                    <label>Book title:</label>
-                    <input  v-model="book.title" placeholder="Book title" required>
-                  </div>
-                  <div id="form-card" class="form-field">
-                    <label>Author:</label>
-                    <input v-model="book.author" placeholder="Author" required>
-                  </div>
-                  <div id="form-card" class="form-field">
-                    <label>Illustrator:</label>
-                    <input v-model="book.illustrator" placeholder="Illustrators" required>
-                  </div>
-                   <div id="form-date" class="form-field">
-                    <label for="expiry-month">Categories:</label>
-                    <v-select  
-                    placeHolder="Categories" 
-                    multiple v-model="book.categories" :options="options"></v-select>
-                  </div>
-
-                  <div id="form-card" class="form-field">
-                    <label>Description:</label>
-                   <textarea class="editor-input not-resize-txt" rows='4' cols='50' 
-                    v-model="book.description"  
-                   placeholder="The story about Yoko ruining everything!" />
-                  </div>
-                  <div class="modal-btns-container flex space-around">
-                    <input type="submit" @click.prevent="saveDetails" value="SAVE" class="edit-btn">
-                    <input type="button" @click.prevent="cancelFirstDetails" value="CANCEL" class="edit-btn">
-                  </div>
-                </form>
-              </section>
-            </main>
-          </transition>
-        </div> -->
-
-        <!--main area-->
-
-
-        <div class="sub-editor-container">
-             <button @click="saveBook"
-              class="btn-margin-bottom editor-btn editor-regular-btn save-btn ">
-              <div>
-                <font-awesome-icon class="icon" icon="save" /> Save
-              </div>
-            </button>
           <!-- <h1 :class="[book.title === '' ? 'hidden': '']">{{book.title}}</h1> -->
           <div class="img-area-container flex justify-center">
           <div class="img-area" :style="{ backgroundImage: 'url(' + book.pages[currPageIdx].img + ')', backgroundSize: book.pages[currPageIdx].imgSize, backgroundPosition: book.pages[currPageIdx].imgPosition}">
             <loader class="loader" v-if="isLoad"></loader>
 
-            <div class="flex column">
+            <div class="par-area-ctr flex column">
               <!-- p loop -->
               <ul class="par-list clean-list">
                 <li class="flex relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
@@ -111,12 +34,13 @@
                       title="Delete paragraph" @click="deletePar(idx)">
                         <font-awesome-icon class="icon" icon="trash-alt" />
                       </button>
-                       <div class="modal-upload-container flex justify-center">
+                       <div class="modal-upload-container flex justify-center btn-margin-bottom">
                   <form method="POST"  class="upload-form flex column">
                     <div class="file-upload input-file-container">
                         <input type="color" v-model="par.color" 
                        class="file-upload__input input-file">
-                      <label tabindex="0"  class="input-file-trigger" :style="{color:par.color}">
+                      <label tabindex="0"  class="input-file-trigger" 
+                      :style="{color:par.color}">
                         <font-awesome-icon class="icon" icon="palette" />
                       </label>
                     </div>
@@ -149,9 +73,7 @@
           </div>
 
           <div class="flex page-ctr column space-around align-center">
-            <h3 class="page-ctr-item">Page: {{currPageIdx+1}}</h3>
-            <!-- <div class="page-title page-ctr-item"># {{currPageIdx+1}}</div> -->
-           
+            <h3 class="page-ctr-item">Page # {{currPageIdx+1}}</h3>
               <div class=" page-ctr-item set-page-time flex  align-center">
                 <button @click="setTimingPage" class=" editor-btn editor-regular-btn ">
                   <font-awesome-icon class="icon" icon="clock" />
@@ -170,26 +92,25 @@
                <button @click="showPreview" class=" editor-btn editor-regular-btn page-ctr-item">
               <font-awesome-icon class="icon" icon="play" />
             </button>
-            <form method="POST" class="img-form page-form page-ctr-item " ref="imgInput">
-              <div class="input-file-container">
+                        <!-- <div class="page-controllers flex column align-center space-between"> -->
+              <form method="POST" class="img-form page-form " ref="imgInput">
+                <div class="input-file-container">
                 <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input input-file">
                 <label tabindex="0" for="my-file" class="input-file-trigger">
                   <font-awesome-icon class="icon" icon="upload" />
                 </label>
-                                <div class="img-setting flex column">
+              </div>
+            </form>
+
+            
+          <div class="img-setting">
         <select class="bgImgSize" @change="updateImgSize" v-model="book.pages[currPageIdx].imgSize">
           <option value="cover">cover</option>
           <option  value="contain">contain</option>
         </select>
   
         <select class="bgImgPos" @change="updateImgPos" v-model="book.pages[currPageIdx].imgPosition">
-          <!-- <option value="left top">left top</option> -->
-          <!-- <option value="left center">left center</option> -->
-          <!-- <option value="left bottom">left bottom</option> -->
-          <!-- <option value="right top">right top</option> -->
-          <!-- <option value="right center">right center</option>
-          <option value="right bottom">right bottom</option> -->
-          <!-- <option  value="center top">center top</option> -->
+      
           <option  value="center center">center center</option>
           <option value="center bottom">center bottom</option>
           <option value="50% 50%">50% 50%</option>
@@ -197,21 +118,29 @@
           <option value="initial">initial</option>
         </select>
       </div>
-              </div>
-             <button class="editor-btn round-btn page-ctr-item" title="Add page" @click="addPage">
-                <font-awesome-icon class="icon" icon="plus-circle" />
-              </button>
-            </form>
-                  <button @click="editBookDetails"
-             class="btn-margin-bottom editor-btn editor-regular-btn details-btn">Details</button>
+              <!-- </div> -->
+
+
             <!-- </div> -->
           </div>  
           </div>
+          
           <div class="bottom-ctr flex align-center justify-center">
+                         <button @click="saveBook"
+              class="editor-btn editor-regular-btn save-btn ">
+              <div>
+                <font-awesome-icon class="icon" icon="save" />
+              </div>
+            </button>
+                            <button @click="editBookDetails"
+             class="editor-btn editor-regular-btn details-btn">Details</button>
             <div class=" audio-set-area flex-warp align-center">
               <audio ref="audio" :src="book.audio" controls />
             </div>
 
+                   <button class="editor-btn round-btn" title="Add page" @click="addPage">
+                <font-awesome-icon class="icon" icon="plus-circle" />
+              </button>
                </div>
             <!--search in web -->
             <!-- <div class="search-img-container self-start">
@@ -222,9 +151,9 @@
                 </button>
               </form>
             </div> -->
-        </div>
     <imgCarusale ref="carusale-cmp"  class="img-carusela"
     :pages="book.pages" @onPreviewClicked="selectPage"></imgCarusale>
+        </div>
       </div>
     </section>
   </template>
@@ -248,23 +177,15 @@ export default {
       imgPath: "",
       toggelModal: false,
       previewModal: false,
-      // options: [
-      //   "Toddlers",
-      //   "Early Reader",
-      //   "Beginner English",
-      //   "Animals",
-      //   "Dogs",
-      //   "Family"
-      // ],
       book: null,
       pageNum: 0,
       currPageIdx: 0,
       parNum: 1,
       showCarusale: false,
       isLoad: true,
-      bgSize: 'contain',
-      bgPos: 'center',
-      currPar : 0,
+      bgSize: "contain",
+      bgPos: "center",
+      currPar: 0
     };
   },
   created() {
@@ -298,17 +219,10 @@ export default {
       this.toggelModal = true;
     }
   },
-  mounted(){
+  mounted() {
     this.isLoad = false;
-
   },
   computed: {
-    // getCoverImg(){
-    //   if (this.book.coverImg){
-    //     return this.book.coverImg;
-    //   }
-    //   else return './img/background/placeholder.png'
-    // },
     isSinglePage(){
       return this.book.pages.length === 1
     },
@@ -376,13 +290,7 @@ export default {
     },
     showPreview() {
       this.previewModal = !this.previewModal;
-      
     },
-    // setAudioFile() {
-    //   cloudinaryService.doUploadAudio(this.$refs.audioInput).then(url => {
-    //     this.book.audio = url.secure_url;
-    //   });
-    // },
 
     setImgFile() {
       this.isLoad = true;
@@ -391,11 +299,6 @@ export default {
         this.isLoad = false;
       });
     },
-    // setCoverImgFile() {
-    //   cloudinaryService.doUploadImg(this.$refs.coverImgInput).then(url => {
-    //     this.book.coverImg = url.secure_url;
-    //   });
-    // },
     setTimingPage() {
       this.book.pages[this.currPageIdx].time = this.$refs.audio.currentTime;
       this.$refs.audio.pause();
@@ -413,7 +316,7 @@ export default {
       //     console.log('prev page time: ', prevPage.time, 'curr page start time: ', currPage.time);
       // }
     },
-    focusPar(idx){
+    focusPar(idx) {
       this.currPar = idx;
     },
     setTimingPar(idx) {
@@ -440,16 +343,12 @@ export default {
       });
     },
     updateImgSize(ev) {
-      console.log(ev.target.value);
       this.bgSize = ev.target.value;
       this.book.pages[this.currPageIdx].imgSize = this.bgSize;
-      console.log(this.book.pages[this.currPageIdx]);
     },
     updateImgPos(ev) {
       this.bgPos = ev.target.value;
       this.book.pages[this.currPageIdx].imgPosition = this.bgPos;
-      console.log(this.book.pages[this.currPageIdx]);
-      
     }
   },
 
@@ -466,6 +365,8 @@ export default {
  <style scoped lang="scss">
 @import "./src/assets/scss/_vars.scss";
 
+
+
 .loader {
   position: absolute;
   left: 50%;
@@ -474,63 +375,53 @@ export default {
 h1, h3 {
   font-family: $main-font;
 }
-.save-btn {
-  margin: 1rem auto;
-    height: auto;
-    width: 150px
-}
+// .save-btn {
+//   margin: 1rem auto;
+//   height: auto;
+//   width: 150px;
+// }
 
 .audio-set-area {
   justify-content: center;
 }
 
 .main-container {
-  min-height: 80vh;
+  // min-height: 80vh;
   background-color: #f6f4f4;
 }
 .main-editor-container {
-  height: 100%;
-  width: 100%;
+  // height: 100vh;
+  width:  100%;
 }
 .sub-editor-container {
-  min-height: 400px;
+  // min-height: 400px;
   flex-direction: column;
   justify-content: space-between;
-  width: 70%;
-  margin:0 auto 1rem;   
+  width: 90%;;
+  margin: 0 auto 1rem;
 }
 
 .img-area {
   min-height: 60vh;
   padding: 0.5rem;
   margin: 0 0 1rem;
-  background-position: 50% 50%; /* Sets reference point to scale from */
-  // background-size: cover;
-
+  background-position: center; /* Sets reference point to scale from */
   //NEW CHANGES
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-color: black;
 }
 
-
 .page-ctr {
-  margin: 0 1rem;
+  width: 100px;
+  // margin: 0 1rem;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
   h3 {
     margin: 0;
     text-align: left;
-      }
-}
-
-.page-title{
-  font-size: 1.5em;
-}
-
-.page-timing{
-  // margin-top: 1em;
+  }
 }
 
 audio {
@@ -549,7 +440,7 @@ audio {
   width: 100%;
 }
 
-.first-details-container, .show-preview {
+.show-preview {
   position: fixed;
   top: 0;
   right: 0;
@@ -574,7 +465,7 @@ audio {
 .par-btns-container {
   margin: 0 0.5rem 0 0;
   position: absolute;
-  left:  -120px;
+  left: -120px;
 }
 
 .par-list {
@@ -586,6 +477,10 @@ audio {
   }
 }
 
+// .page-controllers {
+//   width: 240px;
+// }
+
 @media (max-width: 520px) {
   .show-carusale {
     margin: 0.5rem 0;
@@ -593,150 +488,31 @@ audio {
       margin: 0;
     }
   }
-  .details-modal {
-    width: 80%;
-  }
+
 }
 
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,700");
 
+.img-setting select {
+  width: 100%;
 
-// $shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-// $primary: #9095b1;
-// $secondary: #393e56;
-// $margin-form-label:5px;
-// #main {
-//   position: relative;
-//   width: 80%;
-//   height: 80%;
-
-//   left: 30px;
-
-//   border-radius: 10px;
-//   box-shadow: $shadow;
-
-//   background-color: white;
-// }
-
-// #left {
-//   position: relative;
-//   background-size: cover;
-//   background-position: center;
-//   height: calc(100% + 50px);
-//   width: 40%;
-//   top: -35px;
-//   left: -50px;
-//   padding: 10px 25px;
-//   box-shadow: $shadow;
-//   display: flex;
-//   flex-flow: column nowrap;
-//   justify-content: space-between;
-// }
-
-
-// #left #head {
-//   opacity: 0.95;
-// }
-
-// #right {
-//   padding: .5rem 0;
-//   position: absolute;
-//   width: calc(60% - 40px);
-//   height: 100%;
-//   top: 0;
-//   left: 40%;
-//   display: flex;
-//   flex-flow: column nowrap;
-//   padding-left: 20px;
-// }
-
-// #right form {
-//   display: flex;
-//   flex-flow: column nowrap;
-//   width: 100%;
-//   height:100%; 
-//   justify-content: space-around;
-// }
-
-// #right form input,
-// #right form select {
-//   appearance: none;
-//   border: none;
-//   border-bottom: 2px solid #ccc;
-//   padding: 5px;
-//    outline: none;
-//   transition: all 0.2s;
-//   margin-top: 2.5px;
-//   position: relative;
-// }
-// #right form input:focus {
-//      border-bottom: 2px solid #808ab2;
-
-// }
-// #right form input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-//   color: lightgray;
-// } 
- 
-   
-// #right form .form-field {
-//   display: flex;
-//   flex-flow: column nowrap;
-//   justify-content: center;
-//   margin-bottom: $margin-form-label;
-// }
-// .form-field label {
-//     margin-bottom: $margin-form-label;
-
-// }
-
-// #right form #date-val {
-//   display: flex;
-//   justify-content: space-between;
-// }
-
-// #right form #date-val select {
-//   width: 45%;
-// }
-
-// .edit-btn{
-//   width: 30%;
-// }
-
-// .book-categories, .upload-form{
-//   margin: 0.5rem;
-// }
-
-// #right form button[type="submit"], .edit-btn {
-//   background: linear-gradient(135deg, $secondary 0%, $secondary 100%);
-//   padding: 5px;
-//   border: none;
-//   border-radius: 50px;
-//   color: white;
-//   font-weight: 400;
-//   font-size: 12pt;
-//   margin-top: 10px;
-//   height: 40px;
-//   cursor: pointer;
-// }
-// #right form button[type="submit"]:hover ,.edit-btn:hover {
-//   background: linear-gradient(135deg, $primary 0%, $primary 100%);
-//   color: $secondary;
-// }
-
+}
 .img-carusela {
   max-width: 81vw;
   margin: 0 auto;
 }
-.img-setting select:not(:last-child) {
-  margin: 0 0 .5rem;
-}
+// .img-setting select:not(:last-child) {
+//   margin: 0 0 0.5rem;
+// }
 
 .details-btn {
-  z-index: 1;
+  width: 130px;
+  // z-index: 1;
 }
 .page-ctr-item {
-  margin: 0 .5rem 0 0;
+  margin: 0 0.5rem 0 0;
 }
+
 @media (max-width: 520px) {
   .show-carusale {
     margin: 0.5rem 0;
@@ -744,28 +520,19 @@ audio {
       margin: 0;
     }
   }
-  .details-modal {
-    width: 80%;
+
+  .bottom-ctr {
+    flex-direction: column;
+    audio {
+      margin: 0 0 1rem;
+    }
   }
-.bottom-ctr {
-  flex-direction: column;
-   audio {
-    margin: 0 0 1rem;
-  }
-
-}
-
-
 }
 
 @media (max-width: 640px) {
-    #left {
-    width: 50%;
-  }
   .page-ctr {
-        height: 100px;
+    height: 100px;
     justify-content: flex-end;
-
   }
   .editor-text-area {
     max-width: 60%;
@@ -773,39 +540,33 @@ audio {
 }
 
 @media (max-width: 820px) {
-.page-ctr button &input{
-          margin: 0 .5rem 0 0;
+  .page-ctr button &input {
+    margin: 0 0.5rem 0 0;
   }
-.sub-editor-container {
-  width: 95%;
-}
-.par-btns-container {
-  right: 0;
-  left: auto;
+  .sub-editor-container {
+    width: 95%;
+  }
+  .par-btns-container {
+    right: 0;
+    left: auto;
+  }
 }
 
-}
-
-
-@media (max-width: 900px) { 
-    .img-area-container {
+@media (max-width: 900px) {
+  .img-area-container {
     flex-direction: column;
   }
   .page-ctr {
-     flex-direction: row;
+    flex-direction: row;
     align-items: center;
     margin: 0 0 1rem;
   }
-  .details-btn {
-    margin: 0;
-  }
+
 }
-@media (min-width: 900px) and (max-width: 1024px) { 
+@media (min-width: 900px) and (max-width: 1024px) {
   .par-btns-container {
     left: auto;
     right: 0;
   }
-
 }
-
 </style>

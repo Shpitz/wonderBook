@@ -10,8 +10,9 @@ if (loggedinUser) {
 
 function signup(userDetails) {
     return axios.post(`${BASE_URL}/signup`, userDetails)
-        .then(_ => {
+        .then(({ data }) => {
             _setLoggedinUser(data)
+            return data;
         })
         .catch(err => err)
 }
@@ -20,6 +21,7 @@ function login(userCreds) {
     return axios.post(`${BASE_URL}/checkLogin`, userCreds)
         .then(({ data }) => {
             _setLoggedinUser(data)
+            return data;
         })
         .catch(err => err)
 }
@@ -27,10 +29,17 @@ function login(userCreds) {
 function logout() {
     loggedinUser = null;
     StorageService.store(STORAGE_KEY, null)
+    return axios.post(`${BASE_URL}/logout`)
 }
 
 function getLoggedinUser() {
-    return loggedinUser
+    // debugger;
+    return axios.get(`${BASE_URL}/getLogin`)
+        .then((res)=>{
+            return res.data;
+        })
+        .catch(()=>{console.log('catch inside user service frontend')})
+    // return loggedinUser
 }
 
 function _setLoggedinUser(user) {

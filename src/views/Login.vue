@@ -1,245 +1,191 @@
 <template>
           <section>
-              <div class="container">
-                    <div class="message signup">
-                        <div class="btn-wrapper">
-                        <button class="button" id="signup" @click="vsignup">SignUp</button>
-                        <button class="button" id="login" @click="vlogin"> Login</button>
-                        </div>
-                    </div>
-                    <div class="form form--signup">
-                      <div class="form--heading">Welcome! Sign Up</div>
-                      <form autocomplete="off" @submit.prevent="signup">
-                        <input type="text" placeholder="Name" v-model="signupDetails.name">
-                        <input type="password" placeholder="Password" v-model="signupDetails.password">
-                        <button class="button" type="submit">Sign Up</button>
-                      </form>
-                    </div>
-                    <div class="form form--login">
-                      <div class="form--heading">Welcome back! </div>
-                      <form autocomplete="off" @submit.prevent="login">
-                        <input type="text" placeholder="Name" v-model="loginDetails.name">
-                        <input type="password" placeholder="Password" v-model="loginDetails.password">
-                        <button class="button" type="submit">Login</button>
-                      </form>
-                    </div>
-                </div>
-
-            <!-- <div class="login">
-                <form @submit.prevent="login">
-                    <input type="text" v-model="loginDetails.name" placeholder="name"/>
-                    <input type="password" v-model="loginDetails.password" placeholder="password">
-                    <button type="submit">Login</button>
-                </form>
-            </div>
-            <div class="signup">
-                <form @submit.prevent="signup">
-                    <input type="text" placeholder="name" v-model="signupDetails.name" />
-                    <input type="password" placeholder="password" v-model="signupDetails.password" />
-                    <button type="submit">Signup</button>
-                </form>
-            </div> -->
+      
+<div  v-if="!user">
+<div class="container">
+    <div class="info"></div>
+</div>
+<div class="form">
+    <div class="thumbnail">
+      <img src="../../public/img/icons/profile.png" /></div>
+    <form autocomplete="off" ref="signUp" 
+    class="register-form" :class="{hidden:!isSignUp}" @submit.prevent="signup">
+        <h1>Sign Up</h1>
+      <input type="text" placeholder="Name" required v-model="signupDetails.name" />
+      <input type="password" placeholder="password" required v-model="signupDetails.password"/>
+      <input type="text" placeholder="email address" required />
+      <button type="submit">create account</button>
+        <p class="message">Already registered? <a @click="toggleSign">Sign In</a></p>
+    </form>
+    <!-- login -->
+    <form autocomplete="off" ref="login"
+     class="login-form" :class="{hidden:isSignUp}" @submit.prevent="login">
+      <h1>Login</h1>
+      <input type="text" required placeholder="user name" v-model="loginDetails.name" />
+    <input type="password" required placeholder="password" v-model="loginDetails.password" />
+      <button type="submit">login</button>
+        <p class="message">Not registered? <a @click="toggleSign">Create an account</a></p>
+    </form>
+</div>
+</div>
         </section>
 </template>
 
 <script>
-import userService from '../services/user-service.js'
+import eventBus, { USER_CONNECTED } from "../services/event-bus.service.js";
+import userService from "../services/user-service.js";
+import { LOG_IN, GET_USER, SIGN_UP, LOG_OUT } from "../store/user-module.js";
 export default {
-      data() {
-        return {
-            loginDetails: {
-                name: '',
-                password: ''
-            },
-            signupDetails: {
-                name: '',
-                password: '',
-                book_id: [],
-                isAdmin: false
-            }
-        }
+  data() {
+    return {
+      user: null,
+      loginDetails: {
+        name: "",
+        password: ""
+      },
+      signupDetails: {
+        name: "",
+        password: "",
+        book_id: [],
+        isAdmin: false
+      },
+      isSignUp: false
+    };
+  },
+  computed: {
+    currUser() {
+      this.user = this.$store.getters[GET_USER];
+      return this.user;
+    }
+  },
+  methods: {
+    signup() {
+      this.$store
+        .dispatch({ type: SIGN_UP, signupDetails: this.signupDetails })
+        .then(() => {
+          this.user = this.$store.getters[GET_USER];
+          eventBus.$emit(USER_CONNECTED, this.user);
+        });
+    },
+    login() {
+      this.$store
+        .dispatch({ type: LOG_IN, loginDetails: this.loginDetails })
+        .then(() => {
+          this.user = this.$store.getters[GET_USER];
+          eventBus.$emit(USER_CONNECTED, this.user);
+          this.$router.push("/");
+        });
     },
 
-    methods: {
-
-        signup() {
-            userService.signup(this.signupDetails)
-                .then(_ => {
-                    this.$router.push('/')                    
-                })
-                .catch(err => console.log(err));
-        },
-        login() {
-            userService.login(this.loginDetails)
-                .then(_ => {
-                    this.$router.push('/')
-                })
-        },
-        vlogin() {
-            [].forEach.call( document.querySelectorAll('.message'), function(el) {
-            el.style.transform = 'translateX(0)';
-            if(el.classList.contains(login)) {
-                el.classList.remove('signup')
-            }
-            el.classList.add('login')
-            });
-        },
-        vsignup() {
-            [].forEach.call( document.querySelectorAll('.message'), function(el) {
-                el.style.transform = 'translateX(100%)';
-            if(el.classList.contains(login)) {
-                el.classList.remove('login')
-            }
-            el.classList.add('signup')
-            });
-
-        }
+    toggleSign() {
+      this.isSignUp = !this.isSignUp;
     }
+  }
 };
 </script>
 
 <style scoped lang='scss'>
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
-@import url('https://fonts.googleapis.com/css?family=Playfair+Display');
+@import "./src/assets/scss/_vars.scss";
 
-$font: 'Source Sans Pro', sans-serif;
-$blue: #809BCE;
-$purple: #9893DA;
-$grey: #C3C3D8;
-
-body, .message, .form, form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-
-body {
-  height: 100vh;
-  background: #E8E8E8;
-  font-family: $font;
-  overflow: hidden;
-}
-.container {
-  margin-top: 20px;
-  width: 700px;
-  height: 400px;
-  background: white;
-  position: relative;
-  display: grid;
-  grid-template: 100% / 50% 50%;
-  box-shadow: 2px 2px 10px 0 rgba(#333, 0.2);
-}
-
-.message {
-  position: absolute;
-  background: white;
-  width: 50%;
-  height: 100%;
-  transition: 0.5s all ease;
-  transform: translateX(100%);
-  z-index: 4;
-  
-  &:before {
-    position: absolute;
-    content: '';
-    width: 1px;
-    height: 70%;
-    background: $grey;
-    opacity: 0;
-    left: 0;
-    top:15%;
-  }
-  
-  .button {
-    margin: 5px 0;
-  }
-}
-
-.signup {
-  &:before {
-    opacity: 0.3;
-    left: 0;
-  }
-}
-
-.login {
-  &:before {
-    opacity: 0.3;
-    left: 100%;
-  }
-}
-
-
-.btn-wrapper {
-  width: 60%;
-}
+$white: #ffffff;
+$black: #000000;
+$accent: #e86c62;
+$form-width: 300px;
 
 .form {
-  width: 100%;
-  height: 100%;
-
-  &--heading {
-    font-size: 18px;
-    height: 50px;
-    color: $blue;
-    font-family: 'Playfair Display', serif;
-  }
-}
-
-form {
-  width: 70%;
-  > * {
-    margin: 10px;
-  }
-  input {
-    width: 90%;
-    border: 0;
-    border-bottom: 1px solid rgba($grey, 0.5);
-    font-size: 13px;
-    font-weight: 300;
-    color: #797A9E;
-    letter-spacing: 0.11em;
-
-    &::placeholder {
-      color: #C3C3D8;
-      font-size: 10px;
-    }
-
-    &:focus {
-      outline: 0;
-      border-bottom: 1px solid rgba($blue, 0.7);
-      transition: 0.6s all ease;
-    }
-  }
-}
-
-.button {
-  width: 100%;
-  height: 30px;
-  border: 0;
-  outline: 0;
-  color: white;
-  font-size: 15px;
-  font-weight: 300;
   position: relative;
-  z-index: 3;
-  letter-spacing: 2px;
-  background: linear-gradient(45deg, $blue, $purple);
-  font-family: 'Playfair Display', serif;
-  
-  &:hover {
-    transform: translateY(4px);
-    transition: 0.4s all ease;
+  z-index: 1;
+  background: $white;
+  max-width: $form-width;
+  margin: 0 auto 100px;
+  padding: 30px;
+  text-align: center;
+  font-family: $main-font;
+}
+
+.thumbnail {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 30px;
+  border-radius: 100%;
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+h1 {
+  color: $accent;
+  font-weight: 900;
+  margin: 0 auto 30px;
+}
+
+input {
+  outline: 0;
+  background: darken($white, 5%);
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+button {
+  outline: 0;
+  background: $accent;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  border-radius: 3px;
+  color: $white;
+  font-size: 14px;
+  transition: (all 0.3 ease);
+  cursor: pointer;
+}
+.message {
+  margin: 15px 0 0;
+  color: darken($white, 30%);
+  font-size: 12px;
+  a {
+    color: $accent;
+    text-decoration: none;
   }
 }
 
-
-@media (max-width: 750px){
-  .container {
-    transform: scale(0.8);
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: $form-width;
+  margin: 0 auto;
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
   }
+
+  .info {
+    margin: 50px auto;
+    text-align: center;
+  }
+}
+
+// h1 {
+//   margin: 0 0 15px;
+//   padding: 0;
+//   font-size: 36px;
+//   font-weight: 300;
+//   color: lighten($black, 10%);
+// }
+
+span {
+  color: lighten($black, 30%);
+  font-size: 12px;
+}
+
+a {
+  color: $black;
+  text-decoration: none;
 }
 </style>
 
