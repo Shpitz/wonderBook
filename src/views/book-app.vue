@@ -12,7 +12,9 @@
        @searchCategorie="updateFilter" />
     </div>
     
-     <h1 ref="bookList">Look. Listen. Join the wonder.</h1>
+    <h1 ref="bookList">Look. Listen. Join the wonder.</h1>
+
+    <loader v-if="!books"></loader>
     <loader v-if="isLoad"></loader>
     <book-list  :user="user" :books="booksToShow"></book-list>
     <app-footer></app-footer>
@@ -95,8 +97,9 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css?family=Cinzel");
 .background-img-container {
-  height: 300px;
+  height: 400px;
   margin: 0;
+  margin-bottom: 70px;
 }
 .bg {
   /* The image used */

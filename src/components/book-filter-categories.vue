@@ -50,7 +50,7 @@ export default {
 $container-bg: white;
 ul {
   background-color: $container-bg;
-  padding: 3rem 3rem 1rem 3rem;
+  // padding: 3rem 3rem 1rem 3rem;
   margin: 0;
   max-width: 958px;
 }
@@ -59,7 +59,7 @@ ul {
   cursor: pointer;
   transition: all 0.3s;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  margin: 0 2rem 2rem 0;
+  margin: 0 2rem 3rem;
   width: 200px;
   p {
     margin: 0;
@@ -73,9 +73,9 @@ ul {
   }
 }
 
-.categorie-container:nth-child(3n) {
-  margin: 0 0 2rem 0;
-}
+// .categorie-container:nth-child(3n) {
+//   margin: 0 0 2rem 0;
+// }
 
 .categorie-container:hover {
   .cat-img {
@@ -101,7 +101,7 @@ ul {
 @media (max-width: 500px) {
   .categorie-container {
     width: 80%;
-    margin: 0 0 2rem;
+    // margin: 0 0 2rem;
     .categorie-container:nth-child(3n) {
       margin: 0 0 2rem;
     }
@@ -117,10 +117,10 @@ ul {
 
 @media (max-width: 780px) and (min-width: 520px) {
   .categorie-container:nth-child(4n) {
-    margin: 0 2rem 2rem 0;
+    // margin: 0 2rem 2rem 0;
   }
   .categorie-container:last-child {
-    margin: 0 0 2rem;
+    // margin: 0 0 2rem;
   }
 }
 </style>

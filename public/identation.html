@@ -13,7 +13,68 @@
 </head>
 
 <body>
-
+  <div v-if="(togelModal)" class="first-details-container">
+    <button @click="cancelFirstDetails" class="btn-exit-modal editor-btn editor-regular-btn ">
+      <font-awesome-icon class="icon" icon="times" />
+    </button>
+    <transition name="fade">
+      <main id="main">
+        <section id="left" :style="{ backgroundImage: 'url(' + getCoverImg + ')'}">
+          <div id="head">
+            <h1>Join the wonder</h1>
+          </div>
+          <div class="modal-upload-container flex justify-center">
+            <form method="POST" ref="coverImgInput" class="upload-form flex column">
+              <div class="file-upload input-file-container">
+                <input type="file" accept="image/*" @change.prevent="setCoverImgFile" class="file-upload__input input-file">
+                <label tabindex="0" for="my-file" class="input-file-trigger">
+                  <font-awesome-icon class="icon" icon="image" />
+                </label>
+              </div>
+            </form>
+            <form action="" ref="audioInput" class="upload-form page-form">
+              <div class="file-upload input-file-container">
+                <input type="file" accept="audio/*" @change.prevent="setAudioFile" class="file-upload__input  input-file">
+                <label tabindex="0" for="my-file" class="input-file-trigger">
+                  <font-awesome-icon class="icon" icon="file-audio" />
+                </label>
+              </div>
+            </form>
+          </div>
+        </section>
+        <section id="right">
+          <h1>Book details</h1>
+          <form action="#">
+            <div id="form-card" class="form-field">
+              <label>Book title:</label>
+              <input v-model="book.title" placeholder="Book title" required>
+            </div>
+            <div id="form-card" class="form-field">
+              <label>Author:</label>
+              <input v-model="book.author" placeholder="Author" required>
+            </div>
+            <div id="form-card" class="form-field">
+              <label>Illustrator:</label>
+              <input v-model="book.illustrator" placeholder="Illustrators" required>
+            </div>
+            <div id="form-date" class="form-field">
+              <label for="expiry-month">Categories:</label>
+              <v-select placeHolder="Categories" multiple v-model="book.categories" :options="options"></v-select>
+            </div>
+            <div id="form-card" class="form-field">
+              <label>Description:</label>
+              <textarea class="editor-input not-resize-txt" rows='4' cols='50' v-model="book.description" placeholder="The story about Yoko ruining everything!"
+              />
+            </div>
+            <div class="modal-btns-container flex space-around">
+              <input type="submit" @click.prevent="saveDetails" value="SAVE" class="edit-btn">
+              <input type="button" @click.prevent="cancelFirstDetails" value="CANCEL" class="edit-btn">
+            </div>
+          </form>
+        </section>
+      </main>
+    </transition>
+  </div>
 </body>
 
 </html>
