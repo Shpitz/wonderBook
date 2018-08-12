@@ -47,7 +47,7 @@
   </template>
 
 <script>
-import { LOAD_BOOK,UPDATE_SEARCH_FILTER,DELETE_BOOK } from "../store/book-module.js";
+import { LOAD_BOOK,UPDATE_SEARCH_FILTER,DELETE_BOOK,GET_USER} from "../store/book-module.js";
 import bookFilterCategories from "../components/book-filter-categories.vue";
 import loader from "../components/loader-cmp.vue";
 
@@ -66,6 +66,11 @@ export default {
       .dispatch({ type: LOAD_BOOK, bookId })
       .then(book => (this.book = book));
   },
+  // mounted(){
+  //   var user = this.$store.getters[GET_USER];
+  //   debugger
+  //     console.log('user in  details',user)
+  // },
   computed: {
     bookCategories() {
       var bookCat = [];

@@ -19,11 +19,14 @@ function signup(userDetails) {
 
 function login(userCreds) {
     return axios.post(`${BASE_URL}/checkLogin`, userCreds)
-        .then(({ data }) => {
-            _setLoggedinUser(data)
-            return data;
+        .then(res => {
+            console.log('data',res.data)
+            _setLoggedinUser(res.data)
+            return res.data;
         })
-        .catch(err => err)
+        .catch(err => {
+             throw 'login faild '
+        })
 }
 
 function logout() {
@@ -33,7 +36,6 @@ function logout() {
 }
 
 function getLoggedinUser() {
-    // debugger;
     return axios.get(`${BASE_URL}/getLogin`)
         .then((res)=>{
             return res.data;

@@ -37,6 +37,9 @@ export default {
                 .then(user => {
                     store.commit({ type: SET_USER, user })
                 })
+                .catch(err=>{
+                    throw 'login faild '
+                })
         },
         [LOAD_USER](store, { userId }) {
             return userSerivce.getLoggedinUser()
