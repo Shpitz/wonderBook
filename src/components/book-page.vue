@@ -138,7 +138,7 @@ export default {
 
     .img-error{
     background-image: url("../../public/img/background/img-error.png");
-      height: 50px;
+    height: 50px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -155,7 +155,7 @@ export default {
     }
 
     .page-container {
-      background-size: contain;
+      background-size: cover;
       align-items: flex-start;
       padding: 0.5rem;
       border-radius: 10px;

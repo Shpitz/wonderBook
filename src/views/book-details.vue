@@ -183,7 +183,7 @@ export default {
 }
 
 .txt-details {
-  width: 40%;
+  width: 45%;
   float:right;
   h4 {
     margin: 0;

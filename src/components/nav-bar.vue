@@ -16,7 +16,7 @@
                     </a>
                   <div v-show="userMenuOpen" class="flex column user-menu">
                  <a @click="logout" class="clean-link nav-route" >Log Out</a>
-                 <router-link to="/about" class="clean-link nav-route" >My book</router-link>
+                 <!-- <router-link to="/about" class="clean-link nav-route" >My book</router-link> -->
                 </div>
               </div>
             </div>
