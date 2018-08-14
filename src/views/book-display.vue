@@ -94,10 +94,10 @@ export default {
       if (this.currPageIdx + opartor > this.book.pages.length-1) return;
       if (this.currPageIdx + opartor < 0) return;
 
-          this.currPageIdx += opartor;
-          this.currPage = this.book.pages[this.currPageIdx];
-          this.currParIdx = 0;
-          this.currPar = this.currPage.paragraphs[this.currParIdx];
+      this.currPageIdx += opartor;
+      this.currPage = this.book.pages[this.currPageIdx];
+      this.currParIdx = 0;
+      this.currPar = this.currPage.paragraphs[this.currParIdx];
     },
     movePar() {
       this.currParIdx += 1;
@@ -129,6 +129,7 @@ export default {
       var currBookPages = this.book.pages;
       var currPage = currBookPages[this.currPageIdx];
 
+      // Move to next paragraph
       if (this.currParIdx + 1 === currPage.paragraphs.length) {
       } else if (
         this.currentTime >=
@@ -136,7 +137,11 @@ export default {
       ) {
         this.movePar();
       }
+
+      // If last page - quit
       if (this.currPageIdx + 1 === currBookPages.length) return;
+
+      // Move to next page
       if (this.currentTime >= currBookPages[this.currPageIdx + 1].time) {
         this.movePage(+1);
       }
@@ -179,7 +184,6 @@ export default {
       this.$refs.playIcon.className =
         playIconClass === "fa fa-play" ? "pause fa fa-pause" : "fa fa-play";
     },
-
     toggleVolume() {
       if (this.$refs.audio.volume > 0) {
         this.$refs.audio.volume = 0;
