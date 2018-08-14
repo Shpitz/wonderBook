@@ -109,6 +109,19 @@ export default {
         this.book = book;
         this.currPage = book.pages[0];
         this.currPar = book.pages[0].paragraphs[0];
+
+        // for each page check if the first paragraph doen't begins the same time the page begins
+        for (let i = 0; i < this.book.pages.length; i++) {
+          const page = this.book.pages[i];
+          if (page.paragraphs[0].parStartTime > page.time) {
+            page.paragraphs.unshift({
+                txt: "",
+                parStartTime: page.time,
+                parEndTime: 0
+              });
+          }
+        }
+
       });
     },
     onTimeUpdate(ev, value = null) {
