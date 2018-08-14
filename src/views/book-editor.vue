@@ -28,15 +28,21 @@
               <!-- p loop -->
               <ul class="par-list clean-list">
                 <li class="flex relative" v-for="(par,idx) in book.pages[currPageIdx].paragraphs" :key="idx">
-                  <div v-if="currPar === idx" class="par-btns-container">
-                    <div class="flex space-between align-center">
-                      <button class="editor-btn round-btn btn-margin-bottom" 
-                      title="Delete paragraph" @click="deletePar(idx)">
-                        <font-awesome-icon class="icon" icon="trash-alt" />
+                  <div v-if="currPar === idx" class="par-btns-container flex column space-between align-center">
+                    <!-- <div class="flex column space-between align-center"> -->
+                     <!-- <div class="flex column space-between align-center">       -->
+                      <button title="Set paragraph start time" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
+                        <font-awesome-icon class="icon" icon="clock" />
                       </button>
+                      <input class=" par-input input-samll self-center editor-input"
+                       type="text"  
+                        v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime"
+                        step="1" >
+                    <!-- </div> -->
+
                        <div class="modal-upload-container flex justify-center btn-margin-bottom">
                   <form method="POST"  class="upload-form flex column">
-                    <div class="file-upload input-file-container">
+                    <div class="file-upload input-file-container" title="Change text color">
                         <input type="color" v-model="par.color" 
                        class="file-upload__input input-file">
                       <label tabindex="0"  class="input-file-trigger" 
@@ -46,19 +52,15 @@
                     </div>
                   </form>
                        </div>
-                    
-                    </div>
-                    <div class="flex space-between align-center">      
-                      <button title="Set Paragraf time" class="clock-btn btn-margin-bottom editor-btn round-btn" @click="setTimingPar(idx)">
-                        <font-awesome-icon class="icon" icon="clock" />
+                      <button class="editor-btn round-btn btn-margin-bottom" 
+                      title="Delete paragraph" @click="deletePar(idx)">
+                        <font-awesome-icon class="icon" icon="trash-alt" />
                       </button>
-                      <input class="input-samll self-center editor-input"
-                       type="text"  
-                        v-model="book.pages[currPageIdx].paragraphs[idx].parStartTime"
-                        step="1" >
-                    </div>
+                    
+                    <!-- </div> -->
+
                   </div>
-                  <textarea autofocus class="editor-text-area" rows='2' 
+                  <textarea autofocus class="editor-text-area" rows='3' 
                   :style="{color: par.color}"
                    cols='60'
                    v-model="par.txt" placeHolder="Your paragraph here" 
@@ -70,31 +72,33 @@
               </button>
 
             </div>
-          </div>
-
+            </div>
           <div class="flex page-ctr column space-around align-center">
             <h3 class="page-ctr-item">Page # {{currPageIdx+1}}</h3>
-              <div class=" page-ctr-item set-page-time flex  align-center">
-                <button @click="setTimingPage" class=" editor-btn editor-regular-btn ">
-                  <font-awesome-icon class="icon" icon="clock" />
-                </button>
-                <input type="text" class="input-samll editor-input page-timing" v-model="book.pages[currPageIdx].time" step="0.01">
-              </div>
+            <div class=" page-ctr-item set-page-time flex  align-center">
+              <button @click="setTimingPage" class=" editor-btn editor-regular-btn" title="Set page start time">
+                <font-awesome-icon class="icon" icon="clock" />
+              </button>
+              <input type="text" class="input-samll editor-input page-timing" v-model="book.pages[currPageIdx].time" step="0.01">
+            </div>
               
-              <button class="editor-btn round-btn page-ctr-item" 
+            <button class="editor-btn round-btn page-ctr-item" 
               v-if="!isSinglePage"
                title="Delete page" @click="deletePage(currPageIdx)">
                 <font-awesome-icon class="icon" icon="trash-alt" />
-              </button>
+            </button>
              <!--prev/upload-->
 
            
-               <button @click="showPreview" class=" editor-btn editor-regular-btn page-ctr-item">
+            <button @click="showPreview" class=" editor-btn editor-regular-btn page-ctr-item" title="Show book preview">
               <font-awesome-icon class="icon" icon="play" />
             </button>
+            <button class="editor-btn round-btn" title="Add page" @click="addPage">
+              <font-awesome-icon class="icon" icon="plus-circle" />
+            </button>
                         <!-- <div class="page-controllers flex column align-center space-between"> -->
-              <form method="POST" class="img-form page-form " ref="imgInput">
-                <div class="input-file-container">
+            <form method="POST" class="img-form page-form " ref="imgInput" title="Upload page image">
+              <div class="input-file-container">
                 <input type="file" accept="image/*" @change.prevent="setImgFile" class="file-upload__input input-file">
                 <label tabindex="0" for="my-file" class="input-file-trigger">
                   <font-awesome-icon class="icon" icon="upload" />
@@ -103,45 +107,41 @@
             </form>
 
             
-          <div class="img-setting">
-        <select class="bgImgSize" @change="updateImgSize" v-model="book.pages[currPageIdx].imgSize">
-          <option value="cover">cover</option>
-          <option  value="contain">contain</option>
-        </select>
+            <!-- <div class="img-setting"> -->
+            <select class="bgImgSize" @change="updateImgSize" v-model="book.pages[currPageIdx].imgSize" title="Set image size">
+              <option value="cover">cover</option>
+              <option  value="contain">contain</option>
+            </select>
   
-        <select class="bgImgPos" @change="updateImgPos" v-model="book.pages[currPageIdx].imgPosition">
-      
-          <option  value="center center">center center</option>
-          <option value="center bottom">center bottom</option>
-          <option value="50% 50%">50% 50%</option>
-          <option value="25% 75%">25% 75%</option>
-          <option value="initial">initial</option>
-        </select>
-      </div>
-              <!-- </div> -->
-
-
+            <select class="bgImgPos" @change="updateImgPos" v-model="book.pages[currPageIdx].imgPosition" title="Set image position">
+              <option value="center top">center top</option>
+              <option value="center center">center center</option>
+              <option value="center bottom">center bottom</option>
+              <option value="25% 75%">25% 75%</option>
+              <option value="50% 50%">50% 50%</option>
+              <option value="75% 25%">75% 25%</option>
+              <option value="initial">initial</option>
+            </select>
             <!-- </div> -->
+
           </div>  
+          
+
           </div>
           
           <div class="bottom-ctr flex align-center justify-center">
-                         <button @click="saveBook"
-              class="editor-btn editor-regular-btn save-btn ">
-              <div>
-                <font-awesome-icon class="icon" icon="save" />
-              </div>
-            </button>
-                            <button @click="editBookDetails"
-             class="editor-btn editor-regular-btn details-btn">Details</button>
+            <button @click="editBookDetails"
+             class="editor-btn editor-regular-btn details-btn" title="Edit book details">Details</button>
             <div class=" audio-set-area flex-warp align-center">
               <audio ref="audio" :src="book.audio" controls />
             </div>
-
-                   <button class="editor-btn round-btn" title="Add page" @click="addPage">
-                <font-awesome-icon class="icon" icon="plus-circle" />
-              </button>
-               </div>
+            <button @click="saveBook"
+              class="editor-btn editor-regular-btn save-btn " title="Save changes">
+              <div>
+                <font-awesome-icon class="icon" icon="save" />
+              </div>&nbsp; Save
+            </button>
+          </div>
             <!--search in web -->
             <!-- <div class="search-img-container self-start">
               <form ref="imgFromWeb" class="flex">
@@ -184,7 +184,7 @@ export default {
       showCarusale: false,
       isLoad: true,
       bgSize: "contain",
-      bgPos: "center",
+      bgPos: "center center",
       currPar: 0
     };
   },
@@ -238,7 +238,7 @@ export default {
         time: 0,
         img: "",
         imgSize: 'contain',
-        imgPosition: '',
+        imgPosition: 'center center',
         paragraphs: [
           {
             txt: "",
@@ -375,11 +375,11 @@ export default {
 h1, h3 {
   font-family: $main-font;
 }
-// .save-btn {
+.save-btn {
 //   margin: 1rem auto;
 //   height: auto;
-//   width: 150px;
-// }
+  width: 130px;
+}
 
 .audio-set-area {
   justify-content: center;
@@ -390,6 +390,7 @@ h1, h3 {
   background-color: #f6f4f4;
 }
 .main-editor-container {
+  margin-top: 10px;
   // height: 100vh;
   width:  100%;
 }
@@ -398,10 +399,16 @@ h1, h3 {
   flex-direction: column;
   justify-content: space-between;
   width: 90%;;
-  margin: 0 auto 1rem;
+  margin: 0 auto 0.5rem;
+}
+
+.img-area-container {
+  position: relative;
 }
 
 .img-area {
+  width: 100%;
+  position: relative;
   min-height: 60vh;
   padding: 0.5rem;
   margin: 0 0 1rem;
@@ -413,16 +420,29 @@ h1, h3 {
 }
 
 .page-ctr {
+  position: absolute;
+  right: -107px;
+  top: 0;
   width: 100px;
   // margin: 0 1rem;
   justify-content: space-between;
   align-items: flex-start;
-  flex-wrap: wrap;
-  h3 {
-    margin: 0;
-    text-align: left;
-  }
+//   flex-wrap: wrap;
+  margin-left: 10px;
+   height: 375px;
+//   h3 {
+//     margin: 0;
+//     text-align: left;
+//   }
 }
+
+.bgImgSize, .bgImgPos{
+  width: 100px;
+}
+    .bottom-ctr {
+      width: 700px;
+      justify-content: space-between;
+    }
 
 audio {
   margin: 0 0.5rem 0 0;
@@ -463,9 +483,11 @@ audio {
 }
 
 .par-btns-container {
+  width: 45px;
   margin: 0 0.5rem 0 0;
   position: absolute;
-  left: -120px;
+  left: -60px;
+  height: 180px
 }
 
 .par-list {
@@ -477,19 +499,14 @@ audio {
   }
 }
 
+.par-input {
+  margin: 0;
+}
+
 // .page-controllers {
 //   width: 240px;
 // }
 
-@media (max-width: 520px) {
-  .show-carusale {
-    margin: 0.5rem 0;
-    button {
-      margin: 0;
-    }
-  }
-
-}
 
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,700");
 
@@ -498,8 +515,10 @@ audio {
 
 }
 .img-carusela {
-  max-width: 81vw;
-  margin: 0 auto;
+  max-width: 76vw;
+  // margin: 0 auto;
+  margin-top: 1.5rem;
+
 }
 // .img-setting select:not(:last-child) {
 //   margin: 0 0 0.5rem;
@@ -513,60 +532,94 @@ audio {
   margin: 0 0.5rem 0 0;
 }
 
-@media (max-width: 520px) {
-  .show-carusale {
-    margin: 0.5rem 0;
-    button {
-      margin: 0;
-    }
-  }
+// @media (max-width: 520px) {
+//   .show-carusale {
+//     margin: 0.5rem 0;
+//     button {
+//       margin: 0;
+//     }
+//   }
 
-  .bottom-ctr {
-    flex-direction: column;
-    audio {
-      margin: 0 0 1rem;
-    }
-  }
-}
+//   .bottom-ctr {
+//     flex-direction: column;
+//     audio {
+//       margin: 0 0 1rem;
+//     }
+//   }
+// }
 
-@media (max-width: 640px) {
-  .page-ctr {
-    height: 100px;
-    justify-content: flex-end;
-  }
-  .editor-text-area {
-    max-width: 60%;
-  }
-}
-
-@media (max-width: 820px) {
-  .page-ctr button &input {
-    margin: 0 0.5rem 0 0;
-  }
-  .sub-editor-container {
-    width: 95%;
-  }
-  .par-btns-container {
-    right: 0;
-    left: auto;
-  }
-}
-
-@media (max-width: 900px) {
+@media (max-width: 930px) {
   .img-area-container {
     flex-direction: column;
+    width: 100%;
   }
   .page-ctr {
+    position: initial;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    height: auto;
+    margin-bottom: 15px;
+    margin-left: 0;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .par-btns-container {
     flex-direction: row;
     align-items: center;
-    margin: 0 0 1rem;
+    height: auto;
+    width: 200px;
+    left: 2px;
+    top: 45px;
   }
+  .bottom-ctr{
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+}
 
-}
-@media (min-width: 900px) and (max-width: 1024px) {
-  .par-btns-container {
-    left: auto;
-    right: 0;
-  }
-}
+// @media (max-width: 640px) {
+//   .page-ctr {
+//     height: 100px;
+//     justify-content: flex-end;
+//   }
+//   .editor-text-area {
+//     max-width: 60%;
+//   }
+// }
+
+// @media (max-width: 820px) {
+//   .page-ctr button &input {
+//     margin: 0 0.5rem 0 0;
+//   }
+//   .sub-editor-container {
+//     width: 95%;
+//   }
+//   .par-btns-container {
+//     right: 0;
+//     left: auto;
+//   }
+// }
+
+
+
+// @media (max-width: 900px) {
+//   .img-area-container {
+//     flex-direction: column;
+//   }
+//   .page-ctr {
+//     flex-direction: row;
+//     align-items: center;
+//     margin: 0 0 1rem;
+//   }
+
+// }
+// @media (min-width: 900px) and (max-width: 1024px) {
+//   .par-btns-container {
+//     left: auto;
+//     right: 0;
+//   }
+// }
 </style>

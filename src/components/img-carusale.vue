@@ -1,7 +1,7 @@
 <template>
     <section>
             <!-- <carousel :navigationEnabled="true">' + buildSlideMarkup(10) + '</carousel> -->
-              <carousel :per-page="4" :mouse-drag="true" 
+              <carousel :per-page="3" :mouse-drag="true" 
               :navigationEnabled="true"
                 navigationNextLabel="▶"
                 navigationPrevLabel="◀">
@@ -42,5 +42,6 @@ export default {
   margin: 0 1rem 0 0;
   padding: 1rem;
   max-width: 250px;
+  /* background-size: cover; */
 }
 </style>

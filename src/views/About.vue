@@ -6,7 +6,7 @@
             <div class="about-details flex column">
                 <div class="page-container what flex column">
                     <div class="about-what-is">
-                        <h1>What is Wonder-Book?</h1>
+                        <h1>What is Wonder Book?</h1>
                         <p>
                             Hello and welcome to Wonder-Books, the place to find the best audio books on-line 
                             for children in all ages. If you’re looking for something new, you’re in the right place. 
@@ -35,7 +35,7 @@
                         <h1>Omer Sela | <span>Full stack developer</span> </h1>
                     </div>
                     <div class="member-details">
-                            <img src="../../public/img/3.jpg" alt="">
+                            <img src="../../public/img/omer.jpg" alt="">
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga consectetur velit esse laudantium architecto? Quasi doloremque praesentium, aspernatur veritatis at, nam saepe minus magnam iure exercitationem molestiae, alias cupiditate perspiciatis?</p>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga consectetur velit esse laudantium architecto? Quasi doloremque praesentium, aspernatur veritatis at, nam saepe minus magnam iure exercitationem molestiae, alias cupiditate perspiciatis?</p>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga consectetur velit esse laudantium architecto? Quasi doloremque praesentium, aspernatur veritatis at, nam saepe minus magnam iure exercitationem molestiae, alias cupiditate perspiciatis?</p>
@@ -46,10 +46,11 @@
                         <h1>Itzik Turjeman | <span>Full stack developer</span> </h1>
                     </div>
                     <div class="member-details">
-                            <img src="../../public/img/2.jpg" alt="">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga consectetur velit esse laudantium architecto? Quasi doloremque praesentium, aspernatur veritatis at, nam saepe minus magnam iure exercitationem molestiae, alias cupiditate perspiciatis?</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga consectetur velit esse laudantium architecto? Quasi doloremque praesentium, aspernatur veritatis at, nam saepe minus magnam iure exercitationem molestiae, alias cupiditate perspiciatis?</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga consectetur velit esse laudantium architecto? Quasi doloremque praesentium, aspernatur veritatis at, nam saepe minus magnam iure exercitationem molestiae, alias cupiditate perspiciatis?</p>
+                            <img src="../../public/img/Itzik2.jpg" alt="">
+                        <p>Passionate about solving challenges, with experience in writing single page applications using advanced technologies such as Vue.js, State Management, Node.js etc. Team player with solid problem solving and strong communication skills.</p>
+<p>Eight years of multi-disciplinary hands-on technical experience, including professional project management in the last three years, from requirements analysis through to writing specs for QA and implementation.</p>
+
+                        <p>Specializing in end-to-end operations and maintenance of diverse information systems including NetSuite (ERP), SuccessFactors (CRM), BizDoc, CombTas and Concur.</p>
                     </div>
                 </div>
             </div>
@@ -142,6 +143,10 @@ export default {
   text-justify: inter-word;
 }
 
+.about-what-is {
+
+}
+
 .about-our-team > h1,
 .about-what-is > h1 {
   font-size: 2rem;
@@ -167,6 +172,6 @@ export default {
 }
 
 .member-details img {
-  max-width: 40%;
+  max-width: 35%;
 }
 </style>
