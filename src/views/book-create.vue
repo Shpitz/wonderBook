@@ -114,7 +114,6 @@ export default {
         margin: 0;
         padding: 0;
         vertical-align: baseline;
-        /* padding-bottom: 10px; */
         margin-bottom: -40px;
         margin-top: -40px;
     }
@@ -164,11 +163,9 @@ export default {
         margin-top: 30px;
     }
     .section {
-        /* margin: 2em 2em; */
         margin: 0;
         margin-bottom: 20px;
     }
-
 
     @media(max-width: 800px) {
         .section {

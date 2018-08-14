@@ -126,7 +126,6 @@ export default {
   justify-content: center;
   align-items: center;
   z-index: 2;
-  // font-family: "Lato", sans-serif;
   color: #393e56de;
 }
 
@@ -141,9 +140,7 @@ h1 {
   font-size: 1.17rem;
 }
 
-
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,700");
-
 
 $shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 $primary: #9095b1;
@@ -153,12 +150,9 @@ $margin-form-label:5px;
   position: relative;
   width: 80%;
   height: 80%;
-
   left: 30px;
-
   border-radius: 10px;
   box-shadow: $shadow;
-
   background-color: white;
 }
 
@@ -207,7 +201,6 @@ $margin-form-label:5px;
   appearance: none;
   border: none;
   border-bottom: 2px solid #ccc;
-  // padding: 5px;
    outline: none;
   transition: all 0.2s;
   margin-top: 2.5px;

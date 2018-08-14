@@ -46,7 +46,6 @@ export default {
     justify-content: center;
     padding: 10px 0;
     color: white;
-    /* background-color: #887de6; */
     font-family: Maven Pro, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .get-in-touch h1 {
@@ -173,10 +172,6 @@ export default {
 .get-in-touch-detail-logos div i {
     color: #219d84;
 }
-
-/* path {
-    color: white;
-} */
 
 .contact-us-container {
     width: 230px;

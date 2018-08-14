@@ -175,13 +175,6 @@ button {
   }
 }
 
-// h1 {
-//   margin: 0 0 15px;
-//   padding: 0;
-//   font-size: 36px;
-//   font-weight: 300;
-//   color: lighten($black, 10%);
-// }
 
 span {
   color: lighten($black, 30%);

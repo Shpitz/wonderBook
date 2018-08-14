@@ -1,6 +1,5 @@
 <template>
     <section>
-            <!-- <carousel :navigationEnabled="true">' + buildSlideMarkup(10) + '</carousel> -->
               <carousel :per-page="3" :mouse-drag="true" 
               :navigationEnabled="true"
                 navigationNextLabel="▶"
@@ -13,8 +12,6 @@
 </template>
 
 <script>
-// import carousel from 'VueCarousel.Carousel'
-// import slide from 'VueCarousel.Slide'
 import bookPage from "../components/book-page.vue";
 
 import { Carousel, Slide } from "vue-carousel";
@@ -42,6 +39,5 @@ export default {
   margin: 0 1rem 0 0;
   padding: 1rem;
   max-width: 250px;
-  /* background-size: cover; */
 }
 </style>

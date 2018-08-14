@@ -66,11 +66,6 @@ export default {
       .dispatch({ type: LOAD_BOOK, bookId })
       .then(book => (this.book = book));
   },
-  // mounted(){
-  //   var user = this.$store.getters[GET_USER];
-  //   debugger
-  //     console.log('user in  details',user)
-  // },
   computed: {
     bookCategories() {
       var bookCat = [];
@@ -117,7 +112,6 @@ export default {
   font-family: "Merriweather", sans-serif;
 }
 .book-details-cotainer {
-  // width: 80%;
   margin: 0 auto;
   justify-content: space-around;
 

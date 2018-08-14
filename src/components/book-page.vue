@@ -221,7 +221,6 @@ export default {
       }
      }
 
-
     @media(max-width:736px) {
      
     .image-media {
@@ -231,6 +230,5 @@ export default {
          }
     }
       
-//whenthe window less then 550pxthe imag will be in auto contain
    
   </style>

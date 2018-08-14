@@ -6,7 +6,6 @@
         <book-filter @searchStr="updateFilter"></book-filter>
       </div>
     </div>
-    <!-- <button class="create-button" @click="createBook">Create your book</button> -->
     <div class="flex justify-center">
       <book-filter-categories :categories="filterCategories"
        @searchCategorie="updateFilter" />
