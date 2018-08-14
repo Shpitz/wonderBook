@@ -65,6 +65,7 @@ export default {
         .then(() => {
           this.user = this.$store.getters[GET_USER];
           eventBus.$emit(USER_CONNECTED, this.user);
+          this.$router.push('/');
         });
     },
     login() {
