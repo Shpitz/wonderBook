@@ -91,22 +91,13 @@ export default {
   },
   methods: {
     movePage(opartor) {
-      var currIdx = this.currPageIdx;
-      if (opartor === 1) {
-        if (currIdx < this.book.pages.length - 1) {
+      if (this.currPageIdx + opartor > this.book.pages.length-1) return;
+      if (this.currPageIdx + opartor < 0) return;
+
           this.currPageIdx += opartor;
           this.currPage = this.book.pages[this.currPageIdx];
           this.currParIdx = 0;
           this.currPar = this.currPage.paragraphs[this.currParIdx];
-        }
-      } else {
-        if (currIdx > 0) {
-          this.currPageIdx += opartor;
-          this.currPage = this.book.pages[this.currPageIdx];
-          this.currParIdx = 0;
-          this.currPar = this.currPage.paragraphs[this.currParIdx];
-        }
-      }
     },
     movePar() {
       this.currParIdx += 1;
@@ -157,6 +148,9 @@ export default {
       this.currPar = this.currPage.paragraphs[this.currParIdx];
     },
     manualMovePage(op) {
+      if (this.currPageIdx + op > this.book.pages.length-1) return;
+      if (this.currPageIdx + op < 0) return;
+
       this.movePage(op);
       var currPageTime = this.currPage.time;
       this.currentTime = currPageTime;
