@@ -90,7 +90,8 @@
                 </label>
               </div>
             </form>
-            <select class="bgImgSize page-ctr-item" @change="updateImgSize" v-model="book.pages[currPageIdx].imgSize" title="Set image size">
+            <select class="bgImgSize page-ctr-item" 
+            @change="updateImgSize" v-model="book.pages[currPageIdx].imgSize" title="Set image size">
               <option value="cover">cover</option>
               <option  value="contain">contain</option>
             </select>
@@ -212,7 +213,7 @@ export default {
       var newPage = {
         time: 0,
         img: "",
-        imgSize: 'contain',
+        imgSize: 'cover',
         imgPosition: 'center center',
         paragraphs: [
           {
