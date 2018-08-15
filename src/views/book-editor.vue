@@ -10,8 +10,7 @@
         <book-display class="editor-book-display" :bookIdFromEditor="book._id"></book-display>
       </div>
 
-        <book-first-details v-show="(toggelModal)"
-                            v-if="book"
+        <book-first-details v-if="(book && toggelModal)"
                             :bookFromEditor="book"
                             @cancelFirstDetails="cancelFirstDetails" 
                             @saveDetails="saveDetails">
