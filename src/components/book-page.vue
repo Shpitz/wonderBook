@@ -179,7 +179,7 @@ export default {
     .p-container {
       border-radius: 10px; // background-color: #f0f8ff57;
       padding: 1rem;
-      max-width: 80%;
+      max-width: 100%;
 
       .active-p {
         font-weight: 700;
