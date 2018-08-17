@@ -18,7 +18,7 @@
         <div class="txt-details">
 
           <div class="txt-details-container flex column">
-            <div class="flex row-reverse">
+            <div class="flex row-reverse" v-show="isUserBook">
               <button @click.stop="editBook" class="editor-btn editor-regular-btn edit-btn">
                 <font-awesome-icon icon="edit" />
               </button>
@@ -47,7 +47,13 @@
   </template>
 
 <script>
-import { LOAD_BOOK,UPDATE_SEARCH_FILTER,DELETE_BOOK,GET_USER} from "../store/book-module.js";
+import {
+  LOAD_BOOK,
+  UPDATE_SEARCH_FILTER,
+  DELETE_BOOK
+} from "../store/book-module.js";
+import { GET_USER } from "../store/user-module.js";
+
 import bookFilterCategories from "../components/book-filter-categories.vue";
 import loader from "../components/loader-cmp.vue";
 
@@ -56,7 +62,8 @@ export default {
   data() {
     return {
       book: null,
-      isLoad: false
+      isLoad: false,
+      user: null
     };
   },
 
@@ -65,6 +72,8 @@ export default {
     this.$store
       .dispatch({ type: LOAD_BOOK, bookId })
       .then(book => (this.book = book));
+    var user = this.$store.getters[GET_USER];
+    if (user) this.user = user;
   },
   computed: {
     bookCategories() {
@@ -72,6 +81,11 @@ export default {
       return (bookCat = this.book.categories.map((cat, idx) => {
         return (bookCat[idx] = { catTxt: cat, img: "" });
       }));
+    },
+    isUserBook() {
+      if (this.user) {
+        return this.user.book_id.includes(this.book._id);
+      } else return false
     }
   },
 
@@ -79,24 +93,23 @@ export default {
     playBook() {
       this.$router.push(`/bookReading/${this.book._id}`);
     },
-     updateFilter(filterBy) {
-      this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy});
+    updateFilter(filterBy) {
+      this.$store.commit({ type: UPDATE_SEARCH_FILTER, filterBy });
       this.$router.push(`/`);
     },
     editBook() {
-      this.$router.push(`/bookEditor/${this.book._id}`)
+      this.$router.push(`/bookEditor/${this.book._id}`);
     },
-    deleteBook(){
+    deleteBook() {
       this.isLoad = true;
       this.$store
         .dispatch({ type: DELETE_BOOK, bookId: this.book._id })
         .then(() => {
           this.isLoad = false;
-          this.$router.push(`/`)
+          this.$router.push(`/`);
         })
         .catch(err => {});
-    },
-  
+    }
   },
   components: {
     bookFilterCategories,
@@ -114,9 +127,8 @@ export default {
 .book-details-cotainer {
   margin: 0 auto;
   justify-content: space-around;
-
 }
-    
+
 .hr {
   height: 1px;
   background-color: pink;
@@ -125,12 +137,12 @@ export default {
 
 .edit-btn {
   width: fit-content;
-    align-self: flex-end;
-    background-color: #dedede;
-   margin: 0 .5rem 0 0;
+  align-self: flex-end;
+  background-color: #dedede;
+  margin: 0 0.5rem 0 0;
 }
 
-.edit-btn:hover{
+.edit-btn:hover {
   background-color: #546196;
 }
 
@@ -178,7 +190,7 @@ export default {
 
 .txt-details {
   width: 45%;
-  float:right;
+  float: right;
   h4 {
     margin: 0;
   }
@@ -187,34 +199,31 @@ export default {
   }
 }
 
-@media(max-width: 600px) {
+@media (max-width: 600px) {
   .book-details-cotainer {
     flex-direction: column;
-    width: 80%
-    
+    width: 80%;
   }
   .img-details {
-  width: 100%;
+    width: 100%;
   }
   .txt-details {
     width: 100%;
   }
-  .txt-details-container  {
+  .txt-details-container {
     flex-direction: column-reverse;
   }
- h1 {
-       margin: 0 0 .5rem;
- }
- img {
-       max-height: 350px;
- }
- 
+  h1 {
+    margin: 0 0 0.5rem;
+  }
+  img {
+    max-height: 350px;
+  }
 }
-@media(max-width: 820px) { 
+@media (max-width: 820px) {
   .categories-filter {
-   position: absolute;
-   left:0;
- }
+    position: absolute;
+    left: 0;
+  }
 }
-
 </style>
