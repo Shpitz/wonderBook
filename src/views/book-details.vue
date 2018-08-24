@@ -84,7 +84,7 @@ export default {
     },
     isUserBook() {
       if (this.user) {
-        return this.user.book_id.includes(this.book._id);
+        return this.user.book_id.includes(this.book._id) || this.user.isAdmin;
       } else return false
     }
   },
